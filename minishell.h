@@ -19,5 +19,27 @@
 
 typedef void (*sighandler_t)(int);
 
+enum e_syntax
+{
+	pipe,
+	OR,
+	AND,
+	in,
+	out,
+	heredoc,
+	append
+};
+
+typedef struct	s_syntax
+{
+	int id;
+	char *content;
+	struc s_syntax left;
+	struc s_syntax right;
+}	t_syntax;
+
+int	found_char(char *read, char c);
+int	ft_min(int x, int y, int z);
+
 
 #endif
