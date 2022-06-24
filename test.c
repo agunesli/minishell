@@ -34,35 +34,24 @@ int	found_medium_piece(char *read, int x)
 
 	in = found_char(read, '<');
 	out = found_char(read, '>');
+	if (in > x)
+		in = -1;
+	if (out > x)
+		out = -1;
 	if (in == -1 && out == -1)
 		return (-1);
-	else if (in < out)
-		return (in);
-	else
-		return (out);
+	else if (in < out && in != -1)
+		return (rediction_in(read, in));
+	else if (out != -1)
+		return (rediction_out(read, out)); 
 }
 
-// fonction a refaire !!!!
-void	hub_medium_piece(char *read, int y)
-{
-	if (y == -1)
-		low_piece(read); // fonction a faire
-	else if (read[y] == '<' && read[y + 1] == '<')
-		syn.id = heredoc;
-	else if (read[y] == '<' && read[y + 1] != '<')
-		syn.id = in;
-	else if (read[y] == '>' && read[y + 1] == '>')
-		syn.id = append;
-	else if (read[y] == '>' && read[y + 1] != '>')
-		syn.id = out;
-
-}
-
+/*
 t_syntax	*medium_piece(char *read, int x)
 {
 
 }
-
+*/
 t_syntax	parser(char *read)
 {
 	t_syntax *syn;

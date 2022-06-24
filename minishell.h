@@ -41,5 +41,13 @@ typedef struct	s_syntax
 int	found_char(char *read, char c);
 int	ft_min(int x, int y, int z);
 
+//parser
+t_syntax	*rediction_in(char *read, int y);
+t_syntax	*rediction_out(char *read, int y);
+
+//libft
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *src);
+
 
 #endif
