@@ -1,41 +1,15 @@
 #include "minishell.h"
 
-int	found_char(char	*read, char c)
+int	ft_is_in_set(char c, const char *set)
 {
 	int	i;
 
 	i = 0;
-	if (!read)
-		return (-1);
-	while (read[i])
+	while (set[i])
 	{
-		if (read[i] == c)
-			return (i);
+		if (set[i] == c)
+			return (1);
 		i++;
 	}
-	return (-1);
-}
-
-int     ft_min(int x, int y, int z)
-{
-        int     min1;
-        int     min2;
-        int     min3;
-
-        if (x != -1 && y != -1 && z != -1)
-        {
-                if (x < y && x < z)
-                        return (x);
-                else
-                        return (ft_min(y, z, x));
-        }
-        else if (x == -1)
-        {
-                if (y < z)
-                        return (y);
-                else
-                        return (z);
-        }
-        else
-                return (ft_min(y, z, x));
+	return (0);
 }

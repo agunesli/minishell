@@ -17,7 +17,13 @@
 #include <term.h>
 #include <signal.h>
 
+# define STRONG "|&"
+# define MEDIUM "<>"
+
+int	status_error = 0;
 typedef void (*sighandler_t)(int);
+
+
 
 enum e_syntax
 {
@@ -40,14 +46,15 @@ typedef struct	s_syntax
 
 int	found_char(char *read, char c);
 int	ft_min(int x, int y, int z);
+int	ft_is_in_set(char c, const char *set);
 
 //parser
-t_syntax	*rediction_in(char *read, int y);
-t_syntax	*rediction_out(char *read, int y);
+t_syntax	*redirection_in(char *read, int y);
+t_syntax	*redirection_out(char *read, int y);
 
 //libft
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *src);
-
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
