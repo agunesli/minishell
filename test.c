@@ -1,5 +1,20 @@
 #include "minishell.h"
 
+char	*after_space(char *subread)
+{
+	int	i;
+
+	i = 0;
+	while (subread[i] != ' ')
+		i++;
+	return (ft_substr(subread, i + 1, ft_strlen(subread));
+}
+
+t_syntax	*low_piece(char *subread, char *read) //cmd
+{
+
+}
+
 t_syntax	*medium_piece(char *subread, char *read)
 {
 	t_syntax	*syn;
@@ -9,23 +24,34 @@ t_syntax	*medium_piece(char *subread, char *read)
 	while (subread[i] && !ft_is_in_set(subread[i], MEDIUM))
 		i++;
 	if (i == ft_strlen(subread))
-		syn = low_piece(ft_strdup(subread));	
-	else if (subread[i] == '<')
-		return (redirection_in(subread, i, read));
-	else 
-		return (redirection_out(subread, i, read)); 
+		syn = low_piece(ft_strdup(subread), read);	
+	else
+	{
+		if (subread[i] == '<')
+		{
+			syn = redirection_in(subread, i, read);
+			syn->right = low_piece(after_space(subread), read);
+		}
+		else
+		{
+			syn = redirection_out(subread, i, read);
+			syn->right = low_piece(ft_substr(subread, 0, i), read);
+		}
+	}
+	return (syn);
 }
 
-int	strong_piece(char *read)
+t_syntax	*strong_piece(char *read)
 {
 	t_syntax	*syn;
 	int			i;
+	char		*str;
 
 	i = 0;
 	while (read[i] && !ft_is_in_set(read[i], STRONG))
 		i++;
 	if (i == ft_strlen(read))
-		syn = medium_piece(ft_strdup(read));
+		syn = medium_piece(ft_strdup(read), read);
 	else
 	{
 		sym->content = NULL;
@@ -38,15 +64,20 @@ int	strong_piece(char *read)
 /*		else // cas ou un seul & mais je ne connais pas le comportement !
 			sym->*/
 		syn->left = medium_piece(ft_substr(read, 0, i), read);
+		if (sym->id == pipe)
+			str = ft_substr(read, i + 1, ft_strlen(read));
+		else
+			str = ft_substr(read, i + 2, ft_strlen(read));
+		syn->right = strong_piece(str, read);
 	}
-	return (i);
+	return (syn);
 }
 
 
 // REFAIRE CETTE FONCTION
 t_syntax	parser(char *read)
 {
-	t_syntax *syn;
+/*	t_syntax *syn;
 	int	x;
 
 	x = found_strong_piece(read);
@@ -59,6 +90,6 @@ t_syntax	parser(char *read)
 		syn->id = OR;
 	else
 		syn->id = pipe;
-	syn->left = found_medium_piece(ft_substr(read, 0, x));
+	syn->left = found_medium_piece(ft_substr(read, 0, x));*/
 	//reflechir pour bien positionner pour la recursion
 }

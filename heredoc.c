@@ -7,7 +7,7 @@ void	error_limiter(char *str, void *i, int op, char *subread)
 		printf(str, (char)i);
 	else
 		printf(str, (char *)i);
-	exit(0) //a verifier pour le exit
+	exit(0) //a verifier si on doit faire un exit
 }
 
 //1 => char 2 => char *
@@ -72,18 +72,19 @@ void	write_heredoc(char *subread, char *read)
 		subread++;
 	lim = found_limiter(subread, read); //Verifier le cas erreur malloc
 	msg = found_good_write(ft_strlen(subread), read);
-	fd = open_file("~/tmp/.here_doc", heredoc); // Reprendre cette fonction !!
-	//fd = open("~/tmp/.here_doc", O_CREAT | O_RDWR | O_TRUNC, 00777);
+	fd = open_file("~/tmp/.here_doc", 2); // Reprendre cette fonction !!
+//	if (fd == -1)
+		//message d'erreur
 	if (write(1, msg, ft_strlen(msg)) == -1)
-		merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
+	//	merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 	line = get_next_line(STDIN_FILENO);
 	while (ft_strncmp(lim, line, ft_strlen(lim)))
 	{
 		if (write(fd, line, ft_strlen(line)) == -1)
-			merror("Error with write in .here_doc\n"); //Modifier le message d'erreur
+	//		merror("Error with write in .here_doc\n"); //Modifier le message d'erreur
 		free(line);
 		if (write(1, msg, ft_strlen(msg)) == -1)
-			merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
+	//		merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);

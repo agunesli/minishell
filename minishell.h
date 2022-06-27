@@ -33,7 +33,8 @@ enum e_syntax
 	in,
 	out,
 	heredoc,
-	append
+	append,
+	cmd
 };
 
 typedef struct	s_syntax
@@ -51,6 +52,9 @@ int	ft_is_in_set(char c, const char *set);
 //parser
 t_syntax	*redirection_in(char *read, int y);
 t_syntax	*redirection_out(char *read, int y);
+
+//utils
+int	open_file(char *file, int i);
 
 //libft
 size_t	ft_strlen(const char *s);
