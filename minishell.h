@@ -34,7 +34,10 @@ enum e_syntax
 	out,
 	heredoc,
 	append,
-	cmd
+	cmd,
+	expend,
+	star,
+	error
 };
 
 typedef struct	s_syntax
