@@ -19,6 +19,7 @@
 
 # define STRONG "|&"
 # define MEDIUM "<>"
+# define LOW ""
 
 int	status_error = 0;
 typedef void (*sighandler_t)(int);

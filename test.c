@@ -10,8 +10,40 @@ char	*after_space(char *subread)
 	return (ft_substr(subread, i + 1, ft_strlen(subread));
 }
 
+// 34 double quote, 29 single quote 
+int	quote_before(char *read, int x)
+{
+	int	i;
+	int	cpt;
+
+	i = ((cpt = 0, -1));
+	while (++i < x)
+	{
+		if (read[i] == 34)
+			cpt++;
+	}
+	if (cpt % 2 == 1)
+		return (1);
+	i = ((cpt = 0, -1));
+	while (i < x)
+	{
+		if (read[i] == 39)
+			cpt++;
+	}
+	if (cpt % 2 == 1)
+		return (1);
+	return (0);
+}
+
+// cmd
+// star
+// single quote
+// double quote
+// $
+// $?
 t_syntax	*low_piece(char *subread, char *read) //cmd
 {
+	
 
 }
 
@@ -21,7 +53,9 @@ t_syntax	*medium_piece(char *subread, char *read)
 	int			i;
 
 	i = 0;
-	while (subread[i] && !ft_is_in_set(subread[i], MEDIUM))
+	if (!subread)
+		return (NULL);
+	while (subread[i] && !ft_is_in_set(subread[i], MEDIUM) && !quote_before(subread, i))
 		i++;
 	if (i == ft_strlen(subread))
 		syn = low_piece(ft_strdup(subread), read);	
@@ -38,17 +72,18 @@ t_syntax	*medium_piece(char *subread, char *read)
 			syn->right = low_piece(ft_substr(subread, 0, i), read);
 		}
 	}
+	free(subread);
 	return (syn);
 }
 
-t_syntax	*strong_piece(char *read)
+t_syntax	*strong_piece(char *read) // arg malloc pour eviter pb avec free lors du premier lancement 
 {
 	t_syntax	*syn;
 	int			i;
 	char		*str;
 
 	i = 0;
-	while (read[i] && !ft_is_in_set(read[i], STRONG))
+	while (read[i] && !ft_is_in_set(read[i], STRONG) && !quote_before(read, i))
 		i++;
 	if (i == ft_strlen(read))
 		syn = medium_piece(ft_strdup(read), read);
@@ -68,8 +103,9 @@ t_syntax	*strong_piece(char *read)
 			str = ft_substr(read, i + 1, ft_strlen(read));
 		else
 			str = ft_substr(read, i + 2, ft_strlen(read));
-		syn->right = strong_piece(str, read);
+		syn->right = strong_piece(str);
 	}
+	free(read); 
 	return (syn);
 }
 
