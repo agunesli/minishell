@@ -24,8 +24,6 @@
 int	status_error = 0;
 typedef void (*sighandler_t)(int);
 
-
-
 enum e_syntax
 {
 	pipe,
@@ -36,9 +34,10 @@ enum e_syntax
 	heredoc,
 	append,
 	cmd,
-	expend,
+	expand,
 	star,
-	error
+	error,
+	s
 };
 
 typedef struct	s_syntax
@@ -64,5 +63,5 @@ int	open_file(char *file, int i);
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
+char	**ft_split(char const *s, char c);
 #endif

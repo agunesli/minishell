@@ -10,7 +10,7 @@ char	*after_space(char *subread)
 	return (ft_substr(subread, i + 1, ft_strlen(subread));
 }
 
-// 34 double quote, 29 single quote 
+// 34 double quote, 29 single quote
 /*int	quote_before(char *read, int x)
 {
 	int	i;
@@ -36,6 +36,17 @@ char	*after_space(char *subread)
 }*/
 
 char	*found_word(char *subread, int i)
+{
+	int	len;
+	int	j;
+
+	j = i - 1;
+	while (subread[++j] != ' ')
+		len++;
+	return (ft_substr(subread, i, len));
+}
+
+char	*found_word_star(char *subread, int i)
 {
 	int	tmp;
 	int	j;
@@ -66,39 +77,48 @@ char	*found_word(char *subread, int i)
 // double quote
 // $
 // $?
-t_syntax	*low_piece(char *subread, char *read) //cmd
-{
-	t_syntax	*syn;
-	int			i;
+// t_syntax	*low_piece(char *subread, char *read) //cmd
+// {
+// 	t_syntax	*syn;
+// 	int			i;
+// 	char		**word;
 
-	i = 0;	
-	if (!subread)
-		return (NULL);
-	while (subread[i] == ' ')
-		i++;
-	while (subread[i] && !ft_is_in_set(subread[i], LOW) /*&& !quote_before(subread, i)*/)
-		i++;
-	if (subread[i] == '$')
-	{
-		if (subread[i + 1] == '?')
-		{
-			syn->id = error;
-			syn->content = NUUL;
-		}
-		else
-		{
-			syn->id = expend;
-			syn->content = found_word(subread, i);
-		}
-	}
-	else 
-	{
-		syn->id = star;
-			syn->content = found_word(subread, i);
-
-	}
-
-}
+// 	i = 0;
+// 	if (!subread)
+// 		return (NULL);
+// /*	while (*subread == ' ')
+// 		subread++;
+// 	while (subread[i] == '$')
+// 		i++;
+// 	if (i == ft_strlen(subread))
+// 		not_dollar(subread, read); // fonction a faire */
+// 	while (subread[i] && !ft_is_in_set(subread[i], LOW) /*&& !quote_before(subread, i)*/)
+// 		i++;
+// 	if (i == ft_strlen(subread))
+// 	{
+// 		syn->id = cmd;
+// 		syn->content = ft_strdup(subread);
+// 	}
+// 	if (subread[i] == '$')
+// 	{
+// 		if (subread[i + 1] == '?')
+// 		{
+// 			syn->id = error;
+// 			syn->content = NULL;
+// 			syn->left =
+// 		}
+// 		else
+// 		{
+// 			syn->id = expand;
+// 			syn->content = found_word(subread, i);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		syn->id = star;
+// 		syn->content = found_word_star(subread, i);
+// 	}
+// }
 
 t_syntax	*medium_piece(char *subread, char *read)
 {
@@ -108,12 +128,12 @@ t_syntax	*medium_piece(char *subread, char *read)
 	i = 0;
 	if (!subread)
 		return (NULL);
-	while (subread[i] == ' ')
-		i++;
+	while (*subread == ' ')
+		subread++;
 	while (subread[i] && !ft_is_in_set(subread[i], MEDIUM) /*&& !quote_before(subread, i)*/)
 		i++;
 	if (i == ft_strlen(subread))
-		syn = low_piece(ft_strdup(subread), read);	
+		syn = low_piece(ft_strdup(subread), read);
 	else
 	{
 		if (subread[i] == '<')
@@ -131,7 +151,7 @@ t_syntax	*medium_piece(char *subread, char *read)
 	return (syn);
 }
 
-t_syntax	*strong_piece(char *read) // arg malloc pour eviter pb avec free lors du premier lancement 
+t_syntax	*strong_piece(char *read) // arg malloc pour eviter pb avec free lors du premier lancement
 {
 	t_syntax	*syn;
 	int			i;
@@ -160,7 +180,7 @@ t_syntax	*strong_piece(char *read) // arg malloc pour eviter pb avec free lors d
 			str = ft_substr(read, i + 2, ft_strlen(read));
 		syn->right = strong_piece(str);
 	}
-	free(read); 
+	free(read);
 	return (syn);
 }
 
