@@ -6,11 +6,11 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 14:56:53 by agunesli          #+#    #+#             */
-/*   Updated: 2022/06/24 12:59:53 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/01 09:30:57 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minshell.h"
+#include "minishell.h"
 
 char	*ft_strdup(const char *src)
 {

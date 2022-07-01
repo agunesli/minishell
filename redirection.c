@@ -1,57 +1,65 @@
 #include "minishell.h"
 
-t_syntax	*heredoc(char *subread, char *read)
-{
-	int			fd;
-	t_syntax	*syn;
-
-	write_heredoc(subread, read);
-	syn->id = heredoc;
-	syn->content = ft_strdup("~/tmp/.here_doc");
-	syn->left = NULL;
-	syn->right = NULL;
-	return (syn)
-}
-
-char	*found_name_fd(char *read, int opt)
+char	*found_name_fd(char *read)
 {
 	int	i;
 	//A tester sur le shell et trouve les cas d'erreur 
 	while (*read == ' ')
 		read++;
-	if (opt = in)
-	{
-		while (read[i] != ' ')
-			i++;
-		return (ft_substr(read, 0, i));
-	}
 	while (read[i] != ' ' || read[i] != '\n')
 		i++;
 	return (ft_substr(read, 0, i));
 }
 
-// 0 => in, 1 => out, 2 => append
-t_syntax	*change_std(char *read, int opt)
+t_syntax	*ft_heredoc(char *subread, int y, char *read)
 {
-	syn->id = opt;
-	syn->content = found_name_fd(read, opt);
+	t_syntax	*syn;
+	int			i;
+
+	syn = malloc(sizeof(t_syntax));
+	if (!syn)
+		return (NULL);
+	i = write_heredoc(subread, y, read);
+	syn->id = heredoc;
+	syn->content = ft_strdup("~/tmp/.here_doc");
 	syn->left = NULL;
-	syn->right = NULL;
+	syn->right = low_piece(ft_substr(subread, skip_space(subread, i), ft_strlen(subread)));
+	return (syn);
+}
+
+t_syntax	*change_std(char *read, int id)
+{
+	t_syntax *syn;
+
+	syn = malloc(sizeof(t_syntax));
+	if (!syn)
+		return (NULL);
+	syn->id = id;
+	syn->content = found_name_fd(read);
+	syn->left = NULL;
+	syn->right = low_piece(ft_substr(subread, skip_space(subread, i), ft_strlen(subread)));
+	return (syn);
 	return (syn);
 }
 
 t_syntax	*redirection_in(char *subread, int y, char *read)
 {
+	t_syntax	*syn;
+
 	if (subread[y] == '<' && subread[y + 1] == '<')
-		return(heredoc(read + y + 2, read));
-	else if (read[y] == '<' && read[y + 1] != '<')
-		return (change_std(read + y + 1, in));
+		syn = ft_heredoc(subread, y + 2, read);
+	else if (subread[y] == '<' && subread[y + 1] != '<')
+		syn = change_std(subread + 1, in);
+	return (syn);
 }
 
-t_syntax	*redirection_out(char *read, int y)
+t_syntax	*redirection_out(char *read, int y, char *read)
 {
+	t_syntax	*syn;
+
 	if (read[y] == '>' && read[y + 1] == '>')
-		return (change_std(read + y + 1, append));
+		syn = change_std(read + 1, append);
 	else if (read[y] == '>' && read[y + 1] != '>')
-		return (change_std(read + y + 1, out));
+		syn = change_std(read + 1, out);
+	return (syn);
 }

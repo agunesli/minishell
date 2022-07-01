@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:12:58 by agunesli          #+#    #+#             */
-/*   Updated: 2022/06/30 16:34:02 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/01 09:30:22 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	**ft_big_malloc(char const *s, char c)
 
 static char	**ft_free_all(char **d, size_t j)
 {
-	while (j > -1)
+	while (j > (size_t)-1)
 	{
 		free(d[j]);
 		j--;

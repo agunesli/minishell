@@ -21,12 +21,11 @@
 # define MEDIUM "<>"
 # define LOW "$*"
 
-int	status_error = 0;
 typedef void (*sighandler_t)(int);
 
 enum e_syntax
 {
-	pipe,
+	PIPE,
 	OR,
 	AND,
 	in,
@@ -36,25 +35,31 @@ enum e_syntax
 	cmd,
 	expand,
 	star,
-	error,
-	s
+	error
 };
 
 typedef struct	s_syntax
 {
-	int id;
-	char *content;
-	struc s_syntax left;
-	struc s_syntax right;
+	int				id;
+	char			*content;
+	struct s_syntax	*left;
+	struct s_syntax	*right;
 }	t_syntax;
 
-int	found_char(char *read, char c);
-int	ft_min(int x, int y, int z);
-int	ft_is_in_set(char c, const char *set);
+typedef struct s_data
+{
+	t_syntax	**syn;
+	char		**env;
+	int			error;
+}	t_data;
 
+int			found_char(char *read, char c);
+int			ft_is_in_set(char c, const char *set);
+int			skip_space(char *str, int i);
 //parser
 t_syntax	*redirection_in(char *read, int y);
 t_syntax	*redirection_out(char *read, int y);
+t_syntax	*low_piece(char *subread, char *read);
 
 //utils
 int	open_file(char *file, int i);
