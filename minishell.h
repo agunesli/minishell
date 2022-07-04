@@ -19,7 +19,7 @@
 
 # define STRONG "|&"
 # define MEDIUM "<>"
-# define LOW "$*"
+# define LOW "\"\'$*"
 
 typedef void (*sighandler_t)(int);
 
@@ -54,12 +54,18 @@ typedef struct s_data
 }	t_data;
 
 int			found_char(char *read, char c);
-int			ft_is_in_set(char c, const char *set);
-int			skip_space(char *str, int i);
+
 //parser
 t_syntax	*redirection_in(char *read, int y);
 t_syntax	*redirection_out(char *read, int y);
 t_syntax	*low_piece(char *subread, char *read);
+
+//utils_parser
+int			ft_is_in_set(char c, const char *set);
+char	*found_word(char *subread, int i);
+char	*found_word_star(char *subread, int i);
+int			skip_space(char *str, int i);
+int			good_place(char *read, char *set int i);
 
 //utils
 int	open_file(char *file, int i);
