@@ -36,20 +36,21 @@ void	check_error_limiter(char *subread, char *read)
 	 	//Devien un cat normal - Ecrire cette partie
 } */
 
-char	*found_limiter(char *subread, char *read)
+char	*found_limiter(char *subread)
 {
 	int		len;
 
 	len = 0;
+//	(void)read;
 //	check_error_limiter(subread, read);
 	while (subread[len] && (!ft_is_in_set(subread[len], MEDIUM)
-				&& subread[len] != ' ')
+				&& subread[len] != ' '))
 		len++;
 	return (ft_substr(subread, 0, len));
 }
 
 //! on peut utiliser l'historique dans le heredoc
-char	*found_good_write(int len, char *read)
+/*char	*found_good_write(int len, char *read)
 {
 	if (read[len] == '|' && read[len + 1] != '|')
 		return(ft_strdup("pipe heredoc> "));
@@ -59,42 +60,43 @@ char	*found_good_write(int len, char *read)
 		return (ft_strdup("cmdand heredoc> "));
 	else
 		return (ft_strdup("heredoc> "));
-}
+}*/
 
-int	write_heredoc(char *subread, int y, char *read)
+int	write_heredoc(char *subread, int y)
 {
 	char	*lim;
 	char	*line;
-	char	*msg;
 	int		fd;
 	int		len;
 	
 	while (subread[y] == ' ')
 		y++;
-	lim = found_limiter(subread, read);
+	lim = found_limiter(subread);
 //	if (!lim)
 		//Error limitateur
-	msg = found_good_write(ft_strlen(subread) + 1, read);
 	fd = open_file("~/tmp/.here_doc", 2); // Reprendre cette fonction !!
 //	if (fd == -1)
 		//message d'erreur
-	if (write(1, msg, ft_strlen(msg)) == -1)
+	write(1, ">", 1);
+//	if (write(1, ">", 1) == -1)
 	//	merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 	line = get_next_line(STDIN_FILENO);
 	len = ft_strlen(lim);
 	while (ft_strncmp(lim, line, len))
 	{
-		if (write(fd, line, ft_strlen(line)) == -1)
+		write(fd, line, ft_strlen(line));
+	//	if (write(fd, line, ft_strlen(line)) == -1)
 	//		merror("Error with write in .here_doc\n"); //Modifier le message d'erreur
 		free(line);
-		if (write(1, msg, ft_strlen(msg)) == -1)
+		write(1, ">", 1);
+	//	if (write(1, ">", 1) == -1)
 	//		merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);
 	free(lim);
-	free(msg);
-	if (close(fd) == -1)
+	close(fd);
+	//if (close(fd) == -1)
 //		merror("Error wtih close .here_doc\n");
 	return (len);
 }

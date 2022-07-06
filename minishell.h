@@ -25,17 +25,17 @@ typedef void (*sighandler_t)(int);
 
 enum e_syntax
 {
-	PIPE,
-	OR,
-	AND,
-	in,
-	out,
-	heredoc,
-	append,
-	cmd,
-	expand,
-	star,
-	error
+	PIPE,	// 0
+	OR,	// 1
+	AND,	// 2
+	in,	// 3
+	out,	// 4
+	heredoc,// 5
+	append,	// 6
+	cmd,	// 7
+	dollar, // 8
+	star,	// 9
+	error	// 10
 };
 
 typedef struct	s_syntax
@@ -48,9 +48,10 @@ typedef struct	s_syntax
 
 typedef struct s_data
 {
+	char		*read;
 	t_syntax	**syn;
 	char		**env;
-	int			error;
+	int			status_error;
 }	t_data;
 
 int			found_char(char *read, char c);
@@ -58,14 +59,16 @@ int			found_char(char *read, char c);
 //parser
 t_syntax	*redirection_in(char *read, int y);
 t_syntax	*redirection_out(char *read, int y);
-t_syntax	*low_piece(char *subread, char *read);
+t_syntax	*low_piece(char *subread);
+int			write_heredoc(char *subread, int y);
+void		print_tree(t_syntax *syn);
 
 //utils_parser
 int			ft_is_in_set(char c, const char *set);
 char	*found_word(char *subread, int i);
 char	*found_word_star(char *subread, int i);
 int			skip_space(char *str, int i);
-int			good_place(char *read, char *set int i);
+int			good_place(char *read, char *set, int i);
 
 //utils
 int	open_file(char *file, int i);
@@ -75,4 +78,9 @@ size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*get_next_line(int fd);
+char	*ft_strjoin(char const *s1, char const *s2); //GNL utils
+char	*ft_substr_end(char const *s, unsigned int start, size_t end);  //GNL utils
+
 #endif

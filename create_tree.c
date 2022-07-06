@@ -6,16 +6,24 @@
 // double quote
 // $
 // $?
-t_syntax	*low_piece(char *subread, char *read) //cmd
+t_syntax	*low_piece(char *subread) //cmd
 {
  	t_syntax	*syn;
- 	int			i;
- 	char		**word
+// 	int			i;
+// 	char		**word;
 
  	if (!subread)
  		return (NULL);
-	i = good_place(subread, LOW, 0);
-	if (i == (int)ft_strlen(subread))
+	syn = malloc(sizeof(t_syntax));
+	if (!syn)
+		return (NULL);
+	syn->id = cmd;
+	syn->content = subread;
+	syn->right = NULL;
+	syn->left = NULL;
+	return (syn);
+//	i = good_place(subread, LOW, 0);
+//	if (i == (int)ft_strlen(subread))
  /*	if (i == ft_strlen(subread))
  		not_dollar(subread, read); // fonction a faire
  	while (subread[i] && !ft_is_in_set(subread[i], LOW) && !quote_before(subread, i))
@@ -47,7 +55,7 @@ t_syntax	*low_piece(char *subread, char *read) //cmd
 }
 
 
-t_syntax	*medium_piece(char *subread, char *read)
+t_syntax	*medium_piece(char *subread)
 {
 	t_syntax	*syn;
 	int			i;
@@ -56,16 +64,16 @@ t_syntax	*medium_piece(char *subread, char *read)
 		return (NULL);
 	i = good_place(subread, MEDIUM, 0);
 	if (i == (int)ft_strlen(subread))
-		syn = low_piece(ft_strdup(subread), read);
+		syn = low_piece(ft_strdup(subread));
 	else
 	{
 /*		syn = malloc(sizeof(t_syntax));
 		if (!syn)
 			return (NULL);*/
 		if (subread[i] == '<')
-			syn = redirection_in(subread, i, read);
+			syn = redirection_in(subread, i);
 		else
-			syn = redirection_out(subread, i, read);
+			syn = redirection_out(subread, i);
 	}
 	free(subread);
 	return (syn);
@@ -80,7 +88,7 @@ t_syntax	*strong_piece(char *read)
 
 	i = good_place(read, STRONG, 0);
 	if (i == (int)ft_strlen(read))
-		syn = medium_piece(ft_strdup(read), read);
+		syn = medium_piece(ft_strdup(read));
 	else
 	{
 		syn = malloc(sizeof(t_syntax));
@@ -95,7 +103,7 @@ t_syntax	*strong_piece(char *read)
 			syn->id = AND;
 /*		else // cas ou un seul & mais je ne connais pas le comportement !
 			sym->*/
-		syn->left = medium_piece(ft_substr(read, 0, skip_space(read, i)), read);
+		syn->left = medium_piece(ft_substr(read, 0, skip_space(read, i)));
 		if (syn->id == PIPE)
 			str = ft_substr(read, skip_space(read, i + 1), ft_strlen(read));
 		else
@@ -109,12 +117,14 @@ t_syntax	*strong_piece(char *read)
 // REFAIRE CETTE FONCTION
 void	parser(char *read)
 {
-	t_syntax *syn;
+//	t_syntax *syn;
 
 	while (*read == ' ')
 		read++;
-	syn = strong_piece(ft_strdup(read));
-	
+	print_tree(strong_piece(ft_strdup(read)));
+/*	syn = strong_piece(ft_strdup(read));
+	print_tree(syn);*/
+	// create fonction print
 /*	t_syntax *syn;
 	int	x;
 
@@ -130,4 +140,11 @@ void	parser(char *read)
 		syn->id = pipe;
 	syn->left = found_medium_piece(ft_substr(read, 0, x));*/
 	//reflechir pour bien positionner pour la recursion
+}
+
+int	main(int ac, char **av)
+{
+	(void)ac;
+	parser(av[1]);
+	return (0);
 }

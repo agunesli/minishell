@@ -20,6 +20,7 @@ char	*found_word(char *subread, int i)
 	int	j;
 
 	j = i - 1;
+	len = 0;
 	while (subread[++j] != ' ')
 		len++;
 	return (ft_substr(subread, i, len));
@@ -71,9 +72,9 @@ int	good_place(char *read, char *set, int i)
 		i++;
 		while(read[i] && read[i] != c)
 			i++;
-		if (!read[i])
+//		if (!read[i])
 			//error syntax quote no close
-		return (good_place(read, set, i);
+		return (good_place(read, set, i));
 	}
 	else
 		return (i);

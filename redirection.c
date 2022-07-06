@@ -1,18 +1,18 @@
 #include "minishell.h"
 
-char	*found_name_fd(char *read, int y)
+char	*found_name_fd(char *subread, int y)
 {
 	int	i;
 	//A tester sur le shell et trouve les cas d'erreur 
-	while (read[y] == ' ')
+	while (subread[y] == ' ')
 		y++;
 	i = y;
-	while (read[i] != ' ' || read[i] != '\n')
+	while (subread[i] != ' ' || subread[i] != '\n')
 		i++;
-	return (ft_substr(read, y, i));
+	return (ft_substr(subread, y, i));
 }
 
-t_syntax	*ft_heredoc(char *subread, int y, char *read)
+t_syntax	*ft_heredoc(char *subread, int y)
 {
 	t_syntax	*syn;
 	int			i;
@@ -20,15 +20,15 @@ t_syntax	*ft_heredoc(char *subread, int y, char *read)
 	syn = malloc(sizeof(t_syntax));
 	if (!syn)
 		return (NULL);
-	i = write_heredoc(subread, y, read);
+	i = write_heredoc(subread, y);
 	syn->id = heredoc;
 	syn->content = ft_strdup("~/tmp/.here_doc");
-	syn->right = NULL;
 	syn->left = low_piece(ft_substr(subread, skip_space(subread, i), ft_strlen(subread)));
+	syn->right = NULL;
 	return (syn);
 }
 
-t_syntax	*change_std(char *read, int y, int id)
+t_syntax	*change_std(char *subread, int y, int id)
 {
 	t_syntax	*syn;
 	int		start;
@@ -37,31 +37,33 @@ t_syntax	*change_std(char *read, int y, int id)
 	if (!syn)
 		return (NULL);
 	syn->id = id;
-	syn->content = found_name_fd(read, y);
-	syn->right = NULL;
+	syn->content = found_name_fd(subread, y);
 	start = skip_space(subread, y) +  ft_strlen(syn->content);;
 	syn->left = low_piece(ft_substr(subread, start, ft_strlen(subread)));
+	syn->right = NULL;
 	return (syn);
 }
 
-t_syntax	*redirection_in(char *subread, int y, char *read)
+t_syntax	*redirection_in(char *subread, int y)
 {
 	t_syntax	*syn;
 
 	if (subread[y] == '<' && subread[y + 1] == '<')
-		syn = ft_heredoc(subread, y + 2, read);
-	else if (subread[y] == '<' && subread[y + 1] != '<')
-		syn = change_std(subread, y + 2, in);
+		syn = ft_heredoc(subread, y + 2);
+	else
+	//	else if (subread[y] == '<' && subread[y + 1] != '<')
+		syn = change_std(subread, y + 1, in);
 	return (syn);
 }
 
-t_syntax	*redirection_out(char *read, int y, char *read)
+t_syntax	*redirection_out(char *subread, int y)
 {
 	t_syntax	*syn;
 
-	if (read[y] == '>' && read[y + 1] == '>')
-		syn = change_std(read, y + 2, append);
-	else if (read[y] == '>' && read[y + 1] != '>')
-		syn = change_std(read, y + 2, out);
+	if (subread[y] == '>' && subread[y + 1] == '>')
+		syn = change_std(subread, y + 2, append);
+	else
+//	else if (subread[y] == '>' && subread[y + 1] != '>')
+		syn = change_std(subread, y + 1, out);
 	return (syn);
 }
