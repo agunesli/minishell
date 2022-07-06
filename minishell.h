@@ -63,12 +63,13 @@ t_syntax	*low_piece(char *subread);
 int			write_heredoc(char *subread, int y);
 void		print_tree(t_syntax *syn);
 
-//utils_parser
+//utils_tree
 int			ft_is_in_set(char c, const char *set);
 char	*found_word(char *subread, int i);
 char	*found_word_star(char *subread, int i);
 int			skip_space(char *str, int i);
 int			good_place(char *read, char *set, int i);
+int			end(char *subread, int len);
 
 //utils
 int	open_file(char *file, int i);

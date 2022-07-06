@@ -36,17 +36,17 @@ void	check_error_limiter(char *subread, char *read)
 	 	//Devien un cat normal - Ecrire cette partie
 } */
 
-char	*found_limiter(char *subread)
+char	*found_limiter(char *subread, int y)
 {
 	int		len;
 
 	len = 0;
 //	(void)read;
 //	check_error_limiter(subread, read);
-	while (subread[len] && (!ft_is_in_set(subread[len], MEDIUM)
-				&& subread[len] != ' '))
+	while (subread[len + y] && (!ft_is_in_set(subread[len + y], MEDIUM)
+				&& subread[len + y] != ' '))
 		len++;
-	return (ft_substr(subread, 0, len));
+	return (ft_substr(subread, y, len));
 }
 
 //! on peut utiliser l'historique dans le heredoc
@@ -71,7 +71,7 @@ int	write_heredoc(char *subread, int y)
 	
 	while (subread[y] == ' ')
 		y++;
-	lim = found_limiter(subread);
+	lim = found_limiter(subread, y);
 //	if (!lim)
 		//Error limitateur
 	fd = open_file("~/tmp/.here_doc", 2); // Reprendre cette fonction !!

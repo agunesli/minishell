@@ -9,8 +9,6 @@
 t_syntax	*low_piece(char *subread) //cmd
 {
  	t_syntax	*syn;
-// 	int			i;
-// 	char		**word;
 
  	if (!subread)
  		return (NULL);
@@ -22,36 +20,6 @@ t_syntax	*low_piece(char *subread) //cmd
 	syn->right = NULL;
 	syn->left = NULL;
 	return (syn);
-//	i = good_place(subread, LOW, 0);
-//	if (i == (int)ft_strlen(subread))
- /*	if (i == ft_strlen(subread))
- 		not_dollar(subread, read); // fonction a faire
- 	while (subread[i] && !ft_is_in_set(subread[i], LOW) && !quote_before(subread, i))
- 		i++;
- 	if (i == ft_strlen(subread))
- 	{
- 		syn->id = cmd;
- 		syn->content = ft_strdup(subread);
- 	}
- 	if (subread[i] == '$')
- 	{
- 		if (subread[i + 1] == '?')
- 		{
- 			syn->id = error;
- 			syn->content = NULL;
- 			syn->left =
- 		}
- 		else
- 		{
- 			syn->id = expand;
- 			syn->content = found_word(subread, i);
- 		}
- 	}
- 	else
- 	{
- 		syn->id = star;
- 		syn->content = found_word_star(subread, i);
- 	}*/
 }
 
 
@@ -64,12 +32,9 @@ t_syntax	*medium_piece(char *subread)
 		return (NULL);
 	i = good_place(subread, MEDIUM, 0);
 	if (i == (int)ft_strlen(subread))
-		syn = low_piece(ft_strdup(subread));
+		syn = low_piece(ft_substr(subread, 0, end(subread, ft_strlen(subread))));
 	else
 	{
-/*		syn = malloc(sizeof(t_syntax));
-		if (!syn)
-			return (NULL);*/
 		if (subread[i] == '<')
 			syn = redirection_in(subread, i);
 		else
@@ -111,17 +76,33 @@ t_syntax	*strong_piece(char *read)
 		syn->right = strong_piece(str);
 	}
 	free(read);
+//	print_tree(syn);
 	return (syn);
+}
+
+
+void	free_tree(t_syntax *syn)
+{
+	if (!syn)
+		return ;
+	printf("free %s\n", syn->content);
+	free(syn->content);
+	free_tree(syn->left);
+	free_tree(syn->right);
+	free(syn);
 }
 
 // REFAIRE CETTE FONCTION
 void	parser(char *read)
 {
-//	t_syntax *syn;
+	t_syntax *syn;
 
 	while (*read == ' ')
-		read++;
-	print_tree(strong_piece(ft_strdup(read)));
+		read++;	
+	syn = strong_piece(ft_strdup(read));
+	print_tree(syn);
+	free_tree(syn);
+
 /*	syn = strong_piece(ft_strdup(read));
 	print_tree(syn);*/
 	// create fonction print
@@ -145,6 +126,9 @@ void	parser(char *read)
 int	main(int ac, char **av)
 {
 	(void)ac;
+//	(void)av;
+//	char *s = "<< LIM cmd1 | cmd2 >> file2";
+//	parser(s);
 	parser(av[1]);
 	return (0);
 }
