@@ -1,5 +1,5 @@
 SRC	= ft_split.c ft_substr.c ft_strncmp.c ft_strdup.c ft_strlen.c \
-	  heredoc.c redirection.c create_tree.c utils_tree.c print_tree.c\
+	  ast/heredoc.c ast/redirection.c ast/create_tree.c ast/utils_tree.c ast/print_tree.c \
 	  get_next_line.c get_next_line_utils.c utils.c \
 
 SRC_H	= minishell.h

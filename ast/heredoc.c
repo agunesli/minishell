@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 /* Cette technique d'affichage ne fonctionne pas a revoir !!!
 void	error_limiter(char *str, void i, int op, char *subread)
 {
