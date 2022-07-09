@@ -21,7 +21,7 @@ char	*found_word(char *subread, int i)
 
 	j = i - 1;
 	len = 0;
-	while (subread[++j] != ' ')
+	while (subread[++j] != ' ' && subread[i] != '\n')
 		len++;
 	return (ft_substr(subread, i, len));
 }

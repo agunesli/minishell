@@ -26,6 +26,16 @@ void	free_all_int(int **bin, int nb_process)
 	free(bin);
 }
 
+int	len_split(char **bin)
+{
+	int	i;
+
+	i = 0;
+	while (bin[i])
+		i++;
+	return (i);
+}
+
 int	open_file(char *file, int i)
 {
 	if (i == 1)

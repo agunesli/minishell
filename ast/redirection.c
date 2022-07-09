@@ -23,6 +23,7 @@ t_syntax	*ft_heredoc(char *subread, int y)
 		return (NULL);
 	i = write_heredoc(subread, y);
 	syn->id = heredoc;
+	syn->cmd_arg = NULL;
 	syn->content = ft_strdup("~/tmp/.here_doc");
 	syn->left = low_piece(ft_substr(subread, skip_space(subread, i + y + 1), ft_strlen(subread)));
 	syn->right = NULL;
@@ -46,6 +47,7 @@ t_syntax	*change_std(char *subread, int y, int id)
 	if (!syn)
 		return (NULL);
 	syn->id = id;
+	syn->cmd_arg = NULL;
 	syn->content = found_name_fd(subread, y);
 	if (syn->id == in)
 	{

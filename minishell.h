@@ -43,6 +43,7 @@ typedef struct	s_syntax
 {
 	int				id;
 	char			*content;
+	char			**cmd_arg;
 	struct s_syntax	*left;
 	struct s_syntax	*right;
 }	t_syntax;
@@ -72,10 +73,11 @@ int			skip_space(char *str, int i);
 int			good_place(char *read, char *set, int i);
 int			end(char *subread, int len);
 
-//utils
+//utils_exec
 int	open_file(char *file, int i);
 void	free_all_int(int **bin, int nb_process);
 void	free_all(char **bin);
+int		len_split(char **bin);
 
 //libft
 size_t	ft_strlen(const char *s);
