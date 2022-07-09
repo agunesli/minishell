@@ -1,5 +1,31 @@
 #include "minishell.h"
 
+void	free_all(char **bin)
+{
+	int	i;
+
+	i = 0;
+	while (bin[i])
+	{
+		free(bin[i]);
+		i++;
+	}
+	free(bin);
+}
+
+void	free_all_int(int **bin, int nb_process)
+{
+	int	i;
+
+	i = 0;
+	while (i < nb_process)
+	{
+		free(bin[i]);
+		i++;
+	}
+	free(bin);
+}
+
 int	open_file(char *file, int i)
 {
 	if (i == 1)

@@ -125,6 +125,7 @@ void	parser(char *read)
 
 int	main(int ac, char **av)
 {
+	errno = 0;
 	(void)ac;
 //	(void)av;
 //	char *s = "<< LIM cmd1 | cmd2 >> file2";

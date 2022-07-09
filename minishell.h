@@ -16,6 +16,7 @@
 #include <curses.h>
 #include <term.h>
 #include <signal.h>
+#include <errno.h>
 
 # define STRONG "|&"
 # define MEDIUM "<>"
@@ -73,6 +74,8 @@ int			end(char *subread, int len);
 
 //utils
 int	open_file(char *file, int i);
+void	free_all_int(int **bin, int nb_process);
+void	free_all(char **bin);
 
 //libft
 size_t	ft_strlen(const char *s);
