@@ -6,7 +6,7 @@
 // double quote
 // $
 // $?
-int	len_good_arg(char *cmd)
+int	len_arg(char *cmd)
 {
 	int		i;
 	int		cpt;
@@ -38,9 +38,8 @@ char	*without_quote(char *cmd)
 	int		j;
 	char	c;
 
-	cpt = len_good_arg(cmd);
-	i = -1;
-	j = -1;
+	cpt = len_arg(cmd);
+	i = ((j = -1, -1));
 //	if (cpt == -1)
 //		error ?
 	if (cpt == 0)
@@ -90,7 +89,38 @@ char	*found_word_expand(char *subread, int i)
 	return (ft_substr(subread, i, len));
 }
 
-char	*change_expand(char *cmd, int i, t_data my_data)
+char	*expand_error(char *expand, t_data *my_data)
+{
+	char	*dst;
+	char	*tmp1;
+	char	*tmp2;
+
+	if (expand[1] == ' ' || expand[1] == '\n')
+		return (ft_itoa(my_data->status_error));
+	tmp1 = ft_itoa(my_data->status_error);
+	tmp2 = ft_substr(expand, 1, ft_strlen(expand));
+	dst = ft_strjoin(tmp1, tmp2);
+	free(tmp1);
+	free(tmp2);
+	return (dst);
+}
+
+char	*found_expand(char *expand, t_data *my_data)
+{
+	int	i;
+
+	i = -1;	
+	if (!ft_strncmp(expand, "?", 1))
+		return (expand_error(expand, my_data));
+	while (my_data->env[++i] != NULL)
+	{
+		if (!ft_strncmp(expand, my_data->env[i], ft_strlen(expand)))
+			return (ft_strdup(env + ft_strlen(expand) + 1))
+	}
+	return (NULL); //Cas d'erreur !!
+}
+
+char	*change_expand(char *cmd, int i, t_data *my_data)
 {
 	char	*part1;
 	char	*part2;
@@ -102,7 +132,9 @@ char	*change_expand(char *cmd, int i, t_data my_data)
 	expand = found_word_expand(cmd, i + 1);
 	start2 = i + ft_strlen(expand) + 1;
 	part2 = ft_substr(cmd, start2, ft_strlen(cmd) - start2);
-	result = found_expand(expand);
+	result = found_expand(expand, my_data);
+	free(cmd);
+	free(expand)
 	return (ft_strjoin3(part1, result, part2));
 }
 
@@ -110,16 +142,23 @@ char	*change_expand(char *cmd, int i, t_data my_data)
 char	*expand(char *cmd, t_data *my_data)
 {
 	int	i;
+	int	qoute;
 
 	i = -1;
-	while (cmd[++i] && cmd[i] != '$')
-		;
-	if (!cmd[i])
-		return (cmd);
-	else if (cmd[i + 1] == '?')
-		return (ft_itoa(my_data->status_error));
-	else
-		return (change_expand(cmd, i, my_data));
+	quote = -1;
+	while (cmd[++i])
+	{
+		if (cmd[i] == '\"')
+			quote = -quote;
+		else if (cmd[i] == '$' && quote)
+			cmd = change_expand(cmd, i, my_data);
+	}
+	return (cmd);
+//	if (!cmd[i])
+//	else if (cmd[i + 1] == '?' && quote)
+//		return (ft_itoa(my_data->status_error));
+//	else
+//		return (change_expand(cmd, i, my_data));
 }
 
 // = $ ~ * "'
