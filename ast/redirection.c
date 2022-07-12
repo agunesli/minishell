@@ -8,12 +8,13 @@ char	*found_name_fd(char *subread, int y)
 	while (subread[y] == ' ')
 		y++;
 	i = y;
-	while (subread[y] != ' ' && subread[y] != '\n')
+	while (subread[y] && subread[y] != ' ' && subread[y] != '\n'
+			&& subread[y] != '>' && subread[y] != '<')
 		y++;
 	return (ft_substr(subread, i, y - i));
 }
 
-t_syntax	*ft_heredoc(char *subread, int y)
+t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 {
 	t_syntax	*syn;
 	int			i;
@@ -25,23 +26,23 @@ t_syntax	*ft_heredoc(char *subread, int y)
 	syn->id = heredoc;
 	syn->cmd_arg = NULL;
 	syn->content = ft_strdup("~/tmp/.here_doc");
-	syn->left = low_piece(ft_substr(subread, skip_space(subread, i + y + 1), ft_strlen(subread)));
+	syn->left = low_piece(ft_substr(subread, skip_space(subread, i + y + 1), ft_strlen(subread)), my_data);
 	syn->right = NULL;
 	return (syn);
 }
 
-int	end(char *subread, int len)
+int	end_sub(char *subread, int len)
 {
 	while (subread[len - 1] == ' ')
 		len--;
 	return (len);
 }
 
-
-t_syntax	*change_std(char *subread, int y, int id)
+t_syntax	*change_std(char *subread, int y, int id, t_data *my_data)
 {
 	t_syntax	*syn;
 	int		start;
+	int		end;
 
 	syn = malloc(sizeof(t_syntax));
 	if (!syn)
@@ -49,39 +50,66 @@ t_syntax	*change_std(char *subread, int y, int id)
 	syn->id = id;
 	syn->cmd_arg = NULL;
 	syn->content = found_name_fd(subread, y);
-	if (syn->id == in)
+	printf("y is %d and subread is %s\n", y, subread);
+	if (y != 1)
+	{	
+		syn->left = low_piece(ft_substr(subread, 0, y - 1), my_data);
+	//	start = skip_space(subread, y + ft_strlen(syn->content) + 1);
+		start = skip_space(subread, skip_space(subread, y) + ft_strlen(syn->content));
+		end = end_sub(subread, ft_strlen(subread));
+		syn->right = medium_piece(ft_substr(subread, start, end), my_data);
+	}
+	else
 	{
+		start = skip_space(subread, skip_space(subread, y) + ft_strlen(syn->content) + 1);
+//		end = end_sub(subread, ft_strlen(subread));
+		syn->left = medium_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
+		syn->right = NULL;
+	}
+/*	if (syn->id == in)
+	{
+		end = end_sub(subread, ft_strlen(subread));
 		start = skip_space(subread, y) +  ft_strlen(syn->content) + 1;
-		syn->left = low_piece(ft_substr(subread, start, end(subread, ft_strlen(subread))));
+		syn->left = low_piece(ft_substr(subread, start, end), my_data);
+		syn->right = NULL;
 	}
 	else if (syn->id == out)
-		syn->left = low_piece(ft_substr(subread, 0, end(subread, y - 1)));
+	{
+		end = end_sub(subread, y - 1);
+		start = y + end + ft_strlen(syn->content);
+		syn->left = low_piece(ft_substr(subread, 0, end), my_data);
+		syn->right = low_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
+	}
 	else
-		syn->left = low_piece(ft_substr(subread, 0, end(subread, y - 2)));
-	syn->right = NULL;
+	{
+		end = end_sub(subread, y - 2);
+		start = y + end + ft_strlen(syn->content);
+		syn->left = low_piece(ft_substr(subread, 0, end), my_data);
+		syn->right = low_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
+	}*/
 	return (syn);
 }
 
-t_syntax	*redirection_in(char *subread, int y)
+t_syntax	*redirection_in(char *subread, int y, t_data *my_data)
 {
 	t_syntax	*syn;
 
 	if (subread[y] == '<' && subread[y + 1] == '<')
-		syn = ft_heredoc(subread, y + 2);
+		syn = ft_heredoc(subread, y + 2, my_data);
 	else
 	//	else if (subread[y] == '<' && subread[y + 1] != '<')
-		syn = change_std(subread, y + 1, in);
+		syn = change_std(subread, y + 1, in, my_data);
 	return (syn);
 }
 
-t_syntax	*redirection_out(char *subread, int y)
+t_syntax	*redirection_out(char *subread, int y, t_data *my_data)
 {
 	t_syntax	*syn;
 
 	if (subread[y] == '>' && subread[y + 1] == '>')
-		syn = change_std(subread, y + 2, append);
+		syn = change_std(subread, y + 2, append, my_data);
 	else
 //	else if (subread[y] == '>' && subread[y + 1] != '>')
-		syn = change_std(subread, y + 1, out);
+		syn = change_std(subread, y + 1, out, my_data);
 	return (syn);
 }

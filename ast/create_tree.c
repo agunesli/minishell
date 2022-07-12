@@ -115,7 +115,7 @@ char	*found_expand(char *expand, t_data *my_data)
 	while (my_data->env[++i] != NULL)
 	{
 		if (!ft_strncmp(expand, my_data->env[i], ft_strlen(expand)))
-			return (ft_strdup(env + ft_strlen(expand) + 1))
+			return (ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
 	}
 	return (NULL); //Cas d'erreur !!
 }
@@ -134,7 +134,7 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 	part2 = ft_substr(cmd, start2, ft_strlen(cmd) - start2);
 	result = found_expand(expand, my_data);
 	free(cmd);
-	free(expand)
+	free(expand);
 	return (ft_strjoin3(part1, result, part2));
 }
 
@@ -142,7 +142,7 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 char	*expand(char *cmd, t_data *my_data)
 {
 	int	i;
-	int	qoute;
+	int	quote;
 
 	i = -1;
 	quote = -1;
@@ -162,7 +162,7 @@ char	*expand(char *cmd, t_data *my_data)
 }
 
 // = $ ~ * "'
-char	**parse_cmd(char **cmd)
+char	**parse_cmd(char **cmd, t_data *my_data)
 {
 	int	i;
 
@@ -172,14 +172,16 @@ char	**parse_cmd(char **cmd)
 		cmd[i] = expand(cmd[i], my_data);
 		cmd[i] = without_quote(cmd[i]);
 	}
+	return (cmd);
 }
 
-t_syntax	*low_piece(char *subread, t_data my_data) //cmd
+t_syntax	*low_piece(char *subread, t_data *my_data) //cmd
 {
  	t_syntax	*syn;
 
- 	if (!subread)
+	if (!subread)
  		return (NULL);
+// 	printf("subread[0] is [%c]\n", subread[0]);
 	syn = malloc(sizeof(t_syntax));
 	if (!syn)
 		return (NULL);
@@ -191,7 +193,7 @@ t_syntax	*low_piece(char *subread, t_data my_data) //cmd
 	return (syn);
 }
 
-t_syntax	*medium_piece(char *subread, t_data my_data)
+t_syntax	*medium_piece(char *subread, t_data *my_data)
 {
 	t_syntax	*syn;
 	int			i;
@@ -200,20 +202,20 @@ t_syntax	*medium_piece(char *subread, t_data my_data)
 		return (NULL);
 	i = good_place(subread, MEDIUM, 0);
 	if (i == (int)ft_strlen(subread))
-		syn = low_piece(ft_substr(subread, 0, end(subread, ft_strlen(subread))));
+		syn = low_piece(ft_substr(subread, 0, end_sub(subread, ft_strlen(subread))), my_data);
 	else
 	{
 		if (subread[i] == '<')
-			syn = redirection_in(subread, i);
+			syn = redirection_in(subread, i, my_data);
 		else
-			syn = redirection_out(subread, i);
+			syn = redirection_out(subread, i, my_data);
 	}
 	free(subread);
 	return (syn);
 }
 
 // arg malloc pour eviter pb avec free lors du premier lancement
-t_syntax	*strong_piece(char *read, t_data my_data) 
+t_syntax	*strong_piece(char *read, t_data *my_data) 
 {
 	t_syntax	*syn;
 	int			i;
@@ -269,8 +271,8 @@ void	parser(char *read)
 	while (*read == ' ')
 		read++;	
 	my_data.read = read;
-	syn = strong_piece(ft_strdup(my_data.read), my_data);
-	my_data = &syn;
+	syn = strong_piece(ft_strdup(my_data.read), &my_data);
+	my_data.syn = &syn;
 	print_tree(syn);
 	free_tree(syn);
 
@@ -297,10 +299,15 @@ void	parser(char *read)
 int	main(int ac, char **av)
 {
 	errno = 0;
+/*	if (ac == 1)
+	{
+		printf("Espece de conne tu as oublie les arguments !!\n");
+		return (0);
+	}*/
 	(void)ac;
-//	(void)av;
-//	char *s = "<< LIM cmd1 | cmd2 >> file2";
-//	parser(s);
-	parser(av[1]);
+	(void)av;
+	char *s = "ls -la >fd1<fd2 cat >fd3 ls";
+	parser(s);
+//	parser(av[1]);
 	return (0);
 }

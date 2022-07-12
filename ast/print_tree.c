@@ -3,9 +3,21 @@
 int	g_current_level;
 
 
-void	print_syn(char *item, int id, int current_level)
+void	print_syn(char *item, int id, char **cmd, int current_level)
 {
-	printf("[%d] ID is %d and content is {%s}\n", current_level, id, item);
+	int	i;
+
+	i = -1;
+	printf("[%d] ID is %d and content is {%s} ", current_level, id, item);
+	if (cmd)
+	{
+		printf("cmd is ");
+		while (cmd[++i] != NULL)
+			printf("{%s} ", cmd[i]);
+		printf("\n");
+	}
+	else
+		printf("\n");
 }
 
 int	max2(int a, int b)
@@ -25,7 +37,7 @@ int	btree_level_count2(t_syntax *root)
 }
 
 void	apply(t_syntax *root,
-			void (*applyf)(char *item, int id, int current_level),
+			void (*applyf)(char *item, int id, char **cmd, int current_level),
 			int level)
 {
 	if (!root)
@@ -34,7 +46,7 @@ void	apply(t_syntax *root,
 		return ;
 	if (level == g_current_level)
 	{
-		applyf(root->content, root->id, level);
+		applyf(root->content, root->id, root->cmd_arg, level);
 		return ;
 	}
 	apply(root->left, applyf, level + 1);
@@ -42,7 +54,7 @@ void	apply(t_syntax *root,
 }
 
 void	btree_apply_by_level(t_syntax *root,
-	void (*applyf)(char *item, int id, int current_level))
+	void (*applyf)(char *item, int id, char **cmd, int current_level))
 {
 	int	count;
 	int	level;

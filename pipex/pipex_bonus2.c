@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 17:59:27 by agunesli          #+#    #+#             */
-/*   Updated: 2022/04/06 23:05:48 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:10:38 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,18 @@ int	*create_childs(t_donnee *don)
 	int		i;
 	t_cmd	scmd;
 
-	childs = (int *)malloc(sizeof(int) * don->nb_process);
+	childs = (int *)malloc(sizeof(int) * don->nb_process); /// Bien compter le nb process
 	if (!childs)
 		merror("Error with malloc childs\n");
 	i = -1;
-	while (++i < don->nb_process)
+	while (syn->right->id != PIPE)
 	{
 		childs[i] = fork();
 		if (childs[i] == -1)
 			merror("Error with fork child\n");
 		if (childs[i] == 0)
 		{
-			close_fds(don->fds, don->nb_process, i);
+			close_fds(don->fds, don->nb_process, i); // refaire cette fonction
 			ft_dup2(don->fds, i, don->nb_process, don->argv);
 			scmd = create_t_cmd(don, i);
 			if (execve(scmd.path, scmd.cmd_arg, don->env) == -1)

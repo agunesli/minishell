@@ -1,43 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/27 11:56:16 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/12 19:08:03 by agunesli         ###   ########.fr       */
+/*   Created: 2021/11/27 15:06:36 by agunesli          #+#    #+#             */
+/*   Updated: 2022/07/12 15:54:24 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+static int	ft_size_nb(long n)
 {
-	char	*dst;
-	size_t	i;
+	int	len;
 
-	if (!s)
-		return (NULL);
-	if (start >= ft_strlen(s))
+	if (n == 0)
+		return (1);
+	len = 0;
+	if (n < 0)
 	{
-		return (NULL);
-/*		printf("bouhh\n");
-		dst = (char *)malloc(0);
-		dst[0] = '\0';
-		return (dst);*/
+		n = -n;
+		len++;
 	}
-	if (ft_strlen(s) < len)
-		len = ft_strlen(s);
-	dst = (char *)malloc(sizeof(char) * (len + 1));
+	while (n)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_itoa(int n)
+{
+	int		len;
+	char	*dst;
+	long	nb;
+
+	nb = n;
+	len = ft_size_nb(nb);
+	dst = (char *)malloc(sizeof(char) *(len + 1));
 	if (!dst)
 		return (NULL);
-	i = 0;
-	while (s[i + start] && i < len)
+	if (nb == 0)
+		dst[0] = '0';
+	if (nb < 0)
 	{
-		dst[i] = s[start + i];
-		i++;
+		nb = -nb;
+		dst[0] = '-';
 	}
-	dst[i] = '\0';
+	dst[len] = '\0';
+	while (nb > 0)
+	{
+		len--;
+		dst[len] = (nb - (nb / 10) * 10) + '0';
+		nb /= 10;
+	}
 	return (dst);
 }

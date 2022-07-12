@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 17:59:13 by agunesli          #+#    #+#             */
-/*   Updated: 2022/04/04 12:21:18 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:10:35 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,17 @@ int	**create_fds(int nb_process)
 	int	i;
 	int	**fds;
 
-	fds = (int **)malloc(sizeof(int *) * nb_process);
+	fds = (int **)malloc(sizeof(int *) * 2);
 	if (!fds)
 		merror("Error with malloc fds\n");
-	i = 0;
-	while (i < nb_process)
+	i = -1;
+	while (++i < 2)
 	{
 		fds[i] = (int *)malloc(sizeof(int) * 2);
 		if (!fds[i])
 			merror("Error with malloc fds[i]\n");
 		if (pipe(fds[i]) == -1)
 			merror("Error with pipe\n");
-		i++;
 	}
 	return (fds);
 }
@@ -95,7 +94,8 @@ void	parent(int **fds, int *childs, int nb_process)
 	i = 0;
 	while (i < nb_process)
 	{
-		waitpid(childs[i], NULL, 0);
+		waitpid(childs[i], NULL, 0); // recuperer sa valeur de retourn pour && ou ||
+										// et les cas d'erreur !!
 		i++;
 	}
 	free(childs);
@@ -113,17 +113,7 @@ int	main(int argc, char **argv, char **env)
 	int			nb_process;
 	t_donnee	donnee;
 
-	here_doc = 0;
-	if (argc < 5)
-		merror("nb d'arg no correct\n");
-	if (!ft_strncmp("here_doc", argv[1], 8))
-		here_doc = 1;
-	if (here_doc && argc < 6)
-		merror("nb d'arg no correct\n");
-	if (here_doc)
-		nb_process = argc - 4;
-	else
-		nb_process = argc - 3;
+
 	fds = create_fds(nb_process);
 	donnee = create_struct(fds, nb_process, argv, env);
 	childs = create_childs(&donnee);
