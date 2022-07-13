@@ -64,8 +64,8 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 // A FAIRE QUE ENTRE ""
 char	*expand(char *cmd, t_data *my_data)
 {
-	int	i;
-	int	quote;
+	int		i;
+	int		quote;
 
 	i = -1;
 	quote = 1;
@@ -74,7 +74,7 @@ char	*expand(char *cmd, t_data *my_data)
 		if (cmd[i] == '\'')
 			quote++;
 		else if (cmd[i] == '$' && quote%2)
-			cmd = change_expand(cmd, i, my_data);
+			return (expand(change_expand(cmd, i, my_data),my_data));
 	}
 	return (cmd);
 }

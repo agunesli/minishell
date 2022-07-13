@@ -67,9 +67,9 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 			sym->*/
 		syn->left = medium_piece(ft_substr(read, 0, skip_space(read, i)), my_data);
 		if (syn->id == PIPE)
-			str = ft_substr(read, skip_space(read, i + 1), ft_strlen(read));
+			str = ft_substr(read, skip_space(read, i + 1), end_sub(read, ft_strlen(read)));
 		else
-			str = ft_substr(read, skip_space(read, i + 2), ft_strlen(read));
+			str = ft_substr(read, skip_space(read, i + 2), end_sub(read, ft_strlen(read)));
 		syn->right = strong_piece(str, my_data);
 	}
 	free(read);
@@ -82,8 +82,8 @@ void	free_tree(t_syntax *syn)
 	if (!syn)
 		return ;
 	printf("free %s\n", syn->content);
-	free(syn->content); //all
-	free_all(syn->cmd_arg); //all
+	free(syn->content); 
+	free_all(syn->cmd_arg); 
 	free_tree(syn->left);
 	free_tree(syn->right);
 	free(syn);
@@ -134,13 +134,13 @@ int	main(int ac, char **av, char **env)
 	}*/
 	(void)ac;
 	(void)av;
-	char *s = "ls$CC";
-	char *t = "\"\" accher\"$USER\" \"  \"";
-	char *u = "\"\" \'accher$USER\' \"  \"";
-	printf("s = %s\n", s);
-	parser(s, env);
-	printf("\nt = %s\n", t);
-	parser(t, env);
+//	char *s = "ls$CC \"$USER\" | <fd1 \"\" accher\"$USER\" \"  \"";
+//	char *t = "\"\" accher\"$USER\" \"  \"";
+	char *u = "          |||   ||   |   ";
+//	printf("s = %s\n", s);
+//	parser(s, env);
+//	printf("\nt = %s\n", t);
+//	parser(t, env);
 	printf("\nu = %s\n", u);
 	parser(u, env);
 //	parser(av[1]);

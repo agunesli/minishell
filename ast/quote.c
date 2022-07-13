@@ -40,7 +40,10 @@ char	*without_quote(char *cmd)
 	if (cpt == 0)
 		return (cmd);
 	if (cpt == (int)ft_strlen(cmd))
+	{
+		free(cmd);
 		return (ft_strdup(" ")); //Demander a Gurvan si c'est bon pour lui
+	}
 	dest = malloc(sizeof(char) * (ft_strlen(cmd) - cpt + 1));
 	if (!dest)
 		return (NULL);

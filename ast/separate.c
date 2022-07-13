@@ -18,8 +18,9 @@ char	**separate_word(char *cmd, char **dest)
 //		printf("dest[j] = %s\n", dest[j]); //
 		i+=(len);
 	}
-	printf("j is %d\n", j + 1);
+//	printf("j is %d\n", j + 1);
 	dest[++j] = NULL;
+	free(cmd);
 	return (dest);
 }
 
@@ -33,20 +34,28 @@ int	cpt_good_space(char *cmd)
 	cpt = 0;
 	while (cmd[++i])
 	{
-		while (cmd[i] && cmd[i] != ' ' && cmd[i] != 34 && cmd[i] != 39)
+		while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\'' && cmd[i] != '\"')
 			i++;
 		c = cmd[i];
-		if (c == 34 || c == 39)
+//		printf("c is %c i is %d\n", c, i);
+		if (c == '\'' || c == '\"')
 		{
 			i++;
 			while(cmd[i] && cmd[i] != c)
 				i++;
+//			printf("i after quote %d\n", i);
 		}
-		else
+		else if (c == ' ')
 		{
+//			printf("prout\n");
 			cpt++;
-			while(cmd[i] && cmd[i] == c)
+			//i++;
+			while(cmd[i] && cmd[i] == c && cmd[i + 1] != '\'' 
+					&& cmd[i + 1] != '\"')
 				i++;
+			/*if (cmd[i] == '\'' || cmd[i] == '\"')
+				i--;*/
+//			printf("i after cpt %d => %c\n", i, cmd[i]);
 		}
 	}
 	return (cpt);
@@ -57,10 +66,10 @@ char	**separate(char *cmd)
 	int		cpt;
 	char	**dest;
 
-//	printf("cmd start separate %s\n", cmd);
+//	printf("cmd start separate %s [%ld]\n", cmd, ft_strlen(cmd));
 	cpt = cpt_good_space(cmd);
-	printf("cpt is %d\n", cpt);
-	dest = malloc(sizeof(char *) * (cpt + 1));
+//	printf("cpt is %d\n", cpt);
+	dest = malloc(sizeof(char *) * (cpt + 2));
 	if (!dest)
 		return (NULL);
 	return (separate_word(cmd, dest));
