@@ -58,23 +58,22 @@ int	skip_space(char *str, int i)
 	return (i);
 }
 
-// 34 double quote, 29 single quote
 int	good_place(char *read, char *set, int i)
 {
 	char	c;
 
 	while (read[i] && !ft_is_in_set(read[i], set)
-			&& read[i] != 34 && read[i] != 39)
+			&& read[i] != '\'' && read[i] != '\"')
 		i++;
 	c = read[i];
-	if (c == 34 || c == 39)
+	if (c == '\'' || c == '\"')
 	{
 		i++;
 		while(read[i] && read[i] != c)
 			i++;
 //		if (!read[i])
 			//error syntax quote no close
-		return (good_place(read, set, i));
+		return (good_place(read, set, i + 1));
 	}
 	else
 		return (i);

@@ -62,27 +62,54 @@ char	*found_limiter(char *subread, int y)
 		return (ft_strdup("heredoc> "));
 }*/
 
-int	write_heredoc(char *subread, int y)
+char	*found_name_fd_heredoc(void)
+{
+	int		i;
+	char	*tmp1;
+	char	*tmp2;
+	int 	fd;
+
+	i = 0;
+	tmp1 = ft_itoa(i);
+	tmp2 = ft_strjoin("~/tmp/.here_doc", tmp1);
+	printf("tmp1 is %s, tmp2 is %s\n", tmp1, tmp2);
+	fd = open(tmp2, 1);
+	while (++i && fd != -1)
+	{
+		free(tmp1);
+		free(tmp2);
+		tmp1 = ft_itoa(i);
+		tmp2 = ft_strjoin("~/tmp/.here_doc", tmp1);
+		printf("tmp1 is %s, tmp2 is %s\n", tmp1, tmp2);
+	}
+	free(tmp1);
+	close(fd);
+	return (tmp2);
+}
+
+char	*write_heredoc(char *subread, int y)
 {
 	char	*lim;
 	char	*line;
+	char	*name_fd;
 	int		fd;
-	int		len;
+//	int		len;
 	
 	while (subread[y] == ' ')
 		y++;
 	lim = found_limiter(subread, y);
 //	if (!lim)
 		//Error limitateur
-	fd = open_file("~/tmp/.here_doc", 2); // Reprendre cette fonction !!
+	name_fd = found_name_fd_heredoc();
+	fd = open_file(name_fd, 2); // Reprendre cette fonction !!
 //	if (fd == -1)
 		//message d'erreur
 	write(1, ">", 1);
 //	if (write(1, ">", 1) == -1)
 	//	merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 	line = get_next_line(STDIN_FILENO);
-	len = ft_strlen(lim);
-	while (ft_strncmp(lim, line, len))
+//	len = ft_strlen(lim);
+	while (ft_strncmp(lim, line, ft_strlen(lim)))
 	{
 		write(fd, line, ft_strlen(line));
 	//	if (write(fd, line, ft_strlen(line)) == -1)
@@ -98,5 +125,5 @@ int	write_heredoc(char *subread, int y)
 	close(fd);
 	//if (close(fd) == -1)
 //		merror("Error wtih close .here_doc\n");
-	return (len);
+	return (name_fd);
 }

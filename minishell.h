@@ -63,8 +63,12 @@ t_syntax	*redirection_in(char *read, int y, t_data *my_data);
 t_syntax	*redirection_out(char *read, int y, t_data *my_data);
 t_syntax	*low_piece(char *subread, t_data *my_data);
 t_syntax	*medium_piece(char *subread, t_data *my_data);
-int			write_heredoc(char *subread, int y);
+char		*write_heredoc(char *subread, int y);
 void		print_tree(t_syntax *syn);
+char		**separate(char *cmd);
+char		**parse_cmd(char *cmd, t_data *my_data);
+char		*expand(char *cmd, t_data *my_data);
+char		*without_quote(char *cmd);
 
 //utils_tree
 int			ft_is_in_set(char c, const char *set);
@@ -73,6 +77,7 @@ char	*found_word_star(char *subread, int i);
 int			skip_space(char *str, int i);
 int			good_place(char *read, char *set, int i);
 int			end_sub(char *subread, int len);
+char		*ft_strjoin3(char *s1, char *s2, char *s3);
 
 //utils_exec
 int	open_file(char *file, int i);

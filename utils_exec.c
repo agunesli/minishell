@@ -5,11 +5,14 @@ void	free_all(char **bin)
 	int	i;
 
 	i = 0;
+	if (bin == NULL)
+		return ;
 	while (bin[i])
 	{
 		free(bin[i]);
 		i++;
 	}
+	printf("free all i = %d\n", i);
 	free(bin);
 }
 

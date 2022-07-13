@@ -17,17 +17,23 @@ char	*found_name_fd(char *subread, int y)
 t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 {
 	t_syntax	*syn;
-	int			i;
+//	int			i;
+	int			start;
+	char		*tmp;
 
 	syn = malloc(sizeof(t_syntax));
 	if (!syn)
 		return (NULL);
-	i = write_heredoc(subread, y);
+//	i = write_heredoc(subread, y);
 	syn->id = heredoc;
 	syn->cmd_arg = NULL;
-	syn->content = ft_strdup("~/tmp/.here_doc");
-	syn->left = low_piece(ft_substr(subread, skip_space(subread, i + y + 1), ft_strlen(subread)), my_data);
-	syn->right = NULL;
+//	syn->content = ft_strdup("~/tmp/.here_doc");
+	syn->content = write_heredoc(subread, y);
+	tmp = found_name_fd(subread, y);
+	start = skip_space(subread, ft_strlen(tmp) + y + 1);
+	free(tmp);
+	syn->right = low_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
+	syn->left = low_piece(ft_substr(subread, skip_space(subread, 0), end_sub(subread, y - 2)), my_data);
 	return (syn);
 }
 
@@ -66,27 +72,6 @@ t_syntax	*change_std(char *subread, int y, int id, t_data *my_data)
 		syn->left = medium_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
 		syn->right = NULL;
 	}
-/*	if (syn->id == in)
-	{
-		end = end_sub(subread, ft_strlen(subread));
-		start = skip_space(subread, y) +  ft_strlen(syn->content) + 1;
-		syn->left = low_piece(ft_substr(subread, start, end), my_data);
-		syn->right = NULL;
-	}
-	else if (syn->id == out)
-	{
-		end = end_sub(subread, y - 1);
-		start = y + end + ft_strlen(syn->content);
-		syn->left = low_piece(ft_substr(subread, 0, end), my_data);
-		syn->right = low_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
-	}
-	else
-	{
-		end = end_sub(subread, y - 2);
-		start = y + end + ft_strlen(syn->content);
-		syn->left = low_piece(ft_substr(subread, 0, end), my_data);
-		syn->right = low_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
-	}*/
 	return (syn);
 }
 
