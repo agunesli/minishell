@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 11:56:16 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/12 19:08:03 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:55:14 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	if (start >= ft_strlen(s) || len == 0)
 	{
 		return (NULL);
 /*		printf("bouhh\n");

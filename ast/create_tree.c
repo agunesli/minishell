@@ -6,7 +6,6 @@ t_syntax	*low_piece(char *subread, t_data *my_data) //cmd
 
 	if (!subread)
  		return (NULL);
-// 	printf("subread[0] is [%c]\n", subread[0]);
 	syn = malloc(sizeof(t_syntax));
 	if (!syn)
 		return (NULL);
@@ -45,8 +44,11 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 {
 	t_syntax	*syn;
 	int			i;
+	int			start;
 	char		*str;
 
+	if (!read)
+ 		return (NULL);
 	i = good_place(read, STRONG, 0);
 	if (i == (int)ft_strlen(read))
 		syn = medium_piece(ft_strdup(read), my_data);
@@ -65,11 +67,12 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 			syn->id = AND;
 /*		else // cas ou un seul & mais je ne connais pas le comportement !
 			sym->*/
-		syn->left = medium_piece(ft_substr(read, 0, skip_space(read, i)), my_data);
+		syn->left = medium_piece(ft_substr(read, 0, end_sub(read, i)), my_data);
 		if (syn->id == PIPE)
-			str = ft_substr(read, skip_space(read, i + 1), end_sub(read, ft_strlen(read)));
+			start = skip_space(read, i + 1);
 		else
-			str = ft_substr(read, skip_space(read, i + 2), end_sub(read, ft_strlen(read)));
+			start = skip_space(read, i + 2);
+		str = ft_substr(read, start, end_sub(read, ft_strlen(read)) - start);
 		syn->right = strong_piece(str, my_data);
 	}
 	free(read);
@@ -92,36 +95,19 @@ void	free_tree(t_syntax *syn)
 // REFAIRE CETTE FONCTION
 void	parser(char *read, char **env)
 {
-	t_syntax	*syn;
+//	t_syntax	*syn;
 	t_data		my_data;
 
 	while (*read == ' ')
 		read++;	
 	my_data.read = read;
 	my_data.env = env;
-	syn = strong_piece(ft_strdup(my_data.read), &my_data);
-	my_data.syn = &syn;
-	print_tree(syn);
-	free_tree(syn);
-
-/*	syn = strong_piece(ft_strdup(read));
-	print_tree(syn);*/
-	// create fonction print
-/*	t_syntax *syn;
-	int	x;
-
-	x = found_strong_piece(read);
-	if (x == -1)
-		syn = medium_piece(read, x); // fonction a faire
-	sym->content = NULL;
-	if (read[x] == '&')
-		syn->id = AND;
-	else if (read[x] == '|' && read[x + 1] == '|')
-		syn->id = OR;
-	else
-		syn->id = pipe;
-	syn->left = found_medium_piece(ft_substr(read, 0, x));*/
-	//reflechir pour bien positionner pour la recursion
+	my_data.status_error = 0;
+	my_data.syn = strong_piece(ft_strdup(my_data.read), &my_data);
+//	my_data.syn = &syn;
+	check_tree(my_data.syn, &my_data);
+	print_tree(my_data.syn);
+	free_tree(my_data.syn);
 }
 
 int	main(int ac, char **av, char **env)
@@ -136,7 +122,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 //	char *s = "ls$CC \"$USER\" | <fd1 \"\" accher\"$USER\" \"  \"";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
-	char *u = "          |||   ||   |   ";
+	char *u = "<dsf";
 //	printf("s = %s\n", s);
 //	parser(s, env);
 //	printf("\nt = %s\n", t);

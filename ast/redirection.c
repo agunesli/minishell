@@ -56,7 +56,6 @@ t_syntax	*change_std(char *subread, int y, int id, t_data *my_data)
 	syn->id = id;
 	syn->cmd_arg = NULL;
 	syn->content = found_name_fd(subread, y);
-	printf("y is %d and subread is %s\n", y, subread);
 	if (y != 1)
 	{	
 		syn->left = low_piece(ft_substr(subread, 0, y - 1), my_data);

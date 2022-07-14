@@ -43,6 +43,8 @@ char	*found_limiter(char *subread, int y)
 	len = 0;
 //	(void)read;
 //	check_error_limiter(subread, read);
+	if(!subread[y])
+		printf("Error\n"); // [2] bash: syntax error near unexpected token `newline'
 	while (subread[len + y] && (!ft_is_in_set(subread[len + y], MEDIUM)
 				&& subread[len + y] != ' '))
 		len++;
@@ -72,15 +74,13 @@ char	*found_name_fd_heredoc(void)
 	i = 0;
 	tmp1 = ft_itoa(i);
 	tmp2 = ft_strjoin("~/tmp/.here_doc", tmp1);
-	printf("tmp1 is %s, tmp2 is %s\n", tmp1, tmp2);
-	fd = open(tmp2, 1);
+	fd = open(tmp2, O_CREAT);
 	while (++i && fd != -1)
 	{
 		free(tmp1);
 		free(tmp2);
 		tmp1 = ft_itoa(i);
 		tmp2 = ft_strjoin("~/tmp/.here_doc", tmp1);
-		printf("tmp1 is %s, tmp2 is %s\n", tmp1, tmp2);
 	}
 	free(tmp1);
 	close(fd);

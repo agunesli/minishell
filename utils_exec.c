@@ -41,11 +41,24 @@ int	len_split(char **bin)
 
 int	open_file(char *file, int i)
 {
-	if (i == 1)
-		return (open(file, O_RDONLY));
-	else if (i == 2)
-		return (open(file, O_CREAT | O_RDWR | O_TRUNC, 0644));
-	else if (i == 3)
-		return(open(file, O_CREAT | O_WRONLY | O_APPEND, 0644));
-	return (-1);
+	int	fd;
+
+	if (i == in)
+	{
+		fd = open(file, O_RDONLY);
+		if (fd == -1)
+		{
+			errorp(file);
+//			printf("bash: name_file: No such file or directory\n"); //[1] bash: name_file: No such file or directory
+			return (-1);
+		}
+	}
+	else if (i == out)
+		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	else if (i == append)
+		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	if (fd == -1)
+		perror("");
+	//	printf("bash: name_file: Permission denied\n"); //[1] bash: name_file: Permission denied 
+	return (fd);
 }
