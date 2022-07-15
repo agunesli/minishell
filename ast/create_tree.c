@@ -138,7 +138,7 @@ int	main(int ac, char **av, char **env)
 	}*/
 	(void)ac;
 	(void)av;
-	char *s = "<fd1 ls >fd >fd1 <fd1 | ls && << LIM cat";
+	char *s = "<fd1 ls >fd >fd1 -la <fd1 | ls && << LIM cat";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
 //	char *u = ">>>>>";
 	printf("s = %s\n", s);
