@@ -36,15 +36,23 @@ void	check_error_limiter(char *subread, char *read)
 	 	//Devien un cat normal - Ecrire cette partie
 } */
 
-char	*found_limiter(char *subread, int y)
+char	*found_limiter(char *subread, int y, t_data *my_data)
 {
 	int		len;
 
 	len = 0;
 //	(void)read;
 //	check_error_limiter(subread, read);
-	if(!subread[y])
-		printf("Error\n"); // [2] bash: syntax error near unexpected token `newline'
+	if (!subread[y])
+	{
+		error_syntax("\'newline\'", my_data);
+		return (NULL);
+	}
+	else if (subread[y] == '<')
+	{
+		error_syntax("\'<<\'", my_data);
+		return (NULL);
+	}
 	while (subread[len + y] && (!ft_is_in_set(subread[len + y], MEDIUM)
 				&& subread[len + y] != ' '))
 		len++;
@@ -87,19 +95,19 @@ char	*found_name_fd_heredoc(void)
 	return (tmp2);
 }
 
-char	*write_heredoc(char *subread, int y)
+char	*write_heredoc(char *subread, int y, t_data *my_data)
 {
 	char	*lim;
 	char	*line;
 	char	*name_fd;
 	int		fd;
 //	int		len;
-	
+
 	while (subread[y] == ' ')
 		y++;
-	lim = found_limiter(subread, y);
-//	if (!lim)
-		//Error limitateur
+	lim = found_limiter(subread, y, my_data);
+	if (!lim)
+		return (NULL);
 	name_fd = found_name_fd_heredoc();
 	fd = open_file(name_fd, 2); // Reprendre cette fonction !!
 //	if (fd == -1)

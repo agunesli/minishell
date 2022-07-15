@@ -65,8 +65,8 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 			syn->id = OR;
 		else if (read[i] == '&' && read[i + 1] == '&')
 			syn->id = AND;
-/*		else // cas ou un seul & mais je ne connais pas le comportement !
-			sym->*/
+		/*else // cas ou un seul & mais je ne connais pas le comportement !
+			sym->id = error*/
 		syn->left = medium_piece(ft_substr(read, 0, end_sub(read, i)), my_data);
 		if (syn->id == PIPE)
 			start = skip_space(read, i + 1);
@@ -78,6 +78,20 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 	free(read);
 //	print_tree(syn);
 	return (syn);
+}
+
+int	check_read(char *read)
+{
+	if (!ft_strncmp("\n", read, 1))
+			return (1);
+/*	else if (!ft_strncmp("\t", read, 1))
+			return (1);*/
+	else if (!ft_strncmp(":", read, 1))
+			return (1);
+	else if (!ft_strncmp("!", read, 1))
+			return (1);
+	return (0);
+
 }
 
 void	free_tree(t_syntax *syn)
@@ -100,35 +114,40 @@ void	parser(char *read, char **env)
 
 	while (*read == ' ')
 		read++;	
+	if (!read)
+		return ;
+	if (check_read(read))
+		return ;
 	my_data.read = read;
 	my_data.env = env;
 	my_data.status_error = 0;
 	my_data.syn = strong_piece(ft_strdup(my_data.read), &my_data);
 //	my_data.syn = &syn;
-	check_tree(my_data.syn, &my_data);
+	if (!my_data.status_error)
+		check_tree(my_data.syn, &my_data);
 	print_tree(my_data.syn);
 	free_tree(my_data.syn);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	errno = 0;
-/*	if (ac == 1)
+	if (ac == 1)
 	{
 		printf("Espece de conne tu as oublie les arguments !!\n");
 		return (0);
-	}*/
-	(void)ac;
-	(void)av;
+	}
+//	(void)ac;
+//	(void)av;
 //	char *s = "ls$CC \"$USER\" | <fd1 \"\" accher\"$USER\" \"  \"";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
-	char *u = "<dsf";
+//	char *u = ">>>>>";
 //	printf("s = %s\n", s);
 //	parser(s, env);
 //	printf("\nt = %s\n", t);
 //	parser(t, env);
-	printf("\nu = %s\n", u);
-	parser(u, env);
-//	parser(av[1]);
+//	printf("\nu = %s\n", u);
+//	parser(u, env);
+	printf("\nread = [%s]\n", av[1]);
+	parser(av[1], env);
 	return (0);
 }

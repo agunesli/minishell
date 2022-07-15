@@ -32,7 +32,7 @@ int	cpt_good_space(char *cmd)
 
 	i = -1;
 	cpt = 0;
-	while (cmd[++i])
+	while (++i < (int)ft_strlen(cmd) && cmd[i])
 	{
 		while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\'' && cmd[i] != '\"')
 			i++;

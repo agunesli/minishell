@@ -64,7 +64,7 @@ t_syntax	*redirection_out(char *read, int y, t_data *my_data);
 t_syntax	*low_piece(char *subread, t_data *my_data);
 t_syntax	*medium_piece(char *subread, t_data *my_data);
 t_syntax	*strong_piece(char *read, t_data *my_data);
-char		*write_heredoc(char *subread, int y);
+char		*write_heredoc(char *subread, int y, t_data *my_data);
 void		print_tree(t_syntax *syn);
 char		**separate(char *cmd);
 char		**parse_cmd(char *cmd, t_data *my_data);
@@ -72,6 +72,7 @@ char		*expand(char *cmd, t_data *my_data);
 char		*without_quote(char *cmd);
 void		check_tree(t_syntax *syn, t_data *my_data);
 void		error_syntax(char *str, t_data *my_data);
+void		error_command(char *str, t_data *my_data);
 void		errorp(char	*str);
 
 //utils_tree
