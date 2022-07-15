@@ -43,13 +43,13 @@ int	open_file(char *file, int i)
 {
 	int	fd;
 
+	fd = 0;
 	if (i == in)
 	{
 		fd = open(file, O_RDONLY);
 		if (fd == -1)
 		{
-			errorp(file);
-//			printf("bash: name_file: No such file or directory\n"); //[1] bash: name_file: No such file or directory
+			errorp(file); //[1] bash: name_file: No such file or directory
 			return (-1);
 		}
 	}

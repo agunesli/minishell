@@ -38,7 +38,7 @@ t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 	start = skip_space(subread, ft_strlen(tmp) + y + 1);
 	free(tmp);
 	syn->left = low_piece(ft_substr(subread, skip_space(subread, 0), end_sub(subread, y - 2)), my_data);
-	syn->right = medium_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
+	syn->right = medium_piece(ft_substr(subread, start, ft_strlen(subread) - start), my_data);
 	return (syn);
 }
 
@@ -67,8 +67,8 @@ t_syntax	*change_std(char *subread, int y, int id, t_data *my_data)
 	{	
 		start = skip_space(subread, skip_space(subread, y) + ft_strlen(syn->content));
 //		end = end_sub(subread, ft_strlen(subread));
-		syn->left = medium_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
-		syn->right = NULL;
+		syn->right = medium_piece(ft_substr(subread, start, ft_strlen(subread)), my_data);
+		syn->left = NULL;
 	}
 	else
 	{

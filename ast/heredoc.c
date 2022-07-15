@@ -81,14 +81,16 @@ char	*found_name_fd_heredoc(void)
 
 	i = 0;
 	tmp1 = ft_itoa(i);
-	tmp2 = ft_strjoin("~/tmp/.here_doc", tmp1);
+//	tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
+	tmp2 = ft_strjoin(".here_doc", tmp1);
 	fd = open(tmp2, O_CREAT);
 	while (++i && fd != -1)
 	{
 		free(tmp1);
 		free(tmp2);
 		tmp1 = ft_itoa(i);
-		tmp2 = ft_strjoin("~/tmp/.here_doc", tmp1);
+	//	tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
+		tmp2 = ft_strjoin(".here_doc", tmp1);
 	}
 	free(tmp1);
 	close(fd);
@@ -109,29 +111,21 @@ char	*write_heredoc(char *subread, int y, t_data *my_data)
 	if (!lim)
 		return (NULL);
 	name_fd = found_name_fd_heredoc();
-	fd = open_file(name_fd, 2); // Reprendre cette fonction !!
-//	if (fd == -1)
-		//message d'erreur
+	fd = open_file(name_fd, O_CREAT | O_WRONLY | O_TRUNC);
+	if (fd == -1)
+		printf("bouh\n");
 	write(1, ">", 1);
-//	if (write(1, ">", 1) == -1)
-	//	merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 	line = get_next_line(STDIN_FILENO);
 //	len = ft_strlen(lim);
 	while (ft_strncmp(lim, line, ft_strlen(lim)))
 	{
 		write(fd, line, ft_strlen(line));
-	//	if (write(fd, line, ft_strlen(line)) == -1)
-	//		merror("Error with write in .here_doc\n"); //Modifier le message d'erreur
 		free(line);
 		write(1, ">", 1);
-	//	if (write(1, ">", 1) == -1)
-	//		merror("Error with write pipe heredoc\n"); //Modifier le message d'erreur
 		line = get_next_line(STDIN_FILENO);
 	}
 	free(line);
 	free(lim);
 	close(fd);
-	//if (close(fd) == -1)
-//		merror("Error wtih close .here_doc\n");
 	return (name_fd);
 }

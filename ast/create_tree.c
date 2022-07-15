@@ -131,23 +131,23 @@ void	parser(char *read, char **env)
 
 int	main(int ac, char **av, char **env)
 {
-	if (ac == 1)
+/*	if (ac == 1)
 	{
 		printf("Espece de conne tu as oublie les arguments !!\n");
 		return (0);
-	}
-//	(void)ac;
-//	(void)av;
-//	char *s = "ls$CC \"$USER\" | <fd1 \"\" accher\"$USER\" \"  \"";
+	}*/
+	(void)ac;
+	(void)av;
+	char *s = "<fd1 ls >fd >fd1 <fd1 | ls && << LIM cat";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
 //	char *u = ">>>>>";
-//	printf("s = %s\n", s);
-//	parser(s, env);
+	printf("s = %s\n", s);
+	parser(s, env);
 //	printf("\nt = %s\n", t);
 //	parser(t, env);
 //	printf("\nu = %s\n", u);
 //	parser(u, env);
-	printf("\nread = [%s]\n", av[1]);
-	parser(av[1], env);
+//	printf("\nread = [%s]\n", av[1]);
+//	parser(av[1], env);
 	return (0);
 }

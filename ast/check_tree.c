@@ -44,11 +44,11 @@ void	check_strong(t_syntax *syn, t_data *my_data)
 		else if (syn->id == PIPE)
 			return(error_syntax("\'|\'", my_data));
 	}
-	else if (syn->left->id == in || syn->left->id == append 
+/*	else if (syn->left->id == in || syn->left->id == append 
 		|| syn->left->id == heredoc)
 		return(error_syntax("\'|\'", my_data));
 	else if (syn->left->id == out)
-		return ;
+		return ;*/
 	if (syn->right == NULL)
 		write_more(syn, my_data);
 }
