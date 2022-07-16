@@ -1,83 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/29 17:59:13 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/12 14:10:35 by agunesli         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "pipex.h"
-
-void	start_for_open(char **argv)
-{
-	int		fd;
-	char	*lim;
-
-	if (!ft_strncmp("here_doc", argv[1], 8))
-	{
-		lim = ft_strjoin(argv[2], "\n");
-		fd = ft_heredoc(lim);
-	}
-	else
-		fd = open_file(argv[1], 1);
-	if (dup2(fd, STDIN_FILENO) == -1)
-		merror("Error with dup2\n");
-	close(fd);
-}
-
-void	ft_dup2(int **fds, int i, int nb_process, char **argv)
-{
-	int		fd;
-
-	if (i == 0)
-		start_for_open(argv);
-	else
-	{
-		if (dup2(fds[i][0], STDIN_FILENO) == -1)
-			merror("Error with dup2\n");
-		close(fds[i][0]);
-	}
-	if (i == nb_process - 1)
-	{
-		if (!ft_strncmp("here_doc", argv[1], 8))
-			fd = open_file(argv[nb_process + 3], 3);
-		else
-			fd = open_file(argv[nb_process + 2], 2);
-		if (dup2(fd, STDOUT_FILENO) == -1)
-			merror("Error with dup2\n");
-		close(fd);
-	}
-	else
-	{
-		if (dup2(fds[i + 1][1], STDOUT_FILENO) == -1)
-			merror("Error with dup2\n");
-		close(fds[i + 1][1]);
-	}
-}
-
-int	**create_fds(int nb_process)
-{
-	int	i;
-	int	**fds;
-
-	fds = (int **)malloc(sizeof(int *) * 2);
-	if (!fds)
-		merror("Error with malloc fds\n");
-	i = -1;
-	while (++i < 2)
-	{
-		fds[i] = (int *)malloc(sizeof(int) * 2);
-		if (!fds[i])
-			merror("Error with malloc fds[i]\n");
-		if (pipe(fds[i]) == -1)
-			merror("Error with pipe\n");
-	}
-	return (fds);
-}
 
 void	parent(int **fds, int *childs, int nb_process)
 {
@@ -101,6 +23,66 @@ void	parent(int **fds, int *childs, int nb_process)
 	free(childs);
 }
 
+t_cmd	create_t_cmd(t_donnee *don, int i)
+{
+	t_cmd	sc;
+
+	if (don->here_doc)
+	{
+		sc.cmd_arg = ft_split(don->argv[i + 3], ' ');
+		sc.path = correct_path(don->argv[i + 3], don->env, sc.cmd_arg);
+	}
+	else
+	{
+		sc.cmd_arg = ft_split(don->argv[i + 2], ' ');
+		sc.path = correct_path(don->argv[i + 2], don->env, sc.cmd_arg);
+	}
+	return (sc);
+}
+
+void	not_execve(t_donnee *don, int *childs, t_cmd *scmd, int i)
+{
+	free_all(scmd->cmd_arg);
+	free(scmd->path);
+	free(childs);
+	if (close(don->fds[i][0]) == -1)
+		merror("Error with close\n");
+	if (close(don->fds[i + 1][1]) == -1)
+		merror("Error with close\n");
+	free_all_int(don->fds, don->nb_process);
+	merror("Error with execve\n");
+}
+
+int	*create_childs(t_donnee *don)
+{
+	int		*childs;
+	int		i;
+	t_cmd	scmd;
+
+	childs = (int *)malloc(sizeof(int) * don->nb_process); /// Bien compter le nb process
+	if (!childs)
+		merror("Error with malloc childs\n");
+	i = -1;
+	while (syn->right->id != PIPE)
+	{
+		childs[i] = fork();
+		if (childs[i] == -1)
+			merror("Error with fork child\n");
+		if (childs[i] == 0)
+		{
+			close_fds(don->fds, don->nb_process, i); // refaire cette fonction
+			ft_dup2(don->fds, i, don->nb_process, don->argv);
+			scmd = create_t_cmd(don, i);
+			if (execve(scmd.path, scmd.cmd_arg, don->env) == -1)
+				not_execve(don, childs, &scmd, i);
+		}
+		if (don->here_doc && i == 0)
+			waitpid(childs[0], NULL, 0);
+	}
+	return (childs);
+}
+
+
 //fork() => child process = 0 else main process
 //pipe() => fd[0] = read, fd[1] = write
 //execve => v = array, e = env (Error = -1)
@@ -113,9 +95,7 @@ int	main(int argc, char **argv, char **env)
 	int			nb_process;
 	t_donnee	donnee;
 
-
 	fds = create_fds(nb_process);
-	donnee = create_struct(fds, nb_process, argv, env);
 	childs = create_childs(&donnee);
 	parent(fds, childs, nb_process);
 	return (0);
