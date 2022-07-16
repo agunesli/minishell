@@ -118,18 +118,15 @@ void	parser(char *read, char **av, char **env)
 		return ;
 	if (check_read(read))
 		return ;
-//	my_data.read = read;
-//	my_data.argv = av;
-//	my_data.env = env;
 	init_data(&my_data, read, av, env);
-//	my_data.status_error = 0;
-//	my_data.syn = strong_piece(ft_strdup(my_data.read), &my_data);
-//	my_data.syn = &syn;
 	if (!my_data.status_error)
 		check_tree(my_data.syn, &my_data);
+	print_tree(my_data.syn);
 	update_data(&my_data);
 //	print_tree(my_data.syn);
+	change_all_fd(my_data.syn);
 	free_tree(my_data.syn);
+	free_tab3(my_data.all_cmd);
 }
 
 int	main(int ac, char **av, char **env)
@@ -142,7 +139,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 //	char *s = "<fd1 ls >fd >fd1 -la <fd1 | ls && << LIM"; // SEG FAULT
-	char *s = "<fd1 ls >fd -la | echo >out \" bonjour\" <fd \"$USER\" && sleep 3";
+	char *s = "<fd1 ls >fd <in -la | echo >out \" bonjour\" <fd \"$USER\" && sleep 3 >in";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
 //	char *u = ">>>>>";
 	printf("\ns = %s\n", s);

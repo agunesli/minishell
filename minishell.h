@@ -91,16 +91,19 @@ int			good_place(char *read, char *set, int i);
 int			end_sub(char *subread, int len);
 char		*ft_strjoin3(char *s1, char *s2, char *s3);
 
+// exec
+void	change_all_fd(t_syntax *syn);
 //utils_exec
 int	open_file(char *file, int i);
 void	free_all_int(int **bin, int nb_process);
 void	free_all(char **bin);
 void	print_all(char **bin);
 int		len_split(char **bin);
-
+void	free_tab3(char ***bin);
 //libft
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *src);
+char	**ft_tabdup(char **src);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

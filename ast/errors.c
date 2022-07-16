@@ -27,3 +27,5 @@ void	error_command(char *str, t_data *my_data)
 	putstr_error(str);
 	putstr_error(": command not found\n");
 }
+
+//void	error_execve(char *str, t_data *my_data)

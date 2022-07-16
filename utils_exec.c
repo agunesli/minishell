@@ -4,15 +4,27 @@ void	free_all(char **bin)
 {
 	int	i;
 
-	i = 0;
-	if (bin == NULL)
+	i = -1;
+	if (!bin)
 		return ;
-	while (bin[i])
-	{
+	while (bin[++i])
 		free(bin[i]);
-		i++;
-	}
 //	printf("free all i = %d\n", i);
+	free(bin);
+}
+
+void	free_tab3(char ***bin)
+{
+	int	i;
+
+	i = -1;
+	if (!bin)
+		return ;
+	while (bin[++i])
+	{
+//		print_all(bin[i]);
+		free_all(bin[i]);
+	}
 	free(bin);
 }
 
@@ -44,7 +56,7 @@ int	open_file(char *file, int i)
 	int	fd;
 
 	fd = 0;
-	if (i == in)
+	if (i == in || i == heredoc)
 	{
 		fd = open(file, O_RDONLY);
 		if (fd == -1)
@@ -58,7 +70,7 @@ int	open_file(char *file, int i)
 	else if (i == append)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		perror("");
+		perror(""); //a modifie !!
 	//	printf("bash: name_file: Permission denied\n"); //[1] bash: name_file: Permission denied 
 	return (fd);
 }
