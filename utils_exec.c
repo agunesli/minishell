@@ -12,7 +12,7 @@ void	free_all(char **bin)
 		free(bin[i]);
 		i++;
 	}
-	printf("free all i = %d\n", i);
+//	printf("free all i = %d\n", i);
 	free(bin);
 }
 

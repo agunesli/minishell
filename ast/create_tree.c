@@ -98,7 +98,7 @@ void	free_tree(t_syntax *syn)
 {
 	if (!syn)
 		return ;
-	printf("free %s\n", syn->content);
+//	printf("free %s\n", syn->content);
 	free(syn->content); 
 	free_all(syn->cmd_arg); 
 	free_tree(syn->left);
@@ -107,7 +107,7 @@ void	free_tree(t_syntax *syn)
 }
 
 // REFAIRE CETTE FONCTION
-void	parser(char *read, char **env)
+void	parser(char *read, char **av, char **env)
 {
 //	t_syntax	*syn;
 	t_data		my_data;
@@ -118,14 +118,17 @@ void	parser(char *read, char **env)
 		return ;
 	if (check_read(read))
 		return ;
-	my_data.read = read;
-	my_data.env = env;
-	my_data.status_error = 0;
-	my_data.syn = strong_piece(ft_strdup(my_data.read), &my_data);
+//	my_data.read = read;
+//	my_data.argv = av;
+//	my_data.env = env;
+	init_data(&my_data, read, av, env);
+//	my_data.status_error = 0;
+//	my_data.syn = strong_piece(ft_strdup(my_data.read), &my_data);
 //	my_data.syn = &syn;
 	if (!my_data.status_error)
 		check_tree(my_data.syn, &my_data);
-	print_tree(my_data.syn);
+	update_data(&my_data);
+//	print_tree(my_data.syn);
 	free_tree(my_data.syn);
 }
 
@@ -138,16 +141,17 @@ int	main(int ac, char **av, char **env)
 	}*/
 	(void)ac;
 	(void)av;
-	char *s = "<fd1 ls >fd >fd1 -la <fd1 | ls && << LIM cat";
+//	char *s = "<fd1 ls >fd >fd1 -la <fd1 | ls && << LIM"; // SEG FAULT
+	char *s = "<fd1 ls >fd -la | echo >out \" bonjour\" <fd \"$USER\" && sleep 3";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
 //	char *u = ">>>>>";
-	printf("s = %s\n", s);
-	parser(s, env);
+	printf("\ns = %s\n", s);
+	parser(s, av, env);
 //	printf("\nt = %s\n", t);
-//	parser(t, env);
+//	parser(t, av, env);
 //	printf("\nu = %s\n", u);
-//	parser(u, env);
+//	parser(u, av, env);
 //	printf("\nread = [%s]\n", av[1]);
-//	parser(av[1], env);
+//	parser(av[1], av, env);
 	return (0);
 }

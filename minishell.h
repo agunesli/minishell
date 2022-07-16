@@ -51,12 +51,19 @@ typedef struct	s_syntax
 typedef struct s_data
 {
 	char		*read;
-	t_syntax	*syn;
+	char		**argv;
 	char		**env;
+	t_syntax	*syn;
+	int			nb_process;
+	char		***all_cmd;
 	int			status_error;
 }	t_data;
 
 int			found_char(char *read, char c);
+
+//data
+void		init_data(t_data *my_data, char *read, char **av, char **env);
+void		update_data(t_data *my_data);
 
 //parser
 t_syntax	*redirection_in(char *read, int y, t_data *my_data);
@@ -88,6 +95,7 @@ char		*ft_strjoin3(char *s1, char *s2, char *s3);
 int	open_file(char *file, int i);
 void	free_all_int(int **bin, int nb_process);
 void	free_all(char **bin);
+void	print_all(char **bin);
 int		len_split(char **bin);
 
 //libft
@@ -100,4 +108,6 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2); //GNL utils
 char	*ft_substr_end(char const *s, unsigned int start, size_t end);  //GNL utils
 char	*ft_itoa(int n); 
+char	**ft_strjointab(char **s1, char **s2);
+
 #endif
