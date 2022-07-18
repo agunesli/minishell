@@ -22,6 +22,8 @@
 # define MEDIUM "<>"
 # define LOW "\"\'$*"
 
+# define PATH 
+
 typedef void (*sighandler_t)(int);
 
 enum e_syntax
@@ -53,10 +55,14 @@ typedef struct s_data
 	char		*read;
 	char		**argv;
 	char		**env;
-	t_syntax	*syn;
+	t_syntax	*syn; //need to free
 	int			nb_process;
-	char		***all_cmd;
+	int			current_process;
+	int			*childs; //need to free
+	int			fd[2][2];
+	char		***all_cmd; //need to free
 	int			status_error;
+	char		*path; //NUll sauf si le path n'hesiste pas au debut
 }	t_data;
 
 int			found_char(char *read, char c);
@@ -93,6 +99,9 @@ char		*ft_strjoin3(char *s1, char *s2, char *s3);
 
 // exec
 void	change_all_fd(t_syntax *syn);
+void	good_fd(t_syntax *syn, t_data *data);
+char	*correct_path(char **cmd, t_data *my_data);
+
 //utils_exec
 int	open_file(char *file, int i);
 void	free_all_int(int **bin, int nb_process);

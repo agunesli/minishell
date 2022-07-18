@@ -89,13 +89,11 @@ int	*create_childs(t_donnee *don)
 //nb_process => argc - 3 car fdint, fdout, pipex
 int	main(int argc, char **argv, char **env)
 {
-	int			**fds;
 	int			*childs;
 	int			here_doc;
 	int			nb_process;
 	t_donnee	donnee;
 
-	fds = create_fds(nb_process);
 	childs = create_childs(&donnee);
 	parent(fds, childs, nb_process);
 	return (0);

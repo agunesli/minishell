@@ -24,6 +24,23 @@ void	change_fd(t_syntax *syn, int fd_in, int fd_out)
 	}
 }
 
+void	good_fd(t_syntax *syn, t_data *data)
+{
+	change_fd(syn, STDIN_FILENO, STDOUT_FILENO);
+	close(my_data->fd[(current_process + 1)%2][0]);
+	close(my_data->fd[current_process%2][1]);
+	if (my_data->current_process != 0)
+	{
+		dup2(my_data->fd[current_process%2][0], STDIN_FILENO);
+		close(my_data->fd[current_process%2][0]);
+	}
+	if (my_data->current_process != my_data->nb_process - 1)
+	{
+		dup2(my_data->fd[(current_process + 1)%2][1], STDOUT_FILENO);
+		close(my_data->fd[(current_process + 1)%2][1]);
+	}
+}
+/*
 void	change_all_fd(t_syntax *syn)
 {
 	while (syn && syn->id < in)
@@ -33,4 +50,4 @@ void	change_all_fd(t_syntax *syn)
 		syn = syn->right;
 	}
 	change_fd(syn, STDIN_FILENO, STDOUT_FILENO);
-}
+}*/
