@@ -101,6 +101,8 @@ char		*ft_strjoin3(char *s1, char *s2, char *s3);
 void	change_all_fd(t_syntax *syn);
 void	good_fd(t_syntax *syn, t_data *data);
 char	*correct_path(char **cmd, t_data *my_data);
+void	start_exec(t_data *my_data, t_syntax *syn);
+
 
 //utils_exec
 int	open_file(char *file, int i);
