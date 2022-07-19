@@ -27,15 +27,18 @@ void	parser(char *read, char **av, char **env)
 	if (check_read(read))
 		return ;
 	init_data(&my_data, read, av, env);
+//	print_tree(my_data.syn);
 	if (!my_data.status_error)
+	{
 		check_tree(my_data.syn, &my_data);
-	print_tree(my_data.syn);
-	update_data(&my_data);
+		print_tree(my_data.syn);
+		update_data(&my_data);
 //	print_tree(my_data.syn);
 //	change_all_fd(my_data.syn);
-	start_exec(&my_data, my_data.syn);
-	free_tree(my_data.syn);
-	free_tab3(my_data.all_cmd);
+		start_exec(&my_data, my_data.syn);
+		free_tree(my_data.syn);
+		free_tab3(my_data.all_cmd);
+	}
 }
 
 int	main(int ac, char **av, char **env)

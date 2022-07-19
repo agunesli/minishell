@@ -76,6 +76,7 @@ void	end_of_parent(t_data *my_data)
 		if (!status)
 			perror("");
 	}
+	free(my_data->childs);
 }
 
 void	start_exec(t_data *my_data, t_syntax *syn)

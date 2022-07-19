@@ -67,6 +67,7 @@ void	init_data(t_data *my_data, char *read, char **av, char **env)
 	my_data->current_process = 0;
 	my_data->path = NULL;
 	my_data->all_cmd = NULL; //need to be free
+	my_data->syn = NULL; //need to be free
 	my_data->syn = strong_piece(ft_strdup(read), my_data);
 }
 
