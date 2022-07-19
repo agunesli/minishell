@@ -6,11 +6,11 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 11:56:16 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/14 14:55:14 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:48:03 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

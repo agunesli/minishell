@@ -65,52 +65,74 @@ typedef struct s_data
 	char		*path; //NUll sauf si le path n'hesiste pas au debut
 }	t_data;
 
-int			found_char(char *read, char c);
+
+/***********************************************/
+/*                  AST                        */
+/***********************************************/
+
+//create_tree
+t_syntax	*low_piece(char *subread, t_data *my_data);
+t_syntax	*medium_piece(char *subread, t_data *my_data);
+t_syntax	*strong_piece(char *read, t_data *my_data);
+
+//redirection 
+t_syntax	*redirection_in(char *read, int y, t_data *my_data);
+t_syntax	*redirection_out(char *read, int y, t_data *my_data);
+char		*write_heredoc(char *subread, int y, t_data *my_data);
+
+//utils_tree
+int			ft_is_in_set(char c, const char *set);
+char	*found_word(char *subread, int i);
+int			skip_space(char *str, int i);
+int			good_place(char *read, char *set, int i);
+int			end_sub(char *subread, int len);
+void		print_tree(t_syntax *syn);
+
+//for cmd
+char		**separate(char *cmd);
+char		**change_cmd(char *cmd, t_data *my_data);
+char		*ft_strjoin3(char *s1, char *s2, char *s3);
+char		*expand(char *cmd, t_data *my_data);
+char		*without_quote(char *cmd);
+
+// check_tree
+void		check_tree(t_syntax *syn, t_data *my_data);
+char	*without_nl(char *src);
+void	write_more(t_syntax *syn, t_data *my_data);
+void	check_open(char *name, int opt);
+
+
+/***********************************************/
+/*                  EXEC                       */
+/***********************************************/
+
+void	start_exec(t_data *my_data, t_syntax *syn);
+void	good_fd(t_syntax *syn, t_data *data);
+char	*correct_path(char **cmd, t_data *my_data);
+
+//utils_exec
+int	open_file(char *file, int i);
+void	print_all(char **bin);
+int		len_split(char **bin);
+
+/***********************************************/
+/*                 utils                       */
+/***********************************************/
 
 //data
 void		init_data(t_data *my_data, char *read, char **av, char **env);
 void		update_data(t_data *my_data);
 
-//parser
-t_syntax	*redirection_in(char *read, int y, t_data *my_data);
-t_syntax	*redirection_out(char *read, int y, t_data *my_data);
-t_syntax	*low_piece(char *subread, t_data *my_data);
-t_syntax	*medium_piece(char *subread, t_data *my_data);
-t_syntax	*strong_piece(char *read, t_data *my_data);
-char		*write_heredoc(char *subread, int y, t_data *my_data);
-void		print_tree(t_syntax *syn);
-char		**separate(char *cmd);
-char		**parse_cmd(char *cmd, t_data *my_data);
-char		*expand(char *cmd, t_data *my_data);
-char		*without_quote(char *cmd);
-void		check_tree(t_syntax *syn, t_data *my_data);
+//free
+void	free_all(char **bin);
+void	free_tab3(char ***bin);
+void		free_tree(t_syntax *syn);
+
+// error
 void		error_syntax(char *str, t_data *my_data);
 void		error_command(char *str, t_data *my_data);
 void		errorp(char	*str);
 
-//utils_tree
-int			ft_is_in_set(char c, const char *set);
-char	*found_word(char *subread, int i);
-char	*found_word_star(char *subread, int i);
-int			skip_space(char *str, int i);
-int			good_place(char *read, char *set, int i);
-int			end_sub(char *subread, int len);
-char		*ft_strjoin3(char *s1, char *s2, char *s3);
-
-// exec
-void	change_all_fd(t_syntax *syn);
-void	good_fd(t_syntax *syn, t_data *data);
-char	*correct_path(char **cmd, t_data *my_data);
-void	start_exec(t_data *my_data, t_syntax *syn);
-
-
-//utils_exec
-int	open_file(char *file, int i);
-void	free_all_int(int **bin, int nb_process);
-void	free_all(char **bin);
-void	print_all(char **bin);
-int		len_split(char **bin);
-void	free_tab3(char ***bin);
 //libft
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(const char *src);

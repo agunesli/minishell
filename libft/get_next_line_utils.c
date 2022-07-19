@@ -6,11 +6,11 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:09:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/03/29 18:58:55 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:48:35 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*size_t	ft_strlen(const char *s)
 {

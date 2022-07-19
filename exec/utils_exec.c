@@ -1,45 +1,4 @@
-#include "minishell.h"
-
-void	free_all(char **bin)
-{
-	int	i;
-
-	i = -1;
-	if (!bin)
-		return ;
-	while (bin[++i])
-		free(bin[i]);
-//	printf("free all i = %d\n", i);
-	free(bin);
-}
-
-void	free_tab3(char ***bin)
-{
-	int	i;
-
-	i = -1;
-	if (!bin)
-		return ;
-	while (bin[++i])
-	{
-//		print_all(bin[i]);
-		free_all(bin[i]);
-	}
-	free(bin);
-}
-
-void	free_all_int(int **bin, int nb_process)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb_process)
-	{
-		free(bin[i]);
-		i++;
-	}
-	free(bin);
-}
+#include "../minishell.h"
 
 int	len_split(char **bin)
 {

@@ -6,11 +6,11 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 16:12:58 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/01 09:30:22 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:46:28 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static char	**ft_big_malloc(char const *s, char c)
 {

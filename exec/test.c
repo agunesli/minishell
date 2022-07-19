@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 15:34:25 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/18 15:45:54 by agunesli         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../minishell.h"
 
 //fork() => child process = 0 else main process
@@ -49,7 +37,6 @@ void	update_data_exec(t_data *my_data)
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
 		return ; // Error malloc
-
 }
 
 void	hub_strong(int id, t_syntax *syn, t_data *my_data)

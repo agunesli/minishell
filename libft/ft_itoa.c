@@ -6,11 +6,11 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 15:06:36 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/12 15:54:24 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:46:11 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	ft_size_nb(long n)
 {

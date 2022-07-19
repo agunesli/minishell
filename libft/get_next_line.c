@@ -6,11 +6,11 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 10:27:19 by agunesli          #+#    #+#             */
-/*   Updated: 2022/03/29 19:10:36 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/19 10:48:20 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 #define BUFFER_SIZE 42
 
 int	ft_nl(char	*buf)

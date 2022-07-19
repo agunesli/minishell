@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char	**ft_tabdup(char **src)
 {

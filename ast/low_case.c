@@ -15,7 +15,7 @@ char	*ft_strjoin3(char *s1, char *s2, char *s3)
 }
 
 // = $ ~ * "'
-char	**parse_cmd(char *cmd, t_data *my_data)
+char	**change_cmd(char *cmd, t_data *my_data)
 {
 	int		i;
 	char	**dest;

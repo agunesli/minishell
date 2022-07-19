@@ -21,34 +21,18 @@ char	*found_word(char *subread, int i)
 
 	j = i - 1;
 	len = 0;
-	while (subread[++j] != ' ' && subread[i] != '\n')
+	while (subread[++j] && subread[j] != ' ' && subread[i] != '\n')
 		len++;
 	return (ft_substr(subread, i, len));
 }
 
-char	*found_word_star(char *subread, int i)
+int	end_sub(char *subread, int len)
 {
-	int	tmp;
-	int	j;
-	char	*str;
-
-	tmp = i;
-	j = 0;
-	while (i > -1 && subread[i] != ' ')
-		i--;
-	while (subread[tmp] && subread[tmp] != ' ')
-		tmp++;
-	str = malloc(sizeof(char) * (tmp - i + 1));
-	if (!str)
-		return (NULL);
-	while (i < tmp)
-	{
-		str[j] = subread[i];
-		j++;
-		i++;
-	}
-	str[j] = '\0';
-	return (str);
+	if (len < 1)
+		return (0);
+	while (subread[len - 1] == ' ')
+		len--;
+	return (len);
 }
 
 int	skip_space(char *str, int i)
