@@ -65,7 +65,7 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 			syn->id = OR;
 		else if (read[i] == '&' && read[i + 1] == '&')
 			syn->id = AND;
-		else // cas ou un seul & mais je ne connais pas le comportement !
+		else if (read[i] == '&' && read[i + 1] != '&') // cas ou un seul & mais je ne connais pas le comportement !
 			return (free(read), free(syn), error_syntax("&", my_data), NULL);
 		syn->left = medium_piece(ft_substr(read, 0, end_sub(read, i)), my_data);
 		if (syn->id == PIPE)

@@ -33,8 +33,8 @@ void	parser(char *read, char **av, char **env)
 		check_tree(my_data.syn, &my_data);
 		print_tree(my_data.syn);
 		update_data(&my_data);
-//	print_tree(my_data.syn);
-//	change_all_fd(my_data.syn);
+	//	print_tree(my_data.syn);
+	//	change_all_fd(my_data.syn);
 		start_exec(&my_data, my_data.syn);
 		free_tree(my_data.syn);
 		free_tab3(my_data.all_cmd);
@@ -53,7 +53,7 @@ int	main(int ac, char **av, char **env)
 //	char *s = "<fd1 ls >fd >fd1 -la <fd1 | ls && << LIM"; // SEG FAULT
 //	char *s = "<fd1 ls >fd <in -la | echo >out \" bonjour\" <fd \"$USER\" && sleep 3 >in";
 //	char *t = "\"\" accher\"$USER\" \"  \"";
-//	char *u = ">>>>>";
+//	char *u = "cat < Makefile | cat";
 //	printf("\ns = %s\n", s);
 //	parser(s, av, env);
 //	printf("\nt = %s\n", t);

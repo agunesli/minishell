@@ -8,8 +8,8 @@ void	exec(t_syntax *syn, t_data *my_data)
 	char	*path;
 	int		status;
 
-	printf("%d\n",my_data->current_process); //
-	print_all(my_data->all_cmd[my_data->current_process]); //
+//	printf("%d\n",my_data->current_process); //
+//	print_all(my_data->all_cmd[my_data->current_process]); //
 	my_data->childs[my_data->current_process] = fork();
 //	if (my_data->childs[my_data->current_process] == -1)
 //		Error;
@@ -17,7 +17,7 @@ void	exec(t_syntax *syn, t_data *my_data)
 	{
 		good_fd(syn, my_data);
 		path = correct_path(my_data->all_cmd[my_data->current_process], my_data);
-		dprintf(2, "path is %s\n", path);
+//		dprintf(2, "path is %s\n", path);
 		status = execve(path, my_data->all_cmd[my_data->current_process], my_data->env);
 		if (status == -1)
 			perror("");
@@ -43,12 +43,12 @@ void	hub_strong(int id, t_syntax *syn, t_data *my_data)
 {
 	int	status_wait;
 
-	dprintf(2, "id is %d\n", id);
+//	dprintf(2, "id is %d\n", id);
 	if (my_data->nb_process > 0 && id != PIPE)
 		status_wait = waitpid(my_data->childs[my_data->current_process - 1], NULL, 0);
 	else
 		status_wait = 0;
-	dprintf(2,"BOUHH %d\n", syn->id);
+//	dprintf(2,"BOUHH %d\n", syn->id);
 	if (id == PIPE)
 		exec(syn, my_data);
 	else if (id == AND && status_wait == 0)
