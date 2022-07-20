@@ -9,6 +9,8 @@ SRC	= libft/ft_split.c libft/ft_substr.c libft/ft_strncmp.c \
 	  exec/fd.c exec/test.c exec/path.c\
 	  exec/utils_exec.c \
 	  utils/data.c utils/free.c utils/errors.c \
+	  utils/prompt.c utils/signal.c \
+	  builtins/echo.c \
 
 SRC_H	= minishell.h
 
@@ -18,18 +20,19 @@ NAME	=	minishell
 CC		=	gcc
 FLAGS	=	-g3 -Wall -Wextra -Werror
 RM		=	rm -rf
+LFLAGS	=	-lreadline
 
 %.o: %.c
 	${CC} ${FLAGS} -c $< -o $@
 
 $(NAME):$(OBJ) $(SRC_H)
-	$(CC) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) -o $(NAME) $(LFLAGS)
 
 all:	$(NAME)
 
 clean:
 		$(RM) $(OBJ)
-
+		
 fclean:	clean
 		$(RM) $(NAME)
 

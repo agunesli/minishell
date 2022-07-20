@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-char	**separate_word(char *cmd, char **dest)
+char	**separate_word(char *cmd, char **dest, t_data *my_data)
 {
 	int		i;
 	int		len;
@@ -12,7 +12,7 @@ char	**separate_word(char *cmd, char **dest)
 	{
 		while (cmd[i] && cmd[i] == ' ')
 			i++;
-		len = good_place(cmd, " ", i) - i;
+		len = good_place(cmd, " ", i, my_data) - i;
 //		printf("i is %d and len is %d\n", i, len); //
 		dest[++j] = ft_substr(cmd, i, len);
 //		printf("dest[j] = %s\n", dest[j]); //
@@ -61,7 +61,7 @@ int	cpt_good_space(char *cmd)
 	return (cpt);
 }
 
-char	**separate(char *cmd)
+char	**separate(char *cmd, t_data *my_data)
 {
 	int		cpt;
 	char	**dest;
@@ -72,5 +72,5 @@ char	**separate(char *cmd)
 	dest = malloc(sizeof(char *) * (cpt + 2));
 	if (!dest)
 		return (NULL);
-	return (separate_word(cmd, dest));
+	return (separate_word(cmd, dest, my_data));
 }

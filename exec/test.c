@@ -1,5 +1,24 @@
 #include "../minishell.h"
 
+int	is_builtins(t_data *my_data)
+{
+	if (!ft_strncmp("echo", my_data->all_cmd[0][0], ft_strlen("echo") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	if (!ft_strncmp("pwd", my_data->all_cmd[0][0], ft_strlen("pwd") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	if (!ft_strncmp("cd", my_data->all_cmd[0][0], ft_strlen("cd") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	if (!ft_strncmp("exit", my_data->all_cmd[0][0], ft_strlen("exit") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	if (!ft_strncmp("export", my_data->all_cmd[0][0], ft_strlen("export") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	if (!ft_strncmp("unset", my_data->all_cmd[0][0], ft_strlen("unset") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	if (!ft_strncmp("env", my_data->all_cmd[0][0], ft_strlen("env") + 1))
+		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+	return(-1);
+}
+
 //fork() => child process = 0 else main process
 //pipe() => fd[0] = read, fd[1] = write
 //execve => v = array, e = env (Error = -1)
@@ -8,6 +27,11 @@ void	exec(t_syntax *syn, t_data *my_data)
 	char	*path;
 	int		status;
 
+	if (is_builtins(my_data) != -1)
+	{
+		my_data->crt++;
+		return ;
+	}
 	my_data->childs[my_data->crt] = fork();
 //	if (my_data->childs[my_data->current_process] == -1)
 //		Error;

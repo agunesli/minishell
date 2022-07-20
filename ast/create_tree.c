@@ -25,7 +25,9 @@ t_syntax	*medium_piece(char *subread, t_data *my_data)
 
 	if (!subread)
 		return (NULL);
-	i = good_place(subread, MEDIUM, 0);
+	i = good_place(subread, MEDIUM, 0, my_data);
+	if (i < 0)
+		return (NULL);
 	if (i == (int)ft_strlen(subread))
 	{
 		end = end_sub(subread, ft_strlen(subread));
@@ -52,7 +54,9 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 
 	if (!read)
 		return (NULL);
-	i = good_place(read, STRONG, 0);
+	i = good_place(read, STRONG, 0, my_data);
+	if (i < 0)
+		return (NULL);
 	if (i == (int)ft_strlen(read))
 		syn = medium_piece(ft_strdup(read), my_data);
 	else

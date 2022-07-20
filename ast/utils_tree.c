@@ -42,7 +42,7 @@ int	skip_space(char *str, int i)
 	return (i);
 }
 
-int	good_place(char *read, char *set, int i)
+int	good_place(char *read, char *set, int i, t_data *my_data)
 {
 	char	c;
 
@@ -55,9 +55,15 @@ int	good_place(char *read, char *set, int i)
 		i++;
 		while(read[i] && read[i] != c)
 			i++;
-//		if (!read[i])
-			//error syntax quote no close
-		return (good_place(read, set, i + 1));
+		if (!read[i])
+		{
+			if (c == '\'')
+				error_syntax("\'", my_data);
+			else
+				error_syntax("\"", my_data);
+			return (-1);
+		}
+		return (good_place(read, set, i + 1, my_data));
 	}
 	else
 		return (i);

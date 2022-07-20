@@ -23,7 +23,7 @@ char	**change_cmd(char *cmd, t_data *my_data)
 	i = -1;
 //	(void)my_data;
 	cmd = expand(cmd, my_data);
-	dest = separate(cmd);
+	dest = separate(cmd, my_data);
 	while (dest[++i] != NULL)
 	{
 		dest[i] = without_quote(dest[i]);
