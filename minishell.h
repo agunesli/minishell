@@ -23,6 +23,8 @@
 # define MEDIUM "<>"
 # define LOW "\"\'$*"
 
+//couleur pour le prompt
+
 # define PATH 
 
 typedef void (*sighandler_t)(int);
@@ -63,6 +65,11 @@ typedef struct s_data
 	int			status_error;
 	char		*path; //NUll sauf si le path n'hesiste pas au debut
 }	t_data;
+
+/***********************************************/
+/*                PROMPT                       */
+/***********************************************/
+
 /***********************************************/
 /*                  AST                        */
 /***********************************************/

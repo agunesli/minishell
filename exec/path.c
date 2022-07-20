@@ -51,6 +51,8 @@ char	*correct_path(char **cmd, t_data *my_data)
 	char	*cmdd;
 
 	i = 0;
+	if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) == 0)
+		return (cmd[0]);
 	bin = found_path_env(my_data->env, my_data);
 	len = len_bin(bin);
 	cmdd = ft_strjoin("/", cmd[0]);

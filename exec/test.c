@@ -15,6 +15,7 @@ void	exec(t_syntax *syn, t_data *my_data)
 	{
 		good_fd(syn, my_data);
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
+		dprintf(2, "%s\n", path);
 		print_all(my_data->all_cmd[my_data->crt]);
 		status = execve(path, my_data->all_cmd[my_data->crt], my_data->env);
 		if (status == -1)
@@ -48,7 +49,10 @@ void	end_of_parent(t_data *my_data)
 	{
 		status = waitpid(my_data->childs[i], NULL, 0);
 		if (!status)
+		{
+			my_data->status_error = status;
 			perror("");
+		}
 	}
 	free(my_data->childs);
 }
