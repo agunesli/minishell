@@ -18,7 +18,8 @@
 #include <signal.h>
 #include <errno.h>
 
-# define STRONG "|&"
+//# define STRONG "|&"
+# define STRONG "|"
 # define MEDIUM "<>"
 # define LOW "\"\'$*"
 
@@ -36,9 +37,6 @@ enum e_syntax
 	heredoc,// 5
 	append,	// 6
 	cmd,	// 7
-	dollar, // 8
-	star,	// 9
-	error	// 10
 };
 
 typedef struct	s_syntax
@@ -50,6 +48,7 @@ typedef struct	s_syntax
 	struct s_syntax	*right;
 }	t_syntax;
 
+//crt = current_process
 typedef struct s_data
 {
 	char		*read;
@@ -57,15 +56,13 @@ typedef struct s_data
 	char		**env;
 	t_syntax	*syn; //need to free
 	int			nb_process;
-	int			current_process;
+	int			crt;
 	int			*childs; //need to free
 	int			fd[2][2];
 	char		***all_cmd; //need to free
 	int			status_error;
 	char		*path; //NUll sauf si le path n'hesiste pas au debut
 }	t_data;
-
-
 /***********************************************/
 /*                  AST                        */
 /***********************************************/
@@ -145,5 +142,4 @@ char	*ft_strjoin(char const *s1, char const *s2); //GNL utils
 char	*ft_substr_end(char const *s, unsigned int start, size_t end);  //GNL utils
 char	*ft_itoa(int n); 
 char	**ft_strjointab(char **s1, char **s2);
-
 #endif

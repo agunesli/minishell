@@ -1,11 +1,11 @@
 #include "../minishell.h"
 
-t_syntax	*low_piece(char *subread, t_data *my_data)
+t_syntax	*low_piece(char *subread, t_data *my_data) //cmd
 {
-	t_syntax	*syn;
+ 	t_syntax	*syn;
 
 	if (!subread)
-		return (NULL);
+ 		return (NULL);
 	syn = malloc(sizeof(t_syntax));
 	if (!syn)
 		return (NULL);
@@ -14,6 +14,7 @@ t_syntax	*low_piece(char *subread, t_data *my_data)
 	syn->content = NULL;
 	syn->right = NULL;
 	syn->left = NULL;
+//	free(subread);
 	return (syn);
 }
 
@@ -21,16 +22,12 @@ t_syntax	*medium_piece(char *subread, t_data *my_data)
 {
 	t_syntax	*syn;
 	int			i;
-	int			end;
 
 	if (!subread)
 		return (NULL);
 	i = good_place(subread, MEDIUM, 0);
 	if (i == (int)ft_strlen(subread))
-	{
-		end = end_sub(subread, ft_strlen(subread));
-		syn = low_piece(ft_substr(subread, 0, end), my_data);
-	}
+		syn = low_piece(ft_substr(subread, 0, end_sub(subread, ft_strlen(subread))), my_data);
 	else
 	{
 		if (subread[i] == '<')
@@ -43,7 +40,7 @@ t_syntax	*medium_piece(char *subread, t_data *my_data)
 }
 
 // arg malloc pour eviter pb avec free lors du premier lancement
-t_syntax	*strong_piece(char *read, t_data *my_data)
+t_syntax	*strong_piece(char *read, t_data *my_data) 
 {
 	t_syntax	*syn;
 	int			i;
@@ -51,7 +48,7 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 	char		*str;
 
 	if (!read)
-		return (NULL);
+ 		return (NULL);
 	i = good_place(read, STRONG, 0);
 	if (i == (int)ft_strlen(read))
 		syn = medium_piece(ft_strdup(read), my_data);
@@ -60,14 +57,25 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 		syn = malloc(sizeof(t_syntax));
 		if (!syn)
 			return (NULL);
-		syn->id = PIPE;
 		syn->content = NULL;
 		syn->cmd_arg = NULL;
+		if (read[i] == '|' && read[i + 1] != '|')
+			syn->id = PIPE;
+		else if (read[i] == '|' && read[i + 1] == '|')
+			syn->id = OR;
+		else if (read[i] == '&' && read[i + 1] == '&')
+			syn->id = AND;
+		else if (read[i] == '&' && read[i + 1] != '&') // cas ou un seul & mais je ne connais pas le comportement !
+			return (free(read), free(syn), error_syntax("&", my_data), NULL);
 		syn->left = medium_piece(ft_substr(read, 0, end_sub(read, i)), my_data);
-		start = skip_space(read, i + 1);
+		if (syn->id == PIPE)
+			start = skip_space(read, i + 1);
+		else
+			start = skip_space(read, i + 2);
 		str = ft_substr(read, start, end_sub(read, ft_strlen(read)) - start);
 		syn->right = strong_piece(str, my_data);
 	}
 	free(read);
+//	print_tree(syn);
 	return (syn);
 }

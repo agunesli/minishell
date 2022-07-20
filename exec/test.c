@@ -8,28 +8,23 @@ void	exec(t_syntax *syn, t_data *my_data)
 	char	*path;
 	int		status;
 
-//	printf("%d\n",my_data->current_process); //
-//	print_all(my_data->all_cmd[my_data->current_process]); //
-	my_data->childs[my_data->current_process] = fork();
+	my_data->childs[my_data->crt] = fork();
 //	if (my_data->childs[my_data->current_process] == -1)
 //		Error;
-	if (my_data->childs[my_data->current_process] == 0)
+	if (my_data->childs[my_data->crt] == 0)
 	{
 		good_fd(syn, my_data);
-		path = correct_path(my_data->all_cmd[my_data->current_process], my_data);
-//		dprintf(2, "path is %s\n", path);
-		status = execve(path, my_data->all_cmd[my_data->current_process], my_data->env);
+		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
+		print_all(my_data->all_cmd[my_data->crt]);
+		status = execve(path, my_data->all_cmd[my_data->crt], my_data->env);
 		if (status == -1)
 			perror("");
 	}
-	my_data->current_process++;
+	my_data->crt++;
 }
 
 void	update_data_exec(t_data *my_data)
 {
-//	int fds[2][2];
-//	int	*childs;
-
 	if (pipe(my_data->fd[0]) == -1)
 		printf("Error\n");
 	if (pipe(my_data->fd[1]) == -1)
@@ -39,27 +34,6 @@ void	update_data_exec(t_data *my_data)
 		return ; // Error malloc
 }
 
-void	hub_strong(int id, t_syntax *syn, t_data *my_data)
-{
-	int	status_wait;
-
-//	dprintf(2, "id is %d\n", id);
-	if (my_data->nb_process > 0 && id != PIPE)
-		status_wait = waitpid(my_data->childs[my_data->current_process - 1], NULL, 0);
-	else
-		status_wait = 0;
-//	dprintf(2,"BOUHH %d\n", syn->id);
-	if (id == PIPE)
-		exec(syn, my_data);
-	else if (id == AND && status_wait == 0)
-		exec(syn, my_data);
-	else if (id == OR && status_wait != 0)
-		exec(syn, my_data);
-	if (status_wait)
-		dprintf(2,"here\n");
-//		perror("");
-}
-
 void	end_of_parent(t_data *my_data)
 {
 	int	i;
@@ -67,10 +41,10 @@ void	end_of_parent(t_data *my_data)
 
 	i = -1;
 	close(my_data->fd[0][0]);
-	close(my_data->fd[1][0]);
 	close(my_data->fd[0][1]);
+	close(my_data->fd[1][0]);
 	close(my_data->fd[1][1]);
-	while (++i< my_data->nb_process)
+	while (++i < my_data->nb_process)
 	{
 		status = waitpid(my_data->childs[i], NULL, 0);
 		if (!status)
@@ -87,6 +61,7 @@ void	start_exec(t_data *my_data, t_syntax *syn)
 	if (syn->id >= in)
 	{
 		exec(syn, my_data);
+		end_of_parent(my_data);
 		return ;
 	}
 	else
@@ -96,9 +71,9 @@ void	start_exec(t_data *my_data, t_syntax *syn)
 		if (!syn->right->left)
 			break ;
 		next = syn->right->left;
-		hub_strong(syn->id, next, my_data);
+		exec(next, my_data);
 		syn = syn->right;
 	}
-	hub_strong(syn->id, syn->right, my_data);
+	exec(syn->right, my_data);
 	end_of_parent(my_data);
 }

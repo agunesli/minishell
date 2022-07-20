@@ -40,11 +40,11 @@ char	***handle_all_cmd(t_data *my_data, t_syntax *syn)
 	while (syn->id < in)
 	{
 		all_cmd[++i] = handle_cmd(syn->left, NULL);
-		print_all(all_cmd[i]); //
+///		print_all(all_cmd[i]); //
 		syn = syn->right;
 	}
 	all_cmd[++i] = handle_cmd(syn, NULL);
-	print_all(all_cmd[i]); //
+//	print_all(all_cmd[i]); //
 	all_cmd[++i] = NULL;
 //	printf("i in handlecmd is %d\n", i); //
 	return (all_cmd);
@@ -53,7 +53,7 @@ char	***handle_all_cmd(t_data *my_data, t_syntax *syn)
 void	update_data(t_data *my_data)
 {
 	my_data->nb_process = nb_strong_piece(my_data->syn, 0) + 1;
-	printf("nb process is %d\n", my_data->nb_process); //
+//	printf("nb process is %d\n", my_data->nb_process); //
 	my_data->all_cmd = handle_all_cmd(my_data, my_data->syn); //need to be free
 }
 
@@ -64,10 +64,10 @@ void	init_data(t_data *my_data, char *read, char **av, char **env)
 	my_data->env = env;
 	my_data->status_error = 0;
 	my_data->nb_process = 1;
-	my_data->current_process = 0;
+	my_data->crt = 0;
 	my_data->path = NULL;
 	my_data->all_cmd = NULL; //need to be free
-	my_data->syn = NULL; //need to be free
+	my_data->syn = NULL;
 	my_data->syn = strong_piece(ft_strdup(read), my_data);
 }
 
