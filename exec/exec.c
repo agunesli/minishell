@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
+/*   Updated: 2022/07/21 13:56:50 by agunesli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	is_builtins(t_data *my_data)
@@ -5,17 +17,17 @@ int	is_builtins(t_data *my_data)
 	if (!ft_strncmp("echo", my_data->all_cmd[0][0], ft_strlen("echo") + 1))
 		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("pwd", my_data->all_cmd[0][0], ft_strlen("pwd") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+		return (ft_pwd(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("cd", my_data->all_cmd[0][0], ft_strlen("cd") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+		return (ft_cd(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("exit", my_data->all_cmd[0][0], ft_strlen("exit") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+		return (ft_exit(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("export", my_data->all_cmd[0][0], ft_strlen("export") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+		return (ft_export(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("unset", my_data->all_cmd[0][0], ft_strlen("unset") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+		return (ft_unset(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("env", my_data->all_cmd[0][0], ft_strlen("env") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
+		return (ft_env(my_data->all_cmd[my_data->crt], my_data));
 	return(-1);
 }
 

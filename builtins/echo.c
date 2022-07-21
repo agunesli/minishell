@@ -10,21 +10,18 @@ int	check_option_nl(char **cmd)
 	while (cmd[++i])
 	{
 		j = 0;
-//		printf("cmd is %s\n", cmd[i]);
 		if (cmd[i][j] == '-' && cmd[i][j + 1] == 'n')
 		{
-//			printf("HERE\n");
 			j++;
 			while (cmd[i][j] == 'n')
 				j++;
-//			printf("j is %d and strlen odf cmd is %ld\n", j, ft_strlen(cmd[i]));
 			if (j != (int)ft_strlen(cmd[i]))
-				return (i - 1);
+				return (i);
 		}
 		else
-			return (i - 1);
+			return (i);
 	}
-	return (-1);
+	return (i);
 }
 
 int	ft_echo(char **cmd, t_data *my_data)
@@ -35,15 +32,15 @@ int	ft_echo(char **cmd, t_data *my_data)
 	(void)my_data;
 	print_all(cmd);
 	nl = check_option_nl(cmd);
-	printf("nl is %d\n", nl);
 	i = nl;
-	while (cmd[++i])
+	while (cmd[i])
 	{
 		write(1, cmd[i], ft_strlen(cmd[i]));
 		if (cmd[i + 1])
 			write(1, " ", 1);
+		i++;
 	}
-	if (!nl)
+	if (!(nl - 1))
 		write(1, "\n", 1);
 	return (0);
 }

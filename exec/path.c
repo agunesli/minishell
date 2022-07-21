@@ -18,10 +18,10 @@ char	**found_path_env(char **env, t_data *my_data)
 			break ;
 		}
 	}
-//	if (path == NULL && !my_data->path)
-//		Error; // bash : cat: No such file or directory
-//	else if (my_data->path)
-//		path = ft_strdup(my_data->path);
+	if (path == NULL && !my_data->path)
+		errorp(my_data->all_cmd[my_data->crt][0]); // bash : cat: No such file or directory
+	else if (my_data->path)
+		path = ft_strdup(my_data->path);
 //	ATTENTION LES COMMANDES NE FONCTIONNENT PLUS SSI UNSET PATH 
 //	(fonctionnent si on fait unset path)
 	tmp = path;

@@ -11,7 +11,6 @@ int	check_read(char *read)
 	else if (!ft_strncmp("!", read, 1))
 			return (1);
 	return (0);
-
 }
 
 // REFAIRE CETTE FONCTION

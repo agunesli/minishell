@@ -59,6 +59,7 @@ typedef struct s_data
 	char		*read;
 	char		**argv;
 	char		**env;
+	char		**exprt;
 	t_syntax	*syn; //need to free
 	int			nb_process;
 	int			crt;
@@ -144,7 +145,12 @@ void		signal_exec(int pid);
 
 //builtins
 int	ft_echo(char **cmd, t_data *my_data);
-
+int	ft_cd(char **cmd, t_data *my_data);
+int	ft_pwd(char **cmd, t_data *my_data);
+int	ft_env(char **cmd, t_data *my_data);
+int	ft_unset(char **cmd, t_data *my_data);
+int	ft_export(char **cmd, t_data *my_data);
+int	ft_exit(char **cmd, t_data *my_data);
 
 //libft
 size_t	ft_strlen(const char *s);
@@ -158,4 +164,7 @@ char	*ft_strjoin(char const *s1, char const *s2); //GNL utils
 char	*ft_substr_end(char const *s, unsigned int start, size_t end);  //GNL utils
 char	*ft_itoa(int n);
 char	**ft_strjointab(char **s1, char **s2);
+int		ft_isalnum(int c);
+int		ft_isdigit(int c);
+int		ft_isalpha(int c);
 #endif

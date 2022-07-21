@@ -18,7 +18,8 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	(void)env;
+//	(void)env;
+//	print_all(env);
 	read = NULL;
 	signal_def();
 	while (42)
