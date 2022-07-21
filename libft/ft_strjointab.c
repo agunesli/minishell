@@ -1,5 +1,17 @@
 #include "../minishell.h"
 
+char	**change_str_to_tab(char *str)
+{
+	char	**dst;
+
+	dst = malloc(sizeof(char *) * 2);
+	if (!dst)
+		return (NULL);
+	dst[0] = ft_strdup(str);
+	dst[1] = NULL;
+	return (dst);
+}
+
 char	**ft_tabdup(char **src)
 {
 	char	**dst;

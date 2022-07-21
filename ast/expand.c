@@ -7,26 +7,12 @@ char	*found_word_expand(char *subread, int i)
 
 	j = i - 1;
 	len = 0;
+	if (subread[i] == '?')
+		return (ft_strdup("?"));
 	printf("%s => %c \n", subread, subread[i]);
 	while (subread[++j] && (ft_isalnum(subread[j]) || subread[j] == '_'))
 		len++;
 	return (ft_substr(subread, i, len));
-}
-
-char	*expand_error(char *expand, t_data *my_data)
-{
-	char	*dst;
-	char	*tmp1;
-	char	*tmp2;
-
-	if (expand[1] == ' ' || expand[1] == '\n')
-		return (ft_itoa(my_data->status_error));
-	tmp1 = ft_itoa(my_data->status_error);
-	tmp2 = ft_substr(expand, 1, ft_strlen(expand));
-	dst = ft_strjoin(tmp1, tmp2);
-	free(tmp1);
-	free(tmp2);
-	return (dst);
 }
 
 char	*found_expand(char *expand, t_data *my_data)
@@ -34,10 +20,10 @@ char	*found_expand(char *expand, t_data *my_data)
 	int	i;
 
 	i = -1;
-	if (ft_isdigit(expand[i + 1]))
+	if (!ft_strncmp(expand, "?", 2))
+		return (ft_itoa(my_data->status_error));
+	else if (ft_isdigit(expand[i + 1]))
 		return(ft_strdup(""));
-	else if (!ft_strncmp(expand, "?", 1))
-		return (expand_error(expand, my_data));
 	while (my_data->env[++i] != NULL)
 	{
 		if (!ft_strncmp(expand, my_data->env[i], ft_strlen(expand)))
@@ -56,7 +42,7 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 
 	part1 = ft_substr(cmd, 0, i);
 	expand = found_word_expand(cmd, i + 1);
-	printf("expand is %s\n", expand);
+	// printf("expand is %s\n", expand);
 	result = found_expand(expand, my_data);
 //	if (!result)
 //		errorp("\'$\'");
@@ -64,10 +50,12 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 	part2 = ft_substr(cmd, start2, ft_strlen(cmd) - start2);
 	free(cmd);
 	free(expand);
-	return (ft_strjoin3(part1, result, part2));
+	if (!result[0])
+		return (ft_strjoin(part1, part2));
+	else
+		return (ft_strjoin3(part1, result, part2));
 }
 
-// A FAIRE QUE ENTRE ""
 char	*expand(char *cmd, t_data *my_data)
 {
 	int		i;

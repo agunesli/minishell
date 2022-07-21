@@ -14,29 +14,33 @@ int	check_read(char *read)
 }
 
 // REFAIRE CETTE FONCTION
-void	get_start(char *read, char **av, char **env)
+void	get_start(t_data *my_data, char *read/*, char **av, char **env*/)
 {
 //	t_syntax	*syn;
-	t_data		my_data;
+	// t_data		my_data;
 
 	while (*read == ' ')
-		read++;	
+		read++;
 	if (!*read)
 		return ;
 	if (check_read(read))
 		return ;
-	init_data(&my_data, read, av, env);
+	my_data->read = read;
+	my_data->syn = strong_piece(read, my_data);
+	my_data->nb_process = 1;
+	my_data->crt = 0;
+//	init_data(&my_data, read, av, env);
 //	print_tree(my_data.syn);
-	if (!my_data.status_error)
+	if (!my_data->status_error)
 	{
-		check_tree(my_data.syn, &my_data);
-		if (!my_data.status_error)
+		check_tree(my_data->syn, my_data);
+		if (!my_data->status_error)
 		{
-			print_tree(my_data.syn);
-			update_data(&my_data);
-			start_exec(&my_data, my_data.syn);
-			free_tree(my_data.syn);
-			free_tab3(my_data.all_cmd);
+			print_tree(my_data->syn);
+			update_data(my_data);
+			start_exec(my_data, my_data->syn);
+			free_tree(my_data->syn);
+			free_tab3(my_data->all_cmd); ///PB HERE !!!
 		}
 	}
 }

@@ -12,7 +12,7 @@ SRC	= libft/ft_split.c libft/ft_substr.c libft/ft_strncmp.c \
 	  utils/prompt.c utils/signal.c \
 	  builtins/echo.c builtins/cd.c builtins/pwd.c\
 	  builtins/env.c builtins/unset.c builtins/export.c\
-	  builtins/exit.c\
+	  builtins/exit.c builtins/export_change.c\
 
 SRC_H	= minishell.h
 
