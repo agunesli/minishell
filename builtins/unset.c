@@ -32,6 +32,7 @@ char	**update_env(char *cmd, char **env)
 
 	pos = found_id(cmd, env);
 	len = len_split(env);
+	i = -1;
 	if (pos == -1)
 		return (env);
 	tmp = malloc(sizeof(char *) * len);
