@@ -12,7 +12,7 @@ SRC	= libft/ft_split.c libft/ft_substr.c libft/ft_strncmp.c \
 	  utils/prompt.c utils/signal.c \
 	  builtins/echo.c builtins/cd.c builtins/pwd.c\
 	  builtins/env.c builtins/unset.c builtins/export.c\
-	  builtins/exit.c builtins/export_change.c\
+	  builtins/exit.c builtins/export_change.c builtins/utils_builtins.c \
 
 SRC_H	= minishell.h
 
@@ -34,7 +34,7 @@ all:	$(NAME)
 
 clean:
 		$(RM) $(OBJ)
-		
+
 fclean:	clean
 		$(RM) $(NAME)
 

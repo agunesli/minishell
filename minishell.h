@@ -155,8 +155,10 @@ int			ft_export(char **cmd, t_data *my_data);
 int			ft_exit(char **cmd, t_data *my_data);
 
 //builtins utils
+int			id_check(char *str, int i);
+int			found_char(char *str, char c);
 void		change_env(t_data *my_data, char **dst, int len);
-void		change_exprt(t_data *my_data, char **dst;
+void		change_exprt(t_data *my_data, char **dst);
 
 //libft
 size_t		ft_strlen(const char *s);

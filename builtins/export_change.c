@@ -18,23 +18,24 @@ int	id_is_in_env(char **env, char *cmd, int len)
 			break ;
 		}
 	}
+	free(id);
 	if (pos)
 	{
 		free(env[i]);
 		env[i] = ft_strdup(cmd);
 		return (1);
 	}
-	free(id);
 	return (0);
 }
 
 int	id_is_in_exprt(char **exprt, char *cmd)
 {
-	int	i;
+	int		i;
 	char	*pos;
 
 	i = -1;
-	// printf("id is %s\n", id);
+	if (!exprt)
+		return (0);
 	pos = NULL;
 	while (exprt[++i])
 	{
@@ -46,10 +47,11 @@ int	id_is_in_exprt(char **exprt, char *cmd)
 	}
 	if (pos)
 	{
-	//	free(exprt[i]);
+		if (i == len_split(exprt) - 1)
+			return (1);
 		while (exprt[++i])
-			exprt = exprt[i + 1];
-		cmd[i] = pos;
+			exprt[i - 1] = exprt[i];
+		exprt[i - 1] = pos;
 		return (1);
 	}
 	return (0);
