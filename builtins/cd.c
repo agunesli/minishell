@@ -3,7 +3,8 @@
 char	**update_oldpwd_in_env(char **env, char *old_pwd)
 {
 	int		i;
-	char	**tmp;
+	char	*tmp1;
+	char	**tmp2;
 
 	i = -1;
 	while (env[++i])
@@ -14,13 +15,16 @@ char	**update_oldpwd_in_env(char **env, char *old_pwd)
 	if (env[i])
 	{
 		free(env[i]);
-		env[i] = ft_strdup(old_pwd);
+		env[i] = ft_strjoin("OLDPWD=", old_pwd);
 	}
 	else
 	{
-		tmp = change_str_to_tab(ft_strjoin("OLDPWD=", old_pwd));
-		env = ft_strjointab(env, tmp);
-		free(tmp);
+		printf("srjyjr\n");
+		tmp1 = ft_strjoin("OLDPWD=", old_pwd);
+		tmp2 = change_str_to_tab(tmp1);
+		env = ft_strjointab(env, tmp2);
+		free(tmp1);
+		free_all(tmp2);
 	}
 	return (env);
 }
