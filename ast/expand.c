@@ -23,7 +23,7 @@ char	*found_expand(char *expand, t_data *my_data)
 	if (!ft_strncmp(expand, "?", 2))
 		return (ft_itoa(my_data->status_error));
 	else if (ft_isdigit(expand[i + 1]))
-		return(ft_strdup(""));
+		return (ft_strdup(""));
 	while (my_data->env[++i] != NULL)
 	{
 		if (!ft_strncmp(expand, my_data->env[i], ft_strlen(expand)))
@@ -42,10 +42,7 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 
 	part1 = ft_substr(cmd, 0, i);
 	expand = found_word_expand(cmd, i + 1);
-	// printf("expand is %s\n", expand);
 	result = found_expand(expand, my_data);
-//	if (!result)
-//		errorp("\'$\'");
 	start2 = i + ft_strlen(expand) + 1;
 	part2 = ft_substr(cmd, start2, ft_strlen(cmd) - start2);
 	free(cmd);
@@ -67,8 +64,8 @@ char	*expand(char *cmd, t_data *my_data)
 	{
 		if (cmd[i] == '\'')
 			quote++;
-		else if (cmd[i] == '$' && quote%2)
-			return (expand(change_expand(cmd, i, my_data),my_data));
+		else if (cmd[i] == '$' && quote % 2)
+			return (expand(change_expand(cmd, i, my_data), my_data));
 	}
 	return (cmd);
 }

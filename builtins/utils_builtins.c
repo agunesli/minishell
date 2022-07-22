@@ -1,5 +1,22 @@
 #include "../minishell.h"
 
+void	print_all(char **bin)
+{
+	int	i;
+
+	i = -1;
+	if (bin == NULL)
+	{
+		printf("NULL\n");
+		return ;
+	}
+	while (bin[++i] != NULL)
+	{
+		printf("%s", bin[i]);
+		printf("\n");
+	}
+}
+
 int	found_char(char *str, char c)
 {
 	int	i;

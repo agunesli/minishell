@@ -47,13 +47,13 @@ int	good_place(char *read, char *set, int i, t_data *my_data)
 	char	c;
 
 	while (read[i] && !ft_is_in_set(read[i], set)
-			&& read[i] != '\'' && read[i] != '\"')
+		&& read[i] != '\'' && read[i] != '\"')
 		i++;
 	c = read[i];
 	if (c == '\'' || c == '\"')
 	{
 		i++;
-		while(read[i] && read[i] != c)
+		while (read[i] && read[i] != c)
 			i++;
 		if (!read[i])
 		{

@@ -7,7 +7,6 @@ char	**found_path_env(char **env, t_data *my_data)
 	char	*tmp;
 	char	**bin;
 
-	(void)my_data;
 	i = -1;
 	path = NULL;
 	while (env[++i] != NULL)
@@ -19,7 +18,8 @@ char	**found_path_env(char **env, t_data *my_data)
 		}
 	}
 	if (path == NULL && !my_data->path)
-		errorp(my_data->all_cmd[my_data->crt][0]); // bash : cat: No such file or directory
+		errorp(my_data->all_cmd[my_data->crt][0]);
+	// bash : cat: No such file or directory
 	else if (my_data->path)
 		path = ft_strdup(my_data->path);
 //	ATTENTION LES COMMANDES NE FONCTIONNENT PLUS SSI UNSET PATH 
@@ -65,7 +65,7 @@ char	*correct_path(char **cmd, t_data *my_data)
 	free(cmdd);
 	free_all(bin);
 	if (i == len)
-		return (dprintf(2,"Command no found\n"), NULL);
+		return (dprintf(2, "Command no found\n"), NULL);
 	else
 		return (tmp);
 }

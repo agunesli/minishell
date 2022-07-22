@@ -1,63 +1,55 @@
 #include "../minishell.h"
 
-/* first case : relative paths */
-/* second case : no backslash */
-/* third case : correct format */
+char	**update_oldpwd_in_env(char **env, char *old_pwd)
+{
+	int		i;
+	char	**tmp;
 
-// char	*ft_strjoin(char const *s1, char const *s2)
-// {
-// 	char	*s3;
-// 	int		len;
-// 	int		i;
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp("OLDPWD=", env[i], 7))
+			break ;
+	}
+	if (env[i])
+	{
+		free(env[i]);
+		env[i] = ft_strdup(old_pwd);
+	}
+	else
+	{
+		tmp = change_str_to_tab(ft_strjoin("OLDPWD=", old_pwd));
+		env = ft_strjointab(env, tmp);
+		free(tmp);
+	}
+	return (env);
+}
 
-// 	if (!s1 && !s2)
-// 		return (NULL);
-// 	if (!s1)
-// 		return ((char *)s2);
-// 	if (!s2)
-// 		return ((char *)s1);
-// 	i = 0;
-// 	len = ft_strlen(s1) + ft_strlen(s2);
-// 	s3 = (char *)malloc(len + 1);
-// 	if (!s3)
-// 		return (NULL);
-// 	while (*s1)
-// 		*(s3 + i++) = *(char *)s1++;
-// 	while (*s2)
-// 		*(s3 + i++) = *(char *)s2++;
-// 	*(s3 + i) = '\0';
-// 	return (s3);
-// }
-
-void
-cd_error(char *str)
+void cd_error(char *str)
 {
 	fprintf(stderr, "bash: cd: %s: No such file or directory", str);
 }
 
-int
-ft_cd_handler(char *dst, int x)
+/* Tu dois update tes vars denv avec le old path sur OLDPWD, des le debut, puisque si x == 1, old_pwd sera modif */
+int ft_cd_handler(char *dst, t_data *my_data, int x)
 {
-	/* Tu dois update tes vars denv avec le old path sur OLDPWD, des le debut, puisque si x == 1, old_pwd sera modif */
 	char old_pwd[4096];
-	char *final_path = NULL;
-	int rtvl = 0;
+	char *final_path;
+	int rtvl;
 
+	final_path = ((rtvl = 0, NULL));
 	getcwd(old_pwd, sizeof(old_pwd));
+	my_data->env = update_oldpwd_in_env(my_data->env, old_pwd);
 	if (x == 0)
-	{
 		final_path = ft_strjoin(getenv("HOME"), dst + 1);
-	}
 	else if (x == 1)
 	{
 		strcat(old_pwd, "/");
 		strcat(old_pwd, dst);
-		final_path = strdup(old_pwd);
+		final_path = ft_strdup(old_pwd);
 	}
 	else
-	{
-		final_path = strdup(dst);
-	}
+		final_path = ft_strdup(dst);
 	if (chdir(final_path) == -1)
 	{
 		cd_error(dst);
@@ -65,33 +57,34 @@ ft_cd_handler(char *dst, int x)
 	}
 	free(final_path);
 	free(dst);
-	return rtvl;
+	return (rtvl);
 }
 
-int
-ft_cd(char **cmd, t_data *my_data)
+/* first case : relative paths */
+/* second case : no backslash */
+/* third case : correct format */
+int ft_cd(char **cmd, t_data *my_data)
 {
 	char	*dst_path;
 	char	actual[4096];
 	int 	rtvl;
 
-	(void)my_data;
 	if (cmd[1] == NULL)
 	{
 		return -1;
 	}
 	dst_path = strdup(cmd[1]);
-	if (dst_path[0] == '~') // relative path
+	if (dst_path[0] == '~')
 	{
-		rtvl = ft_cd_handler(dst_path, 0);
+		rtvl = ft_cd_handler(dst_path, my_data, 0);
 	}
-	else if (dst_path[0] != '/') // no backslash
+	else if (dst_path[0] != '/')
 	{
-		rtvl =  ft_cd_handler(dst_path, 1);
+		rtvl =  ft_cd_handler(dst_path, my_data, 1);
 	}
-	else // correct format
+	else
 	{
-		rtvl = ft_cd_handler(dst_path, 2);
+		rtvl = ft_cd_handler(dst_path, my_data, 2);
 	}
 	printf("ACTUAL POS : %s \n", getcwd(actual, sizeof(actual)));
 	return rtvl;

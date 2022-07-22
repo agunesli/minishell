@@ -5,11 +5,11 @@ void	check_strong(t_syntax *syn, t_data *my_data)
 	if (syn->left == NULL)
 	{
 		if (syn->id == OR)
-			return(error_syntax("\'||\'", my_data));
+			return (error_syntax("\'||\'", my_data));
 		else if (syn->id == AND)
-			return(error_syntax("\'&&\'", my_data));
+			return (error_syntax("\'&&\'", my_data));
 		else if (syn->id == PIPE)
-			return(error_syntax("\'|\'", my_data));
+			return (error_syntax("\'|\'", my_data));
 	}
 /*	else if (syn->left->id == in || syn->left->id == append 
 		|| syn->left->id == heredoc)
@@ -25,16 +25,16 @@ void	check_medium(t_syntax *syn, t_data *my_data)
 	if (syn->left != NULL && in <= syn->left->id && syn->left->id <= append)
 	{
 		if (syn->left->id == in)
-			return(error_syntax("\'<\'", my_data));
+			return (error_syntax("\'<\'", my_data));
 		if (syn->left->id == out)
-			return(error_syntax("\'>\'", my_data));
+			return (error_syntax("\'>\'", my_data));
 		if (syn->left->id == heredoc)
-			return(error_syntax("\'<<\'", my_data));
+			return (error_syntax("\'<<\'", my_data));
 		if (syn->left->id == append)
-			return(error_syntax("\'>>\'", my_data));
+			return (error_syntax("\'>>\'", my_data));
 	}
 	if (!syn->content)
-		return(error_syntax("\'newline\'", my_data));
+		return (error_syntax("\'newline\'", my_data));
 	else if (syn->content && syn->id != heredoc)
 		check_open(syn->content, syn->id);
 }

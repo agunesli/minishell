@@ -27,10 +27,8 @@ void	write_more(t_syntax *syn, t_data *my_data)
 
 void	check_open(char *name, int opt)
 {
-	int fd;
+	int	fd;
 
 	fd = open_file(name, opt);
 	close(fd);
 }
-
-

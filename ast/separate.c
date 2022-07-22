@@ -6,13 +6,13 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:35:04 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/21 13:43:21 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/22 12:52:21 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**separate_word(char *cmd, char **dest,int cpt, t_data *my_data)
+char	**separate_word(char *cmd, char **dest, int cpt, t_data *my_data)
 {
 	int		i;
 	int		len;
@@ -30,7 +30,7 @@ char	**separate_word(char *cmd, char **dest,int cpt, t_data *my_data)
 				i++;
 			len = good_place(cmd, " ", i, my_data) - i;
 			dest[++j] = ft_substr(cmd, i, len);
-			i+=(len);
+			i += len;
 		}
 	}
 	dest[++j] = NULL;
@@ -44,10 +44,7 @@ int	cpt_good_space(char *cmd)
 	char	c;
 	int		i;
 
-	i = -1;
-	cpt = 0;
-//	if (!cmd)
-//		return (-1);
+	i = ((cpt = 0, -1));
 	while (++i < (int)ft_strlen(cmd) && cmd[i])
 	{
 		while (cmd[i] && cmd[i] != ' ' && cmd[i] != '\'' && cmd[i] != '\"')
@@ -56,14 +53,13 @@ int	cpt_good_space(char *cmd)
 		if (c == '\'' || c == '\"')
 		{
 			i++;
-			while(cmd[i] && cmd[i] != c)
+			while (cmd[i] && cmd[i] != c)
 				i++;
 		}
 		else if (c == ' ')
 		{
-			cpt++;
-			while(cmd[i] && cmd[i] == c && cmd[i + 1] != '\'' 
-					&& cmd[i + 1] != '\"')
+			while (cpt++ && cmd[i] && cmd[i] == c && cmd[i + 1] != '\''
+				&& cmd[i + 1] != '\"')
 				i++;
 		}
 	}

@@ -18,7 +18,7 @@ int	id_is_in_env(char **env, char *cmd, int len)
 			break ;
 		}
 	}
-	free(id);
+	free (id);
 	if (pos)
 	{
 		free(env[i]);

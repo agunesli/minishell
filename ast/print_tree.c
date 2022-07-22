@@ -2,24 +2,6 @@
 
 int	g_current_level;
 
-void	print_all(char **bin)
-{
-	int	i;
-
-	i = -1;
-	if (bin == NULL)
-	{
-		printf("NULL\n");
-		return ;
-	}
-	while (bin[++i] != NULL)
-	{
-		printf("%s", bin[i]);
-		printf("\n");
-	}
-//	printf("\n");
-}
-
 void	print_syn(char *item, int id, char **cmd, int current_level)
 {
 	int	i;

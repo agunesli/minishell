@@ -65,13 +65,12 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 		if (!syn)
 			return (NULL);
 		syn->id = PIPE;
-		syn->content = NULL;
-		syn->cmd_arg = NULL;
+		syn->content = ((syn->cmd_arg = NULL, NULL));
 		syn->left = medium_piece(ft_substr(read, 0, end_sub(read, i)), my_data);
 		start = skip_space(read, i + 1);
 		str = ft_substr(read, start, end_sub(read, ft_strlen(read)) - start);
 		syn->right = strong_piece(str, my_data);
 	}
-	free(read);
-	return (syn);
+	return (free(read), syn);
 }
+//	free(read);

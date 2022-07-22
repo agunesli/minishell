@@ -1,7 +1,6 @@
 #include "../minishell.h"
 
-int
-ft_pwd(char **cmd, t_data *my_data)
+int ft_pwd(char **cmd, t_data *my_data)
 {
     char	buffer_pwd[4096];
 

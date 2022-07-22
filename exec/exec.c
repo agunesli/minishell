@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/21 13:56:50 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/22 12:56:14 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_builtins(t_data *my_data)
 		return (ft_unset(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("env", my_data->all_cmd[0][0], ft_strlen("env") + 1))
 		return (ft_env(my_data->all_cmd[my_data->crt], my_data));
-	return(-1);
+	return (-1);
 }
 
 //fork() => child process = 0 else main process
@@ -68,7 +68,7 @@ void	update_data_exec(t_data *my_data)
 		printf("Error\n");
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
-		return ; // Error malloc
+		return ;// Error malloc
 }
 
 void	end_of_parent(t_data *my_data)
