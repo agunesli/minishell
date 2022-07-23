@@ -9,7 +9,8 @@ char	*found_word_expand(char *subread, int i)
 	len = 0;
 	if (subread[i] == '?')
 		return (ft_strdup("?"));
-	printf("%s => %c \n", subread, subread[i]);
+	if (ft_isdigit(subread[i]))
+		return (ft_itoa(subread[i] - 48));
 	while (subread[++j] && (ft_isalnum(subread[j]) || subread[j] == '_'))
 		len++;
 	return (ft_substr(subread, i, len));
@@ -62,15 +63,23 @@ char	*expand(char *cmd, t_data *my_data)
 {
 	int		i;
 	int		quote;
+	int		dbl;
 
 	if (!cmd)
 		return (NULL);
 	i = -1;
 	quote = 1;
+	dbl = 0;
 	while (cmd[++i])
 	{
-		if (cmd[i] == '\'')
+		if (quote % 2 && cmd[i] == '\"')
+			dbl++;
+		else if (!(dbl % 2) && cmd[i] == '\'')
 			quote++;
+		else if (cmd[i] == '$' && dbl % 2
+				&& /*(cmd[i + 1] == '\'' || cmd[i + 1] == '\"' 
+					|| */(cmd[i + 1] == '$' || !cmd[i + 1])) 
+				i++;
 		else if (cmd[i] == '$' && quote % 2)
 			return (expand(change_expand(cmd, i, my_data), my_data));
 	}

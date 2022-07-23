@@ -35,7 +35,7 @@ char	**update_env(char *cmd, char **env, t_data *my_data)
 	int 	pos;
 	int		len;
 	int		i;
-	char	*tmp;
+	char	**tmp;
 
 	pos = found_id(cmd, env, my_data);
 	len = len_split(env);
