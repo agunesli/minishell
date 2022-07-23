@@ -135,6 +135,8 @@ void		start_env(char **env, t_data *my_data);
 void		free_all(char **bin);
 void		free_tab3(char ***bin);
 void		free_tree(t_syntax *syn);
+void		ft_free_end(t_data *my_data);
+void		ft_free_necessary(t_data *my_data);
 
 // error
 void		error_syntax(char *str, t_data *my_data);
@@ -177,4 +179,5 @@ char		**change_str_to_tab(char *str);
 int			ft_isalnum(int c);
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);
+int			ft_atoi(const char *str);
 #endif

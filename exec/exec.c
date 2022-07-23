@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/22 12:56:14 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/23 12:50:27 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ void	exec(t_syntax *syn, t_data *my_data)
 	if (my_data->childs[my_data->crt] == 0)
 	{
 		good_fd(syn, my_data);
+//		print_all(my_data->all_cmd[my_data->crt]);
+//	if (!my_data->all_cmd[my_data->crt][0] 
+//			&& !my_data->all_cmd[my_data->crt + 1])
+//			return ;
+	//		dprintf(2, "exec command not found\n");
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
 		dprintf(2, "%s\n", path);
 		print_all(my_data->all_cmd[my_data->crt]);

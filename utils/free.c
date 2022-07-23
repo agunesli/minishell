@@ -39,3 +39,20 @@ void	free_tree(t_syntax *syn)
 	free_tree(syn->right);
 	free(syn);
 }
+
+void	ft_free_end(t_data *my_data)
+{
+	free_tree(my_data->syn);
+	free(my_data->childs);
+	free_tab3(my_data->all_cmd);
+	free(my_data->env);
+	free(my_data->path);
+}
+
+void	ft_free_necessary(t_data *my_data)
+{
+	free_tree(my_data->syn);
+	free(my_data->childs);
+	free_tab3(my_data->all_cmd);
+}
+

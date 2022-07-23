@@ -17,17 +17,22 @@ char	*found_word_expand(char *subread, int i)
 
 char	*found_expand(char *expand, t_data *my_data)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = -1;
+	if (!expand)
+		return (NULL);
 	if (!ft_strncmp(expand, "?", 2))
 		return (ft_itoa(my_data->status_error));
 	else if (ft_isdigit(expand[i + 1]))
 		return (ft_strdup(""));
 	while (my_data->env[++i] != NULL)
 	{
-		if (!ft_strncmp(expand, my_data->env[i], ft_strlen(expand)))
+		tmp = ft_strjoin(expand, "=");
+		if (!ft_strncmp(tmp, my_data->env[i], ft_strlen(tmp)))
 			return (ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
+		free(tmp);
 	}
 	return (NULL); //Cas d'erreur !!
 }
@@ -47,7 +52,7 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 	part2 = ft_substr(cmd, start2, ft_strlen(cmd) - start2);
 	free(cmd);
 	free(expand);
-	if (!result[0])
+	if (!result || !result[0])
 		return (ft_strjoin(part1, part2));
 	else
 		return (ft_strjoin3(part1, result, part2));
@@ -58,6 +63,8 @@ char	*expand(char *cmd, t_data *my_data)
 	int		i;
 	int		quote;
 
+	if (!cmd)
+		return (NULL);
 	i = -1;
 	quote = 1;
 	while (cmd[++i])

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	found_id(char *cmd,  char **env)
+int	found_id(char *cmd,  char **env, t_data *my_data)
 {
 	int	i;
 	char	*id;
@@ -8,6 +8,8 @@ int	found_id(char *cmd,  char **env)
 
 	i = -1;
 	id = ft_strjoin(cmd, "=");
+	if (!ft_strncmp(id, "PATH=", 5))
+		my_data->path = NULL;
 	pos = NULL;
 	while (env[++i])
 	{
@@ -17,20 +19,25 @@ int	found_id(char *cmd,  char **env)
 			break ;
 		}
 	}
+	if (!ft_strncmp(id, "SHLVL=", 6))
+	{
+		env[i] = ft_strdup("SHLVL=0");
+		pos = NULL;
+	}
 	free(id);
 	if (pos)
 		return (i);
 	return (-1);
 }
 
-char	**update_env(char *cmd, char **env)
+char	**update_env(char *cmd, char **env, t_data *my_data)
 {
 	int 	pos;
 	int		len;
 	int		i;
-	char	**tmp;
+	char	*tmp;
 
-	pos = found_id(cmd, env);
+	pos = found_id(cmd, env, my_data);
 	len = len_split(env);
 	i = -1;
 	if (pos == -1)
@@ -60,7 +67,7 @@ int	ft_unset(char **cmd, t_data *my_data)
 		if (!id_check(cmd[i], -1))
 			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]); //Error 1
 		else
-			my_data->env = update_env(cmd[i], my_data->env);
+			my_data->env = update_env(cmd[i], my_data->env, my_data);
 	}
 	return (0);
 }

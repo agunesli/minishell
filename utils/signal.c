@@ -3,6 +3,7 @@
 void	signal_crtc(int sig)
 {
 	(void)sig;
+//	signal(sig, signal_crtc);
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
@@ -12,6 +13,7 @@ void	signal_crtc(int sig)
 void	signal_crtbs(int sig)
 {
 	(void)sig;
+//	signal(sig, signal_crtbs);
 	printf("\b\b  \b\b");
 }
 

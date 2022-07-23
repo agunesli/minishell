@@ -41,5 +41,5 @@ int main(int argc, char **argv, char **env)
 		}
 	}
 //	free(read);
-	return (0);
+	return (my_data.status_error);
 }

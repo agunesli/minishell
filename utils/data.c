@@ -67,7 +67,7 @@ void	start_env(char **env, t_data *my_data)
 		my_data->env = malloc(sizeof(char *) * 4);
 		if (!my_data->env)
 			return ;
-		my_data->env[0] = getcwd(buffer_pwd, sizeof(buffer_pwd));
+		my_data->env[0] = ft_strjoin("PWD=", getcwd(buffer_pwd, sizeof(buffer_pwd)));
 		my_data->env[1] = ft_strdup("SHLVL=1");
 		my_data->env[2] = ft_strdup("_=/usr/bin/env");
 		my_data->env[3] = NULL;
