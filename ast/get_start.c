@@ -31,7 +31,7 @@ void	get_start(t_data *my_data, char *read)
 		{
 			print_tree(my_data->syn);
 			update_data(my_data);
-			start_exec(my_data, my_data->syn);
+			get_start_exec(my_data, my_data->syn);
 			free_tree(my_data->syn);
 			free_tab3(my_data->all_cmd);
 		}

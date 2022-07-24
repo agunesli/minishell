@@ -12,59 +12,6 @@
 
 #include "../minishell.h"
 
-int	is_builtins(t_data *my_data)
-{
-	if (!ft_strncmp("echo", my_data->all_cmd[0][0], ft_strlen("echo") + 1))
-		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
-	if (!ft_strncmp("pwd", my_data->all_cmd[0][0], ft_strlen("pwd") + 1))
-		return (ft_pwd(my_data->all_cmd[my_data->crt], my_data));
-	if (!ft_strncmp("cd", my_data->all_cmd[0][0], ft_strlen("cd") + 1))
-		return (ft_cd(my_data->all_cmd[my_data->crt], my_data));
-	if (!ft_strncmp("exit", my_data->all_cmd[0][0], ft_strlen("exit") + 1))
-		return (ft_exit(my_data->all_cmd[my_data->crt], my_data));
-	if (!ft_strncmp("export", my_data->all_cmd[0][0], ft_strlen("export") + 1))
-		return (ft_export(my_data->all_cmd[my_data->crt], my_data));
-	if (!ft_strncmp("unset", my_data->all_cmd[0][0], ft_strlen("unset") + 1))
-		return (ft_unset(my_data->all_cmd[my_data->crt], my_data));
-	if (!ft_strncmp("env", my_data->all_cmd[0][0], ft_strlen("env") + 1))
-		return (ft_env(my_data->all_cmd[my_data->crt], my_data));
-	return (-1);
-}
-
-//fork() => child process = 0 else main process
-//pipe() => fd[0] = read, fd[1] = write
-//execve => v = array, e = env (Error = -1)
-void	exec(t_syntax *syn, t_data *my_data)
-{
-	char	*path;
-	int		status;
-
-	if (is_builtins(my_data) != -1)
-	{
-		my_data->crt++;
-		return ;
-	}
-	my_data->childs[my_data->crt] = fork();
-//	if (my_data->childs[my_data->current_process] == -1)
-//		Error;
-	if (my_data->childs[my_data->crt] == 0)
-	{
-		good_fd(syn, my_data);
-//		print_all(my_data->all_cmd[my_data->crt]);
-//	if (!my_data->all_cmd[my_data->crt][0] 
-//			&& !my_data->all_cmd[my_data->crt + 1])
-//			return ;
-	//		dprintf(2, "exec command not found\n");
-		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
-		dprintf(2, "%s\n", path);
-		print_all(my_data->all_cmd[my_data->crt]);
-		status = execve(path, my_data->all_cmd[my_data->crt], my_data->env);
-		if (status == -1)
-			perror("");
-	}
-	my_data->crt++;
-}
-
 void	update_data_exec(t_data *my_data)
 {
 	if (pipe(my_data->fd[0]) == -1)
@@ -74,6 +21,33 @@ void	update_data_exec(t_data *my_data)
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
 		return ;// Error malloc
+}
+
+//fork() => child process = 0 else main process
+//pipe() => fd[0] = read, fd[1] = write
+//execve => v = array, e = env (Error = -1)
+void	exec(t_syntax *syn, t_data *my_data)
+{
+	char	*path;
+	int		status;
+	int		built;
+
+	my_data->childs[my_data->crt] = fork();
+//	if (my_data->childs[my_data->current_process] == -1)
+//		Error;
+	if (my_data->childs[my_data->crt] == 0)
+	{
+		good_fd(syn, my_data);
+		built = is_builtins(my_data);
+		if (built != -1)
+			exit(built);
+		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
+		print_all(my_data->all_cmd[my_data->crt]);
+		status = execve(path, my_data->all_cmd[my_data->crt], my_data->env);
+		if (status == -1)
+			perror("");
+	}
+	my_data->crt++;
 }
 
 void	end_of_parent(t_data *my_data)
@@ -98,27 +72,15 @@ void	end_of_parent(t_data *my_data)
 	free(my_data->childs);
 }
 
-void	start_exec(t_data *my_data, t_syntax *syn)
+void	exec_with_pipe(t_data *my_data, t_syntax *syn)
 {
-	t_syntax	*next;
 
 	update_data_exec(my_data);
-	if (syn->id >= in)
+	while (syn && syn->id < in && syn->left)
 	{
-		exec(syn, my_data);
-		end_of_parent(my_data);
-		return ;
-	}
-	else
 		exec(syn->left, my_data);
-	while (syn && syn->id < in)
-	{
-		if (!syn->right->left)
-			break ;
-		next = syn->right->left;
-		exec(next, my_data);
 		syn = syn->right;
 	}
-	exec(syn->right, my_data);
+	exec(syn, my_data);
 	end_of_parent(my_data);
 }

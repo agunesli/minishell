@@ -113,9 +113,16 @@ void		check_open(char *name, int opt);
 /*                  EXEC                       */
 /***********************************************/
 
-void		start_exec(t_data *my_data, t_syntax *syn);
+void		get_start_exec(t_data *my_data, t_syntax *syn);
 void		good_fd(t_syntax *syn, t_data *data);
 char		*correct_path(char **cmd, t_data *my_data);
+int		is_builtins(t_data *my_data);
+
+//exec
+void		exec(t_syntax *syn, t_data *my_data);
+void		update_data_exec(t_data *my_data);
+void		end_of_parent(t_data *my_data);
+void		exec_with_pipe(t_data *my_data, t_syntax *syn);
 
 //utils_exec
 int			open_file(char *file, int i);
