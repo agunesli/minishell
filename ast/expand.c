@@ -25,7 +25,7 @@ char	*found_expand(char *expand, t_data *my_data)
 	if (!expand)
 		return (NULL);
 	if (!ft_strncmp(expand, "?", 2))
-		return (ft_itoa(my_data->status_error));
+		return (ft_itoa(g_error));
 	else if (ft_isdigit(expand[i + 1]))
 		return (ft_strdup(""));
 	while (my_data->env[++i] != NULL)

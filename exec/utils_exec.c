@@ -29,7 +29,7 @@ int	open_file(char *file, int i)
 	else if (i == append)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		perror(""); //a modifie !!
+		errorp(file); //a modifie !!
 	//	printf("bash: name_file: Permission denied\n"); //[1] bash: name_file: Permission denied 
 	return (fd);
 }

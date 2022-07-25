@@ -21,13 +21,16 @@ void	get_start(t_data *my_data, char *read)
 	if (check_read(read))
 		return ;
 	my_data->read = read;
+	my_data->syntax = 1;
 	my_data->syn = strong_piece(read, my_data);
 	my_data->nb_process = 1;
 	my_data->crt = 0;
-	if (!my_data->status_error)
+//	if (my_data->status_error != 2)
+	if (my_data->syntax)
 	{
 		check_tree(my_data->syn, my_data);
-		if (!my_data->status_error)
+	//	if (my_data->status_error != 2)
+		if (my_data->syntax)
 		{
 			print_tree(my_data->syn);
 			update_data(my_data);

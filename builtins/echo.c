@@ -30,7 +30,7 @@ int	ft_echo(char **cmd, t_data *my_data)
 	int	i;
 
 	(void)my_data;
-	print_all(cmd);
+//	print_all(cmd);
 	nl = check_option_nl(cmd);
 	i = nl;
 	while (cmd[i])

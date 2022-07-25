@@ -12,6 +12,9 @@
 */
 #include "../minishell.h"
 
+
+int g_error = 0;
+
 int main(int argc, char **argv, char **env)
 {
 	char	*read;
@@ -41,5 +44,5 @@ int main(int argc, char **argv, char **env)
 		}
 	}
 //	free(read);
-	return (my_data.status_error);
+	return (0);
 }

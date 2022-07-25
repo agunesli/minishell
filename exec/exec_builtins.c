@@ -3,7 +3,7 @@
 int	is_builtins(t_data *my_data)
 {
 	if (my_data->nb_process == 1)
-		good_fd(my_data->syn, my_data);
+		change_fd(my_data->syn);
 	if (!ft_strncmp("echo", my_data->all_cmd[0][0], ft_strlen("echo") + 1))
 		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
 	if (!ft_strncmp("pwd", my_data->all_cmd[0][0], ft_strlen("pwd") + 1))

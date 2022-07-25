@@ -30,7 +30,8 @@
 
 //# define PATH
 
-typedef void (*sighandler_t)(int);
+extern int	g_error;
+//typedef void (*sighandler_t)(int);
 
 enum e_syntax
 {
@@ -66,7 +67,8 @@ typedef struct s_data
 	int			*childs; //need to free
 	int			fd[2][2];
 	char		***all_cmd; //need to free
-	int			status_error;
+//	int			status_error;
+	int			syntax;
 	char		*path; //NUll sauf si le path n'hesiste pas au debut
 }	t_data;
 
@@ -115,8 +117,9 @@ void		check_open(char *name, int opt);
 
 void		get_start_exec(t_data *my_data, t_syntax *syn);
 void		good_fd(t_syntax *syn, t_data *data);
+void		change_fd(t_syntax *syn);
 char		*correct_path(char **cmd, t_data *my_data);
-int		is_builtins(t_data *my_data);
+int			is_builtins(t_data *my_data);
 
 //exec
 void		exec(t_syntax *syn, t_data *my_data);

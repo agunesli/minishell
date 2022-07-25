@@ -74,6 +74,7 @@ void	start_env(char **env, t_data *my_data)
 		my_data->path = ft_strdup("PATH=/mnt/nfs/homes/agunesli/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/mnt/nfs/homes/agunesli/.local/bin");
 	}
 	else
+//		my_data->env = env;
 		my_data->env = ft_tabdup(env);
 }
 
@@ -85,11 +86,13 @@ void	init_data(t_data *my_data, char *read, char **av, char **env)
 	my_data->env = NULL;
 	my_data->exprt = NULL;
 	start_env(env, my_data);
-	my_data->status_error = 0;
-	// my_data->nb_process = 1;
-	// my_data->crt = 0;
+//	my_data->status_error = 0;
+	my_data->nb_process = 1;
+	my_data->crt = 0;
 	my_data->all_cmd = NULL; //need to be free
 	my_data->syn = NULL;
+	my_data->childs = NULL;
+
 //	my_data->syn = strong_piece(ft_strdup(read), my_data);
 }
 

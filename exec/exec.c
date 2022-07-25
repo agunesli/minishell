@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/23 12:50:27 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/25 21:55:56 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	update_data_exec(t_data *my_data)
 void	exec(t_syntax *syn, t_data *my_data)
 {
 	char	*path;
-	int		status;
 	int		built;
 
 	my_data->childs[my_data->crt] = fork();
@@ -42,10 +41,13 @@ void	exec(t_syntax *syn, t_data *my_data)
 		if (built != -1)
 			exit(built);
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
-		print_all(my_data->all_cmd[my_data->crt]);
-		status = execve(path, my_data->all_cmd[my_data->crt], my_data->env);
-		if (status == -1)
+//		print_all(my_data->all_cmd[my_data->crt]);
+	//	execve(path, my_data->all_cmd[my_data->crt], my_data->env);
+		if (execve(path, my_data->all_cmd[my_data->crt], my_data->env) == -1)
+		{
+			g_error = errno;	
 			perror("");
+		}
 	}
 	my_data->crt++;
 }
@@ -62,12 +64,16 @@ void	end_of_parent(t_data *my_data)
 	close(my_data->fd[1][1]);
 	while (++i < my_data->nb_process)
 	{
-		status = waitpid(my_data->childs[i], NULL, 0);
-		if (!status)
-		{
-			my_data->status_error = status;
-			perror("");
-		}
+		waitpid(my_data->childs[i], &status, 0);
+		if (WIFEXITED(status))
+			g_error = WEXITSTATUS(status);
+	//	status = waitpid(my_data->childs[i], NULL, 0);
+	//	dprintf(2, "status error is %d\n",status);
+	//	if (!status)
+	//	{
+	//		my_data->status_error = status;
+	//		perror("");
+	//	}
 	}
 	free(my_data->childs);
 }
