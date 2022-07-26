@@ -44,6 +44,16 @@ enum e_syntax
 	append,	// 6
 	cmd,	// 7
 };
+enum e_built
+{
+	b_echo = 1,
+	b_cd,
+	b_pwd,
+	b_exprt,
+	b_unset,
+	b_env,
+	b_exit
+};
 
 typedef struct	s_syntax
 {
@@ -120,6 +130,7 @@ void		good_fd(t_syntax *syn, t_data *data);
 void		change_fd(t_syntax *syn);
 char		*correct_path(char **cmd, t_data *my_data);
 int			is_builtins(t_data *my_data);
+int			hub_builtins(int opt, t_data *my_data);
 
 //exec
 void		exec(t_syntax *syn, t_data *my_data);

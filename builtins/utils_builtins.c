@@ -1,5 +1,10 @@
 #include "../minishell.h"
 
+void	ft_putstr(char *str)
+{
+	write(1, str, ft_strlen(str));
+}
+
 void	print_all(char **bin)
 {
 	int	i;
@@ -7,13 +12,13 @@ void	print_all(char **bin)
 	i = -1;
 	if (bin == NULL)
 	{
-		printf("NULL\n");
+		ft_putstr("NULL\n");
 		return ;
 	}
 	while (bin[++i] != NULL)
 	{
-		printf("%s", bin[i]);
-		printf("\n");
+		ft_putstr(bin[i]);
+		ft_putstr("\n");
 	}
 }
 

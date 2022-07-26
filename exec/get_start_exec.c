@@ -1,12 +1,23 @@
 #include "../minishell.h"
 
+void	clean_fd(void)
+{
+	dup2(STDIN_FILENO, STDIN_FILENO);
+	dup2(STDOUT_FILENO, STDOUT_FILENO);
+	if (isatty(0))
+		printf("YESS\n");
+}
+
 void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 {
-	int built;
+	int status;
 
-	built = is_builtins(my_data); 
-	if (built != -1)
-		g_error = built;
+	status = is_builtins(my_data);
+	if (status)
+	{
+		g_error = hub_builtins(status, my_data);
+		clean_fd();
+	}
 	else
 	{
 		update_data_exec(my_data);

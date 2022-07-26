@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/25 21:55:56 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/07/26 09:36:35 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	update_data_exec(t_data *my_data)
 {
-	if (pipe(my_data->fd[0]) == -1)
-		printf("Error\n");
-	if (pipe(my_data->fd[1]) == -1)
-		printf("Error\n");
+	if (my_data->nb_process != 1)
+	{
+		if (pipe(my_data->fd[0]) == -1)
+			printf("Error\n");
+		if (pipe(my_data->fd[1]) == -1)
+			printf("Error\n");
+	}
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
 		return ;// Error malloc
@@ -38,8 +41,8 @@ void	exec(t_syntax *syn, t_data *my_data)
 	{
 		good_fd(syn, my_data);
 		built = is_builtins(my_data);
-		if (built != -1)
-			exit(built);
+		if (built)
+			exit(hub_builtins(built, my_data));
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
 //		print_all(my_data->all_cmd[my_data->crt]);
 	//	execve(path, my_data->all_cmd[my_data->crt], my_data->env);

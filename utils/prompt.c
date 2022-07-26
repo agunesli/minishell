@@ -43,6 +43,7 @@ int main(int argc, char **argv, char **env)
 //			write(1, "bouh\n",5);
 		}
 	}
+	rl_clear_history();
 //	free(read);
 	return (0);
 }

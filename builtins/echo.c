@@ -44,25 +44,3 @@ int	ft_echo(char **cmd, t_data *my_data)
 		write(1, "\n", 1);
 	return (0);
 }
-/*
-struct s
-{
-	int size;
-	char *str;
-	t_token_type
-};
-
-
-
-void
-test ()
-{
-	static const char* tmp = {	"echo",
-								"pwd",
-								"exit",
-								"cd",
-								"export",
-								"unset",
-								"env"};
-
-}*/
