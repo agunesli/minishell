@@ -54,7 +54,7 @@ void	check_tree(t_syntax *syn, t_data *my_data/*, int i*/)
 		check_medium(syn, my_data);
 	/*else
 		check_low(syn, my_data);*/
-	if (!my_data->check_syntax)
+	if (!my_data->syntax)
 		return ;
 	check_tree(syn->left, my_data);
 	check_tree(syn->right, my_data);

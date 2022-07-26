@@ -15,9 +15,9 @@
 void	update_data_exec(t_data *my_data)
 {
 	if (pipe(my_data->fd[0]) == -1)
-		printf("Error\n");
-	if (pipe(my_data->fd[1]) == -1)
-		printf("Error\n");
+		printf("Error with the fonction pipe\n");
+//	if (pipe(my_data->fd[1]) == -1)
+//		printf("Error\n");
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
 		return ;// Error malloc
@@ -33,10 +33,11 @@ void	exec(t_syntax *syn, t_data *my_data)
 
 	my_data->childs[my_data->crt] = fork();
 //	if (my_data->childs[my_data->current_process] == -1)
-//		Error;
+//		printf("Fail to create a new process\n");
+	signal_exec(my_data->childs[my_data->crt]); 
 	if (my_data->childs[my_data->crt] == 0)
 	{
-		good_fd(syn, my_data);
+		good_fd(syn, my_data, my_data->tmp);
 		built = is_builtins(my_data);
 		if (built != -1)
 			exit(built);
@@ -58,15 +59,24 @@ void	end_of_parent(t_data *my_data)
 	int	status;
 
 	i = -1;
-	close(my_data->fd[0][0]);
-	close(my_data->fd[0][1]);
-	close(my_data->fd[1][0]);
-	close(my_data->fd[1][1]);
+	close(my_data->fd[0]);
+	close(my_data->fd[1]);
+	close(my_data->tmp);
+//	close(my_data->fd[0][0]);
+//	close(my_data->fd[0][1]);
+//	close(my_data->fd[1][0]);
+//	close(my_data->fd[1][1]);
 	while (++i < my_data->nb_process)
 	{
 		waitpid(my_data->childs[i], &status, 0);
 		if (WIFEXITED(status))
 			g_error = WEXITSTATUS(status);
+	/*	if (WIFSIGNALED(g_pid))
+		{
+			g_status = WTERMSIG(g_pid);
+			if (g_status != 131)
+				g_status += 128;
+		}*/
 	//	status = waitpid(my_data->childs[i], NULL, 0);
 	//	dprintf(2, "status error is %d\n",status);
 	//	if (!status)
