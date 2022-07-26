@@ -36,6 +36,7 @@ int main(int argc, char **argv, char **env)
 			exit(0);
 		if (read && *read)
 		{
+			signal_def();
 			add_history(read);
 			// if (!check_read(read))
 			// 	break ;

@@ -75,7 +75,8 @@ typedef struct s_data
 	int			nb_process;
 	int			crt;
 	int			*childs; //need to free
-	int			fd[2][2];
+	int			fd[2];
+	int			tmp;
 	char		***all_cmd; //need to free
 //	int			status_error;
 	int			syntax;

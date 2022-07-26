@@ -3,6 +3,7 @@
 void	signal_crtc(int sig)
 {
 	(void)sig;
+	g_error = 1;
 //	signal(sig, signal_crtc);
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
