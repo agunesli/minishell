@@ -25,7 +25,7 @@ void	signal_def(void)
 }
 
 // SIG_IGN => demande a ignnorer le signal
-// SIG_DFL => action par defaut 
+// SIG_DFL => action par defaut
 void	signal_exec(int pid)
 {
 	if (pid == 0)

@@ -68,15 +68,13 @@ typedef struct	s_syntax
 typedef struct s_data
 {
 	char		*read;
-	char		**argv;
 	char		**env;
 	char		**exprt;
 	t_syntax	*syn; //need to free
 	int			nb_process;
 	int			crt;
 	int			*childs; //need to free
-	int			fd[2];
-	int			tmp;
+	int			fd[2][2];
 	char		***all_cmd; //need to free
 //	int			status_error;
 	int			syntax;
@@ -149,7 +147,7 @@ int			len_split(char **bin);
 /***********************************************/
 
 //data
-void		init_data(t_data *my_data, char *read, char **av, char **env);
+void		init_data(t_data *my_data, char *read, char **env);
 void		update_data(t_data *my_data);
 void		start_env(char **env, t_data *my_data);
 

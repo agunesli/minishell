@@ -11,7 +11,6 @@ int	check_read(char *read)
 	return (0);
 }
 
-// REFAIRE CETTE FONCTION
 void	get_start(t_data *my_data, char *read)
 {
 	while (*read == ' ')
@@ -22,14 +21,13 @@ void	get_start(t_data *my_data, char *read)
 		return ;
 	my_data->read = read;
 	my_data->syntax = 1;
+	my_data->syn = NULL;
 	my_data->syn = strong_piece(read, my_data);
 	my_data->nb_process = 1;
 	my_data->crt = 0;
-//	if (my_data->status_error != 2)
 	if (my_data->syntax)
 	{
 		check_tree(my_data->syn, my_data);
-	//	if (my_data->status_error != 2)
 		if (my_data->syntax)
 		{
 			print_tree(my_data->syn);

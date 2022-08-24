@@ -22,11 +22,9 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-//	(void)env;
-//	print_all(env);
 	read = NULL;
 	signal_def();
-	init_data(&my_data, read, argv, env);
+	init_data(&my_data, read, env);
 	while (42)
 	{
 //		if (read)
@@ -38,9 +36,7 @@ int main(int argc, char **argv, char **env)
 		{
 			signal_def();
 			add_history(read);
-			// if (!check_read(read))
-			// 	break ;
-			get_start(&my_data, read/*, argv, env*/);
+			get_start(&my_data, read);
 //			write(1, "bouh\n",5);
 		}
 	}
