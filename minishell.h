@@ -159,6 +159,7 @@ void		ft_free_end(t_data *my_data);
 void		ft_free_necessary(t_data *my_data);
 
 // error
+void		putstr_error(char *str);
 void		error_syntax(char *str, t_data *my_data);
 void		error_command(char *str, t_data *my_data);
 void		errorp(char	*str);
@@ -200,4 +201,5 @@ int			ft_isalnum(int c);
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_atoi(const char *str);
+char    	*ft_strrchr(const char *s, int c);
 #endif

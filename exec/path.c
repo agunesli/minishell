@@ -42,6 +42,20 @@ int	len_bin(char **bin)
 	return (i);
 }
 
+int	is_dir(char *cmd)
+{
+	if(open(cmd, __O_DIRECTORY) != -1)
+	{
+		putstr_error("bash: ");
+		putstr_error(cmd);
+		putstr_error(": ");
+		putstr_error(strerror(21));
+		putstr_error("\n");
+		return (1);
+	}
+	return (0);
+}
+
 char	*correct_path(char **cmd, t_data *my_data)
 {
 	char	**bin;
@@ -51,16 +65,23 @@ char	*correct_path(char **cmd, t_data *my_data)
 	char	*cmdd;
 
 	i = 0;
-	if (access(cmd[0], F_OK) == 0 && access(cmd[0], X_OK) == 0)
+	if (access(cmd[0], F_OK) == 0)
+	{
+		if(is_dir(cmd[0]))
+			return (NULL);
 		return (cmd[0]);
+	}
 	bin = found_path_env(my_data->env, my_data);
 	len = len_bin(bin);
 	cmdd = ft_strjoin("/", cmd[0]);
 	tmp = ft_strjoin(bin[0], cmdd);
-	while (++i < len && access(tmp, F_OK) != 0 && access(tmp, X_OK) != 0)
+	if(!ft_strrchr(cmd[0], '/'))
 	{
-		free(tmp);
-		tmp = ft_strjoin(bin[i], cmdd);
+		while (++i < len && access(tmp, F_OK | X_OK))
+		{
+			free(tmp);
+			tmp = ft_strjoin(bin[i], cmdd);
+		}
 	}
 	free(cmdd);
 	free_all(bin);
