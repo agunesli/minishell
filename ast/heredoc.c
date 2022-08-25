@@ -83,8 +83,9 @@ char	*found_name_fd_heredoc(void)
 	tmp1 = ft_itoa(i);
 	tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
 //	tmp2 = ft_strjoin(".here_doc", tmp1);
-	fd = open(tmp2, O_CREAT);
-	while (++i && fd != -1)
+	fd = open(tmp2, O_CREAT, 777);
+	printf("name is %s [%d]\n", tmp2, fd);
+	while (++i && fd == -1)
 	{
 		free(tmp1);
 		free(tmp2);
@@ -92,7 +93,6 @@ char	*found_name_fd_heredoc(void)
 		tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
 //		tmp2 = ft_strjoin(".here_doc", tmp1);
 		fd = open(tmp2, O_CREAT);
-
 	}
 	free(tmp1);
 	close(fd);
@@ -113,7 +113,9 @@ char	*write_heredoc(char *subread, int y, t_data *my_data)
 	if (!lim)
 		return (NULL);
 	name_fd = found_name_fd_heredoc();
-	fd = open_file(name_fd, O_CREAT | O_WRONLY | O_TRUNC);
+	printf("name of herdoc file is %s", name_fd); ///
+	fd = open(name_fd, O_CREAT | O_WRONLY | O_TRUNC);
+	printf(" and this fd is %d\n", fd); ///
 	if (fd == -1)
 		printf("bouh\n");
 	write(1, ">", 1);
