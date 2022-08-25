@@ -91,6 +91,8 @@ char	*found_name_fd_heredoc(void)
 		tmp1 = ft_itoa(i);
 		tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
 //		tmp2 = ft_strjoin(".here_doc", tmp1);
+		fd = open(tmp2, O_CREAT);
+
 	}
 	free(tmp1);
 	close(fd);

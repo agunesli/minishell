@@ -22,8 +22,8 @@ int	is_builtins(t_data *my_data)
 
 int	hub_builtins(int opt, t_data *my_data)
 {
-	if (my_data->nb_process == 1)
-		change_fd(my_data->syn);
+	//if (my_data->nb_process == 1)
+	//	change_fd(my_data->syn);
 	if (opt == b_echo)
 		return (ft_echo(my_data->all_cmd[my_data->crt], my_data));
 	if (opt == b_pwd)

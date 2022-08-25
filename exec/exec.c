@@ -46,7 +46,6 @@ void	exec(t_syntax *syn, t_data *my_data)
 			exit(hub_builtins(built, my_data));
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
 	//	print_all(my_data->all_cmd[my_data->crt]);
-	//	execve(path, my_data->all_cmd[my_data->crt], my_data->env);
 		if (path && execve(path, my_data->all_cmd[my_data->crt], my_data->env) == -1)
 		{
 			g_error = errno;
@@ -63,9 +62,7 @@ void	end_of_parent(t_data *my_data)
 	int	status;
 
 	i = -1;
-//	close(my_data->fd[0]);
-//	close(my_data->fd[1]);
-//	close(my_data->tmp);
+
 	close(my_data->fd[0][0]);
 	close(my_data->fd[0][1]);
 	close(my_data->fd[1][0]);
