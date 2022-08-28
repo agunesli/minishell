@@ -9,6 +9,7 @@ void	errorp(char *str)
 {
 //	printf("errno is %d\n", errno);
 //	my_data->status_error = errno;
+	g_error = errno;
 	putstr_error("bash: ");
 	putstr_error(str);
 	perror(" ");

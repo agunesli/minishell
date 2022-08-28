@@ -85,7 +85,6 @@ typedef struct s_data
 /*                  AST                        */
 /***********************************************/
 
-// void		get_start(char *read, char **av, char **env);
 void		get_start(t_data *my_data, char *read);
 
 //create_tree
@@ -96,7 +95,7 @@ t_syntax	*strong_piece(char *read, t_data *my_data);
 //redirection
 t_syntax	*redirection_in(char *read, int y, t_data *my_data);
 t_syntax	*redirection_out(char *read, int y, t_data *my_data);
-char		*write_heredoc(char *subread, int y, t_data *my_data);
+char		*create_heredoc(char *subread, int y, t_data *my_data);
 
 //utils_tree
 int			ft_is_in_set(char c, const char *set);
@@ -111,6 +110,7 @@ char		**separate(char *cmd, t_data *my_data);
 char		**change_cmd(char *cmd, t_data *my_data);
 char		*ft_strjoin3(char *s1, char *s2, char *s3);
 char		*expand(char *cmd, t_data *my_data);
+char		*change_expand(char *cmd, int i, t_data *my_data);
 char		*without_quote(char *cmd);
 
 // check_tree

@@ -1,28 +1,44 @@
 #include "../minishell.h"
 
+char	*bye_esp(char *read)
+{	
+	int		y;
+	char	*tmp;
+
+	y = 0;
+	while (read[y] == ' ')
+		y++;
+	tmp = ft_substr(read, y, ft_strlen(read) - y + 1);
+	free(read);
+	return (tmp);
+}
+
 int	check_read(char *read)
 {
-	if (!ft_strncmp("\n", read, 1))
+	int	y;
+
+	y = 0;
+	while (read[y] == ' ')
+		y++;
+	if (!read[y])
 		return (1);
-	else if (!ft_strncmp(":", read, 1))
+	if (read[y] == '\n')
 		return (1);
-	else if (!ft_strncmp("!", read, 1))
+	else if (read[y] == ':')
+		return (1);
+	else if (read[y] == '!')
 		return (1);
 	return (0);
 }
 
 void	get_start(t_data *my_data, char *read)
 {
-	while (*read == ' ')
-		read++;
-	if (!*read)
-		return ;
 	if (check_read(read))
 		return ;
-	my_data->read = read;
+	my_data->read = bye_esp(read);
 	my_data->syntax = 1;
 	my_data->syn = NULL;
-	my_data->syn = strong_piece(read, my_data);
+	my_data->syn = strong_piece(my_data->read, my_data);
 	my_data->nb_process = 1;
 	my_data->crt = 0;
 	if (my_data->syntax)

@@ -26,7 +26,7 @@ t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 		return (NULL);
 	syn->id = heredoc;
 	syn->cmd_arg = NULL;
-	syn->content = write_heredoc(subread, y, my_data);
+	syn->content = create_heredoc(subread, y, my_data);
 	if (syn->content == NULL)
 		return (free(syn), NULL);
 	start = skip_space(subread, 0);

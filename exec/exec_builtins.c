@@ -3,6 +3,8 @@
 
 int	is_builtins(t_data *my_data)
 {
+	if (!my_data->all_cmd[0])
+		return (0);
 	if (!ft_strncmp("echo", my_data->all_cmd[0][0], ft_strlen("echo") + 1))
 		return (b_echo);
 	if (!ft_strncmp("pwd", my_data->all_cmd[0][0], ft_strlen("pwd") + 1))
