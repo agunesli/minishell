@@ -65,24 +65,26 @@ char	*correct_path(char **cmd, t_data *my_data)
 	char	*cmdd;
 
 	i = 0;
-	if (access(cmd[0], F_OK) == 0)
+	if (access(cmd[0], F_OK) == 0 && is_dir(cmd[0]))
 	{
-		if(is_dir(cmd[0]))
-			return (NULL);
-		return (cmd[0]);
+//		if(is_dir(cmd[0]))
+		return (NULL);
 	}
+	if (access(cmd[0], F_OK | X_OK) == 0 || ft_strrchr(cmd[0], '/'))
+		return (cmd[0]);
 	bin = found_path_env(my_data->env, my_data);
 	len = len_bin(bin);
 	cmdd = ft_strjoin("/", cmd[0]);
 	tmp = ft_strjoin(bin[0], cmdd);
-	if(!ft_strrchr(cmd[0], '/'))
+//	if(!ft_strrchr(cmd[0], '/'))
+//	{
+	while (++i < len && access(tmp, F_OK | X_OK))
 	{
-		while (++i < len && access(tmp, F_OK | X_OK))
-		{
-			free(tmp);
-			tmp = ft_strjoin(bin[i], cmdd);
-		}
+//		printf("path is %s\n", tmp);
+		free(tmp);
+		tmp = ft_strjoin(bin[i], cmdd);
 	}
+//	}
 	free(cmdd);
 	free_all(bin);
 	if (i == len)
