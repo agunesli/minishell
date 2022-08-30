@@ -1,27 +1,29 @@
 #include "../minishell.h"
 
-void	signal_crtc(int sig)
+void	signal_ctrc(int sig)
 {
 	(void)sig;
-	g_error = 1;
-//	signal(sig, signal_crtc);
+	g_error = 130;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }
 
-void	signal_crtbs(int sig)
+void	signal_ctrbs(int sig)
 {
 	(void)sig;
-//	signal(sig, signal_crtbs);
-	printf("\b\b  \b\b");
+//	g_error = 131;
+	printf("\b\b  \b\b  \b\b");
 }
 
+// SIGINT => Terminal interrupt signal
+// SIGQUIT => Terminal quit signal
 void	signal_def(void)
 {
-	signal(SIGINT, signal_crtc);
-	signal(SIGQUIT, signal_crtbs);
+//	signal(SIGTSTP, signal_ctrd);
+	signal(SIGINT, signal_ctrc);
+	signal(SIGQUIT, signal_ctrbs);
 }
 
 // SIG_IGN => demande a ignnorer le signal

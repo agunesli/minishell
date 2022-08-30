@@ -38,13 +38,8 @@ void	check_medium(t_syntax *syn, t_data *my_data)
 	else if (syn->content && syn->id != heredoc)
 		check_open(syn->content, syn->id);
 }
-/*
-void	check_low(t_syntax *syn, t_data *my_data)
-{
 
-}*/
-
-void	check_tree(t_syntax *syn, t_data *my_data/*, int i*/)
+void	check_tree(t_syntax *syn, t_data *my_data)
 {
 	if (!syn)
 		return ;
@@ -52,8 +47,6 @@ void	check_tree(t_syntax *syn, t_data *my_data/*, int i*/)
 		check_strong(syn, my_data);
 	else if (in <= syn->id && syn->id <= append)
 		check_medium(syn, my_data);
-	/*else
-		check_low(syn, my_data);*/
 	if (!my_data->syntax)
 		return ;
 	check_tree(syn->left, my_data);

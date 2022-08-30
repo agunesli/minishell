@@ -5,8 +5,6 @@ char	*found_limiter(char *subread, int y, t_data *my_data)
 	int		len;
 
 	len = 0;
-//	(void)read;
-//	check_error_limiter(subread, read);
 	if (!subread[y])
 	{
 		error_syntax("\'newline\'", my_data);
@@ -18,7 +16,7 @@ char	*found_limiter(char *subread, int y, t_data *my_data)
 		return (NULL);
 	}
 	while (subread[len + y] && (!ft_is_in_set(subread[len + y], MEDIUM)
-				&& subread[len + y] != ' '))
+			&& subread[len + y] != ' '))
 		len++;
 	return (ft_substr(subread, y, len));
 }
@@ -28,24 +26,22 @@ char	*found_name_fd_heredoc(void)
 	int		i;
 	char	*tmp1;
 	char	*tmp2;
-	int 	fd;
+	int		fd;
 
 	i = 0;
 	tmp1 = ft_itoa(i);
 	tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
-//	tmp2 = ft_strjoin(".here_doc", tmp1);
-	fd = open(tmp2,/* O_CREAT |*/ O_WRONLY, 0777);
-	printf("name is %s [%d]\n", tmp2, fd); //
+	fd = open(tmp2, O_WRONLY, 0777);
+//	printf("name is %s [%d]\n", tmp2, fd); //
 	while (++i && fd != -1)
 	{
 		free(tmp1);
 		free(tmp2);
 		tmp1 = ft_itoa(i);
 		tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
-//		tmp2 = ft_strjoin(".here_doc", tmp1);
 		close(fd);
-		fd = open(tmp2,/* O_CREAT |*/ O_WRONLY, 0777);
-		printf("name is %s [%d]\n", tmp2, fd); //
+		fd = open(tmp2, O_WRONLY, 0777);
+	//	printf("name is %s [%d]\n", tmp2, fd); //
 	}
 	free(tmp1);
 	close(fd);
@@ -59,35 +55,47 @@ char	*expand_heredoc(char *line, t_data *my_data)
 	i = -1;
 	while (line[++i])
 	{
-		if (line[i] ==  '$')
+		if (line[i] == '$')
 			return (expand_heredoc(change_expand(line, i, my_data), my_data));
 	}
 	return (line);
+}
+
+void	sg_heredoc(int sig)
+{
+	(void)sig;
+	g_error = 666;
+	printf("\n");
+	close(STDIN_FILENO);
 }
 
 void	write_heredoc(int fd, char *lim, t_data *my_data)
 {
 	char	*line;
 	int		expd;
+	int 	b;
 
+	signal(SIGINT, sg_heredoc);
+	b = dup(STDIN_FILENO);
 	expd = 1;
 	if (lim[0] == '\"' || lim [0] == '\'')
 		lim = ((expd = 0, without_quote(lim)));
-	write(1, ">", 1);
-	line = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(lim, line, ft_strlen(lim)))
+	line = readline("> ");
+	while (line && ft_strncmp(lim, line, ft_strlen(lim)))
 	{
-		printf("before expand %s", line);
 		if (expd)
 			line = expand_heredoc(line, my_data);
-		printf("after expand %s", line);
 		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
 		free(line);
-		write(1, ">", 1);
-		line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
 	}
+	if (g_error == 666)
+		my_data->syntax = 0;
+	dup2(b, STDIN_FILENO);
 	free(line);
 	free(lim);
+	signal_def();
 }
 
 char	*create_heredoc(char *subread, int y, t_data *my_data)

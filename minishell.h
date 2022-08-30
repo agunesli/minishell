@@ -74,6 +74,7 @@ typedef struct s_data
 	int			nb_process;
 	int			crt;
 	int			*childs; //need to free
+//	int			*fd;
 	int			fd[2][2];
 	char		***all_cmd; //need to free
 //	int			status_error;
@@ -127,6 +128,7 @@ void		check_open(char *name, int opt);
 void		get_start_exec(t_data *my_data, t_syntax *syn);
 void		good_fd(t_syntax *syn, t_data *data);
 void		change_fd(t_syntax *syn);
+void		change_pipe(t_data *my_data);
 char		*correct_path(char **cmd, t_data *my_data);
 int			is_builtins(t_data *my_data);
 int			hub_builtins(int opt, t_data *my_data);
@@ -167,6 +169,8 @@ void		errorp(char	*str);
 //signal
 void		signal_def(void);
 void		signal_exec(int pid);
+void		sg_heredoc(int sig);
+void		signal_ctrbs(int sig);
 
 //builtins
 int			ft_echo(char **cmd, t_data *my_data);

@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/24 16:00:48 by tamather         ###   ########.fr       */
+/*   Updated: 2022/08/30 13:01:13 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	update_data_exec(t_data *my_data)
 {
 	if (my_data->nb_process != 1)
 	{
+//		my_data->fd = malloc(sizeof(int) * 3);
+//		if (!my_data->fd)
+//			return ; //Error malloc
 		if (pipe(my_data->fd[0]) == -1)
 			printf("Error\n");
 		if (pipe(my_data->fd[1]) == -1)
@@ -27,19 +30,20 @@ void	update_data_exec(t_data *my_data)
 }
 
 //fork() => child process = 0 else main process
-//pipe() => fd[0] = read, fd[1] = write
+//pipe() => fd[0] = read (in), fd[1] = write (out)
 //execve => v = array, e = env (Error = -1)
 void	exec(t_syntax *syn, t_data *my_data)
 {
 	char	*path;
 	int		built;
 
+//	change_pipe(my_data);
 	my_data->childs[my_data->crt] = fork();
 //	if (my_data->childs[my_data->current_process] == -1)
 //		printf("Fail to create a new process\n");
-	//signal_exec(my_data->childs[my_data->crt]);
 	if (my_data->childs[my_data->crt] == 0)
 	{
+		signal(SIGQUIT, signal_ctrbs);
 		good_fd(syn, my_data);
 		built = is_builtins(my_data);
 		if (built)
@@ -67,24 +71,16 @@ void	end_of_parent(t_data *my_data)
 	close(my_data->fd[0][1]);
 	close(my_data->fd[1][0]);
 	close(my_data->fd[1][1]);
+//	close(my_data->fd[0]);
+//	close(my_data->fd[1]);
+//	close(my_data->fd[2]);
 	while (++i < my_data->nb_process)
 	{
 		waitpid(my_data->childs[i], &status, 0);
 		if (WIFEXITED(status))
 			g_error = WEXITSTATUS(status);
-	/*	if (WIFSIGNALED(g_pid))
-		{
-			g_status = WTERMSIG(g_pid);
-			if (g_status != 131)
-				g_status += 128;
-		}*/
-	//	status = waitpid(my_data->childs[i], NULL, 0);
-	//	dprintf(2, "status error is %d\n",status);
-	//	if (!status)
-	//	{
-	//		my_data->status_error = status;
-	//		perror("");
-	//	}
+		if (WIFSIGNALED(status))
+			g_error = WTERMSIG(status);
 	}
 	free(my_data->childs);
 }

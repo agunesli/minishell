@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 char	*bye_esp(char *read)
-{	
+{
 	int		y;
 	char	*tmp;
 

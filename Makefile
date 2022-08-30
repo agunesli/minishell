@@ -20,7 +20,7 @@ OBJ	= $(SRC:%.c=%.o)
 
 NAME	=	minishell
 CC		=	gcc
-FLAGS	=	-g3 -Wall -Wextra -Werror
+FLAGS	=	-g3 -Wall -Wextra #-Werror
 RM		=	rm -rf
 LFLAGS	=	-lreadline
 

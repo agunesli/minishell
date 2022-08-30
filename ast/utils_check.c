@@ -12,17 +12,28 @@ char	*without_nl(char *src)
 void	write_more(t_syntax *syn, t_data *my_data)
 {
 	char	*line;
+	int		b;
 
-	write(1, ">", 1);
-	line = get_next_line(STDIN_FILENO);
-	while (!ft_strncmp(line, "\n", 1))
+	b = dup(STDIN_FILENO);
+	signal(SIGINT, sg_heredoc);
+//	signal(SIGINT, SIG_DFL);
+	line = readline("> ");
+	printf("line is %s\n", line);
+	if (!line && g_error != 666)
 	{
-		free(line);
-		write(1, ">", 1);
-		line = get_next_line(STDIN_FILENO);
+		printf("bash: syntax error: unexpected end of file\nexit");
+		free_tree(my_data->syn);
+		exit(2);
 	}
-	line = without_nl(line);
-	syn->right = strong_piece(line, my_data);
+	if (line && *line)
+		syn->right = strong_piece(line, my_data);
+	else
+	{
+		syn->right = NULL;
+		my_data->syntax = 0;
+	}
+	dup2(b, STDIN_FILENO);
+	signal_def();
 }
 
 void	check_open(char *name, int opt)

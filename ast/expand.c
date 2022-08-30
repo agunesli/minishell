@@ -77,8 +77,7 @@ char	*expand(char *cmd, t_data *my_data)
 		else if (!(dbl % 2) && cmd[i] == '\'')
 			quote++;
 		else if (cmd[i] == '$' && dbl % 2
-				&& /*(cmd[i + 1] == '\'' || cmd[i + 1] == '\"' 
-					|| */(cmd[i + 1] == '$' || !cmd[i + 1])) 
+				&& (cmd[i + 1] == '$' || !cmd[i + 1])) 
 				i++;
 		else if (cmd[i] == '$' && quote % 2)
 			return (expand(change_expand(cmd, i, my_data), my_data));
