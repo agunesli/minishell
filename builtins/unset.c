@@ -38,19 +38,19 @@ char	**update_env(char *cmd, char **env, t_data *my_data)
 	char	**tmp;
 
 	pos = found_id(cmd, env, my_data);
-	len = len_split(env);
-	i = -1;
 	if (pos == -1)
 		return (env);
-	tmp = malloc(sizeof(char *) * len);
+	i = -1;
+	len = len_split(env);
+	tmp = malloc(sizeof(char *) * (len));
 	if (!tmp)
 		return (NULL);
 	while (++i < pos)
 		tmp[i] = env[i];
-	while (env[++i])
+	while (++i < len)
 		tmp[i - 1] = env[i];
-	tmp[i] = NULL;
-	free(env[i]);
+	tmp[i - 1] = NULL;
+	free(env[pos]);
 	free(env);
 	return (tmp);
 }

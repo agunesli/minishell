@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:35:04 by agunesli          #+#    #+#             */
-/*   Updated: 2022/07/22 12:52:21 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:36:29 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ char	**separate_word(char *cmd, char **dest, int cpt, t_data *my_data)
 
 	i = 0;
 	j = -1;
+
 	if (!cpt)
+	{
 		dest[++j] = ft_strdup(cmd);
+	}
 	else
 	{
-		while (cmd[i])
+		while (cmd && cmd[i])
 		{
 			while (cmd[i] && cmd[i] == ' ')
 				i++;

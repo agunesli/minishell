@@ -58,7 +58,9 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 	if (i < 0)
 		return (NULL);
 	if (i == (int)ft_strlen(read))
+	{
 		syn = medium_piece(ft_strdup(read), my_data);
+	}
 	else
 	{
 		syn = malloc(sizeof(t_syntax));
