@@ -5,6 +5,8 @@ int	all_is_digit(char *str)
 	int	i;
 
 	i = -1;
+	if (str[++i] != '-' && str[i] != '+')
+		i--;
 	while (str[++i])
 	{
 		if (!ft_isdigit(str[i]))

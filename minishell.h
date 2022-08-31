@@ -25,8 +25,8 @@
 # define LOW "\"\'$*"
 
 //couleur pour le prompt
-#define CYELLOW "\001\e[0;36m\002"
-#define RESET   "\001\e[0m\002"
+#define CYELLOW "\1\e[0;36m\2"
+#define RESET   "\1\e[0m\2"
 
 //# define PATH
 
@@ -118,7 +118,7 @@ char		*without_quote(char *cmd);
 void		check_tree(t_syntax *syn, t_data *my_data);
 char		*without_nl(char *src);
 void		write_more(t_syntax *syn, t_data *my_data);
-void		check_open(char *name, int opt);
+void		check_open(char *name, int opt, t_data *my_data);
 
 
 /***********************************************/

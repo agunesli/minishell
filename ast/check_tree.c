@@ -11,7 +11,7 @@ void	check_strong(t_syntax *syn, t_data *my_data)
 		else if (syn->id == PIPE)
 			return (error_syntax("\'|\'", my_data));
 	}
-/*	else if (syn->left->id == in || syn->left->id == append 
+/*	else if (syn->left->id == in || syn->left->id == append
 		|| syn->left->id == heredoc)
 		return(error_syntax("\'|\'", my_data));
 	else if (syn->left->id == out)
@@ -36,7 +36,7 @@ void	check_medium(t_syntax *syn, t_data *my_data)
 	if (!syn->content)
 		return (error_syntax("\'newline\'", my_data));
 	else if (syn->content && syn->id != heredoc)
-		check_open(syn->content, syn->id);
+		check_open(syn->content, syn->id, my_data);
 }
 
 void	check_tree(t_syntax *syn, t_data *my_data)

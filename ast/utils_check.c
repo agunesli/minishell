@@ -36,10 +36,12 @@ void	write_more(t_syntax *syn, t_data *my_data)
 	signal_def();
 }
 
-void	check_open(char *name, int opt)
+void	check_open(char *name, int opt, t_data *my_data)
 {
 	int	fd;
 
 	fd = open_file(name, opt);
+	if (fd == -1)
+		my_data->syntax = 0;
 	close(fd);
 }
