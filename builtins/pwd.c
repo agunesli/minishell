@@ -16,7 +16,7 @@ int ft_pwd(char **cmd, t_data *my_data)
 	}
 	else
 	{
-		perror("getcwd() error\n");
+		perror("pwd: error retrieving current directory: getcwd: cannot access parent directories");
 		return -1;
 	}
 	return 0;
