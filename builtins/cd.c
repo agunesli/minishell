@@ -31,7 +31,8 @@ char	**update_oldpwd_in_env(char **env, char *old_pwd)
 
 void cd_error(char *str)
 {
-	fprintf(stderr, "bash: cd: %s: No such file or directory", str);
+	printf("bash: cd: %s: %s\n", str, strerror(errno));
+
 }
 
 /* Tu dois update tes vars denv avec le old path sur OLDPWD, des le debut, puisque si x == 1, old_pwd sera modif */
@@ -70,7 +71,6 @@ int ft_cd_handler(char *dst, t_data *my_data, int x)
 int ft_cd(char **cmd, t_data *my_data)
 {
 	char	*dst_path;
-	char	actual[4096];
 	int 	rtvl;
 
 	if (cmd[1] == NULL)
@@ -90,6 +90,5 @@ int ft_cd(char **cmd, t_data *my_data)
 	{
 		rtvl = ft_cd_handler(dst_path, my_data, 2);
 	}
-	printf("ACTUAL POS : %s \n", getcwd(actual, sizeof(actual)));
 	return rtvl;
 }
