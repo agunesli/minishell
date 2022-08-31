@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 18:30:32 by agunesli          #+#    #+#             */
+/*   Updated: 2022/08/31 18:31:15 by agunesli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*found_word_expand(char *subread, int i)
@@ -35,7 +47,7 @@ char	*found_expand(char *expand, t_data *my_data)
 			return (ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
 		free(tmp);
 	}
-	return (NULL); //Cas d'erreur !!
+	return (NULL);
 }
 
 char	*change_expand(char *cmd, int i, t_data *my_data)
@@ -77,7 +89,7 @@ char	*expand(char *cmd, t_data *my_data)
 		else if (!(dbl % 2) && cmd[i] == '\'')
 			quote++;
 		else if (cmd[i] == '$' && dbl % 2
-				&& (cmd[i + 1] == '$' || !cmd[i + 1])) 
+			&& (cmd[i + 1] == '$' || !cmd[i + 1]))
 				i++;
 		else if (cmd[i] == '$' && quote % 2)
 			return (expand(change_expand(cmd, i, my_data), my_data));

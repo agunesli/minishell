@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_check.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 18:25:52 by agunesli          #+#    #+#             */
+/*   Updated: 2022/08/31 18:28:50 by agunesli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*without_nl(char *src)
@@ -16,10 +28,8 @@ void	write_more(t_syntax *syn, t_data *my_data)
 
 	b = dup(STDIN_FILENO);
 	signal(SIGINT, sg_heredoc);
-//	signal(SIGINT, SIG_DFL);
 	line = readline("> ");
-	printf("line is %s\n", line);
-	if (!line && g_error != 666)
+	if (!line && g_error != 130)
 	{
 		printf("bash: syntax error: unexpected end of file\nexit");
 		free_tree(my_data->syn);
@@ -44,4 +54,18 @@ void	check_open(char *name, int opt, t_data *my_data)
 	if (fd == -1)
 		my_data->syntax = 0;
 	close(fd);
+}
+
+char	*found_name_fd(char *subread, int y)
+{
+	int	i;
+
+	i = 0;
+	while (subread[y] == ' ')
+		y++;
+	i = y;
+	while (subread[y] && subread[y] != ' ' && subread[y] != '\n'
+		&& subread[y] != '>' && subread[y] != '<')
+		y++;
+	return (ft_substr(subread, i, y - i));
 }

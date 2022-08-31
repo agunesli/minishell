@@ -119,7 +119,7 @@ void		check_tree(t_syntax *syn, t_data *my_data);
 char		*without_nl(char *src);
 void		write_more(t_syntax *syn, t_data *my_data);
 void		check_open(char *name, int opt, t_data *my_data);
-
+char		*found_name_fd(char *subread, int y);
 
 /***********************************************/
 /*                  EXEC                       */

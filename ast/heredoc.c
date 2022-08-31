@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 18:26:10 by agunesli          #+#    #+#             */
+/*   Updated: 2022/08/31 18:26:20 by agunesli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*found_limiter(char *subread, int y, t_data *my_data)
@@ -32,7 +44,6 @@ char	*found_name_fd_heredoc(void)
 	tmp1 = ft_itoa(i);
 	tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
 	fd = open(tmp2, O_WRONLY, 0777);
-//	printf("name is %s [%d]\n", tmp2, fd); //
 	while (++i && fd != -1)
 	{
 		free(tmp1);
@@ -41,7 +52,6 @@ char	*found_name_fd_heredoc(void)
 		tmp2 = ft_strjoin("/tmp/.here_doc", tmp1);
 		close(fd);
 		fd = open(tmp2, O_WRONLY, 0777);
-	//	printf("name is %s [%d]\n", tmp2, fd); //
 	}
 	free(tmp1);
 	close(fd);
@@ -61,19 +71,11 @@ char	*expand_heredoc(char *line, t_data *my_data)
 	return (line);
 }
 
-void	sg_heredoc(int sig)
-{
-	(void)sig;
-	g_error = 666;
-	printf("\n");
-	close(STDIN_FILENO);
-}
-
 void	write_heredoc(int fd, char *lim, t_data *my_data)
 {
 	char	*line;
 	int		expd;
-	int 	b;
+	int		b;
 
 	signal(SIGINT, sg_heredoc);
 	b = dup(STDIN_FILENO);
@@ -90,7 +92,7 @@ void	write_heredoc(int fd, char *lim, t_data *my_data)
 		free(line);
 		line = readline("> ");
 	}
-	if (g_error == 666)
+	if (g_error == 130)
 		my_data->syntax = 0;
 	dup2(b, STDIN_FILENO);
 	free(line);

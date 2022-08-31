@@ -17,6 +17,14 @@ void	signal_ctrbs(int sig)
 	printf("\b\b  \b\b  \b\b");
 }
 
+void	sg_heredoc(int sig)
+{
+	(void)sig;
+	g_error = 130;
+	printf("\n");
+	close(STDIN_FILENO);
+}
+
 // SIGINT => Terminal interrupt signal
 // SIGQUIT => Terminal quit signal
 void	signal_def(void)

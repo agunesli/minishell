@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quote.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 18:26:26 by agunesli          #+#    #+#             */
+/*   Updated: 2022/08/31 18:28:02 by agunesli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	len_arg(char *cmd)
@@ -34,12 +46,10 @@ char	*without_quote(char *cmd)
 
 	cpt = len_arg(cmd);
 	i = ((j = -1, -1));
-//	if (cpt == -1)
-//		error ?
 	if (cpt == 0)
 		return (cmd);
 	if (cpt == (int)ft_strlen(cmd))
-		return (free(cmd), ft_strdup(" ")); //PEUT ETRE PB AVEC ECHO
+		return (free(cmd), ft_strdup(" "));
 	dest = malloc(sizeof(char) * (ft_strlen(cmd) - cpt + 1));
 	if (!dest)
 		return (NULL);

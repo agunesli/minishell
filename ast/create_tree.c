@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_tree.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/31 18:29:59 by agunesli          #+#    #+#             */
+/*   Updated: 2022/08/31 18:30:15 by agunesli         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 t_syntax	*low_piece(char *subread, t_data *my_data)
@@ -58,9 +70,7 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 	if (i < 0)
 		return (NULL);
 	if (i == (int)ft_strlen(read))
-	{
 		syn = medium_piece(ft_strdup(read), my_data);
-	}
 	else
 	{
 		syn = malloc(sizeof(t_syntax));
@@ -75,4 +85,3 @@ t_syntax	*strong_piece(char *read, t_data *my_data)
 	}
 	return (free(read), syn);
 }
-//	free(read);
