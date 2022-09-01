@@ -37,15 +37,15 @@ void	change_fd(t_syntax *syn)
 // fd => fd[0] in actuel fd[1] out actuel fd[2] in futur (technique adrien)
 // fd => fd[0] in futur fd[1] out actuel fd[2] in actuel
 // la technique de Lylian faire une recursive ! (je prefere celle la !)
-void	good_fd(t_syntax *syn, t_data *my_data)
+/*void	good_fd(t_syntax *syn, t_data *my_data)
 {
-/*	close(my_data->fd[0]);
+	close(my_data->fd[0]);
 	if (my_data->crt != 0)
 		dup2(my_data->fd[2], STDIN_FILENO);
 //	close(my_data->fd[2]);
 	if (my_data->crt != my_data->nb_process - 1)
 		dup2(my_data->fd[1], STDOUT_FILENO);
-//	close(my_data->fd[1]);*/
+//	close(my_data->fd[1]);
 //	printf(":crt is %d [%d] and nb process is %d\n", my_data->crt, my_data->crt%2, my_data->nb_process);
 	close(my_data->fd[my_data->crt % 2][1]);
 	close(my_data->fd[(my_data->crt + 1) % 2][0]);
@@ -60,6 +60,6 @@ void	good_fd(t_syntax *syn, t_data *my_data)
 		printf("out %d\n",(my_data->crt + 1) % 2);
 		dup2(my_data->fd[(my_data->crt + 1) % 2][1], STDOUT_FILENO);
 	}
-//	close(my_data->fd[(my_data->crt + 1) % 2][1]);*/
+//	close(my_data->fd[(my_data->crt + 1) % 2][1]);
 	change_fd(syn);
-}
+}*/

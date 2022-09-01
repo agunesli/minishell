@@ -76,7 +76,7 @@ typedef struct s_data
 	int			fd_sdt[2];
 	int			*childs; //need to free
 //	int			*fd;
-	int			fd[2][2];
+	int			fd_tmp;
 	char		***all_cmd; //need to free
 //	int			status_error;
 	int			syntax;
