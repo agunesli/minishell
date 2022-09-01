@@ -19,12 +19,10 @@ char	**update_oldpwd_in_env(char **env, char *old_pwd)
 	}
 	else
 	{
-		printf("srjyjr\n");
 		tmp1 = ft_strjoin("OLDPWD=", old_pwd);
 		tmp2 = change_str_to_tab(tmp1);
 		env = ft_strjointab(env, tmp2);
 		free(tmp1);
-		free_all(tmp2);
 	}
 	return (env);
 }

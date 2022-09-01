@@ -95,6 +95,7 @@ void	write_heredoc(int fd, char *lim, t_data *my_data)
 	if (g_error == 130)
 		my_data->syntax = 0;
 	dup2(b, STDIN_FILENO);
+	close(b);
 	free(line);
 	free(lim);
 	signal_def();

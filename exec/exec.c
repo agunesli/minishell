@@ -57,6 +57,8 @@ void	exec(t_syntax *syn, t_data *my_data)
 		}
 		exit(0);
 	}
+	else
+		signal(SIGINT, SIG_IGN);
 	my_data->crt++;
 }
 
