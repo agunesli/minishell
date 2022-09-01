@@ -73,6 +73,7 @@ typedef struct s_data
 	t_syntax	*syn; //need to free
 	int			nb_process;
 	int			crt;
+	int			fd_sdt[2];
 	int			*childs; //need to free
 //	int			*fd;
 	int			fd[2][2];

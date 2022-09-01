@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/30 13:01:13 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:54:46 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	exec(t_syntax *syn, t_data *my_data)
 	if (my_data->childs[my_data->crt] == 0)
 	{
 		signal(SIGQUIT, signal_ctrbs);
-		good_fd(syn, my_data);
+	//	good_fd(syn, my_data);
+		change_fd(syn);
 		built = is_builtins(my_data);
 		if (built)
 			exit(hub_builtins(built, my_data));

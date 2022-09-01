@@ -12,7 +12,6 @@
 */
 #include "../minishell.h"
 
-
 int g_error = 0;
 
 int main(int argc, char **argv, char **env)

@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:26:10 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/31 18:26:20 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/01 18:02:17 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ char	*create_heredoc(char *subread, int y, t_data *my_data)
 	char	*lim;
 	char	*name_fd;
 	int		fd;
+	int		tmp;
 
+	tmp = g_error;
+	g_error = 0;
 	while (subread[y] == ' ')
 		y++;
 	lim = found_limiter(subread, y, my_data);
@@ -118,5 +121,7 @@ char	*create_heredoc(char *subread, int y, t_data *my_data)
 		perror("");
 	write_heredoc(fd, lim, my_data);
 	close(fd);
+	if (g_error == 0)
+		g_error = tmp;
 	return (name_fd);
 }
