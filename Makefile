@@ -20,9 +20,9 @@ OBJ	= $(SRC:%.c=%.o)
 
 NAME	=	minishell
 CC		=	gcc
-FLAGS	=	-g3 -Wall -Wextra -Werror #-fsanitize=address 
+FLAGS	=	-g3 -Wall -Wextra -Werror -fsanitize=address 
 RM		=	rm -rf
-LFLAGS	=	-lreadline #-fsanitize=address
+LFLAGS	=	-lreadline -fsanitize=address
 
 %.o: %.c
 	${CC} ${FLAGS} -c $< -o $@

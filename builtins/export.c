@@ -19,8 +19,8 @@ void	print_only_export(char **env, char **exprt)
 
 void	do_export(char **cmd, t_data *my_data)
 {
-	int	i;
-	int pos_eg;
+	int		i;
+	int		pos_eg;
 	char	**dst;
 
 	i = 0;
@@ -31,6 +31,11 @@ void	do_export(char **cmd, t_data *my_data)
 			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]); //Error 1
 		else
 		{
+			if (!ft_strncmp("PATH=", cmd[i], 5))
+			{
+				free(my_data->path);
+				my_data->path = NULL;
+			}
 			dst = change_str_to_tab(cmd[i]);
 			if (pos_eg == -1)
 				change_exprt(my_data, dst);

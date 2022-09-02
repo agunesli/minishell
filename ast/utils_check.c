@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:25:52 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/31 18:28:50 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/02 13:58:43 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	write_more(t_syntax *syn, t_data *my_data)
 		my_data->syntax = 0;
 	}
 	dup2(b, STDIN_FILENO);
+	close(b);
 	signal_def();
 }
 

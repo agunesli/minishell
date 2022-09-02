@@ -11,7 +11,6 @@ void	clean_fd(int ft_init[2])
 void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 {
 	int status;
-//	int	fd_init[2];
 
 	status = is_builtins(my_data);
 	if (status)
@@ -32,11 +31,13 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 
 void	get_start_exec(t_data *my_data, t_syntax *syn)
 {
-	my_data->fd_sdt[0] = dup(STDIN_FILENO);
-	my_data->fd_sdt[1] = dup(STDOUT_FILENO);
+	int	fd_sdt[2];
+
+	fd_sdt[0] = dup(STDIN_FILENO);
+	fd_sdt[1] = dup(STDOUT_FILENO);
 	if (syn->id >= in)
 		exec_one_cmd(my_data, syn);
 	else
 		exec_with_pipe(my_data, syn);
-	clean_fd(my_data->fd_sdt);
+	clean_fd(fd_sdt);
 }
