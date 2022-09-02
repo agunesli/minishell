@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:21:18 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/31 18:25:13 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:14:11 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 	tmp = found_name_fd(subread, y);
 	start = skip_space(subread, ft_strlen(tmp) + y);
 	free(tmp);
-	end = ft_strlen(subread) - start + 1;
+	end = ft_strlen(subread) - start;
 	syn->right = medium_piece(ft_substr(subread, start, end), my_data);
 	return (syn);
 }

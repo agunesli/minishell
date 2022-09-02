@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/02 14:23:10 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/02 16:28:49 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	end_of_parent(t_data *my_data)
 void	exec_with_pipe(t_data *my_data, t_syntax *syn)
 {
 
+	if (!my_data->all_cmd[my_data->crt])
+		return ;
 	update_data_exec(my_data);
 	while (syn && syn->id < in && syn->left)
 	{
