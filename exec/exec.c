@@ -61,7 +61,12 @@ void	exec(t_syntax *syn, t_data *my_data)
 		change_fd(syn);
 		built = is_builtins(my_data);
 		if (built)
-			exit(hub_builtins(built, my_data));
+		{
+			g_error = hub_builtins(built, my_data);
+			ft_free_end(my_data);
+			free(my_data->childs);
+			exit(g_error);
+		}
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
 		if (path && execve(path, my_data->all_cmd[my_data->crt], my_data->env) == -1)
 		{

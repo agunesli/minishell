@@ -21,6 +21,7 @@ int	found_id(char *cmd,  char **env, t_data *my_data)
 	}
 	if (!ft_strncmp(id, "SHLVL=", 6))
 	{
+		free(env[i]);
 		env[i] = ft_strdup("SHLVL=0");
 		pos = NULL;
 	}

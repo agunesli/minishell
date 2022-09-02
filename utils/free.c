@@ -47,7 +47,10 @@ void	ft_free_end(t_data *my_data)
 //	if (my_data->childs)
 //		free(my_data->childs);
 	if (my_data->all_cmd)
+	{
 		free_tab3(my_data->all_cmd);
+		my_data->all_cmd = NULL;
+	}
 	free_all(my_data->env);
 	free(my_data->path);
 }
@@ -55,7 +58,11 @@ void	ft_free_end(t_data *my_data)
 void	ft_free_necessary(t_data *my_data)
 {
 	free_tree(my_data->syn); 
-free(my_data->childs);
-	free_tab3(my_data->all_cmd);
+	free(my_data->childs);
+	if (my_data->all_cmd)
+	{
+		free_tab3(my_data->all_cmd);
+		my_data->all_cmd = NULL;
+	}
 }
 

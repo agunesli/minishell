@@ -21,6 +21,8 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 //		fd_init[1] = dup(STDOUT_FILENO);
 		change_fd(my_data->syn);
 		g_error = hub_builtins(status, my_data);
+		//ft_free_end(my_data);
+		ft_free_necessary(my_data);
 //		clean_fd(fd_init);
 	}
 	else
