@@ -88,7 +88,10 @@ char	*correct_path(char **cmd, t_data *my_data)
 	free(cmdd);
 	free_all(bin);
 	if (i == len)
+	{
+		free(tmp);
 		return (error_command(cmd[0], my_data), NULL);
+	}
 	else
 		return (tmp);
 }

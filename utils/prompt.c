@@ -33,7 +33,10 @@ int main(int argc, char **argv, char **env)
 		read = readline(CYELLOW "Minishell💙 > " RESET);
 //		printf("signal %d\n", sg);
 		if (!read)
-			exit(0);
+		{
+			ft_free_end(&my_data);
+			exit(g_error);
+		}
 		if (read && *read)
 		{
 //			signal_def();

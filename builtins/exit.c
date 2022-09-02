@@ -22,7 +22,10 @@ int	ft_exit(char **cmd, t_data *my_data)
 	nb = 0;
 	printf("exit\n");
 	if (!cmd[1])
+	{
+		ft_free_end(my_data);
 		exit(g_error);
+	}
 	else
 	{
 		if (all_is_digit(cmd[1]) && !cmd[2])

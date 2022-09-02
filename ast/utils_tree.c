@@ -50,7 +50,10 @@ int	end_sub(char *subread, int len)
 int	skip_space(char *str, int i)
 {
 	while (str[i] && str[i] == ' ')
+	{
+		printf("str[i] %c\n", str[i]);
 		i++;
+	}		
 	return (i);
 }
 
@@ -69,6 +72,7 @@ int	good_place(char *read, char *set, int i, t_data *my_data)
 			i++;
 		if (!read[i])
 		{
+			free(read);
 			if (c == '\'')
 				error_syntax("\'", my_data);
 			else

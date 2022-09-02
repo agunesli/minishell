@@ -42,18 +42,20 @@ void	free_tree(t_syntax *syn)
 
 void	ft_free_end(t_data *my_data)
 {
-	free_tree(my_data->syn);
+	if (my_data->syn)
+		free_tree(my_data->syn);
 //	if (my_data->childs)
 //		free(my_data->childs);
-	free_tab3(my_data->all_cmd);
+	if (my_data->all_cmd)
+		free_tab3(my_data->all_cmd);
 	free_all(my_data->env);
 	free(my_data->path);
 }
 
 void	ft_free_necessary(t_data *my_data)
 {
-	free_tree(my_data->syn);
-	free(my_data->childs);
+	free_tree(my_data->syn); 
+free(my_data->childs);
 	free_tab3(my_data->all_cmd);
 }
 

@@ -31,15 +31,15 @@ t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 	end = end_sub(subread, y - 2);
 	syn->left = low_piece(ft_substr(subread, start, end), my_data);
 	tmp = found_name_fd(subread, y);
-	start = skip_space(subread, ft_strlen(tmp) + y + 1);
+	start = skip_space(subread, ft_strlen(tmp) + y);
 	free(tmp);
-	end = ft_strlen(subread) - start;
+	end = ft_strlen(subread) - start + 1;
 	syn->right = medium_piece(ft_substr(subread, start, end), my_data);
 	return (syn);
 }
 
 t_syntax	*handle_std_next(t_syntax *syn, char *subrd, int y, t_data *my_data)
-{
+{ 
 	int			end;
 	int			start;
 
