@@ -33,11 +33,28 @@ void	free_tree(t_syntax *syn)
 	if (!syn)
 		return ;
 //	printf("free %s\n", syn->content);
-	free(syn->content); 
-	free_all(syn->cmd_arg); 
-	free_tree(syn->left);
-	free_tree(syn->right);
+	if(syn->content)
+	{
+		free(syn->content);
+		syn->content = NULL;
+	}
+	if (syn->cmd_arg)
+	{
+		free_all(syn->cmd_arg);
+		syn->cmd_arg = NULL;
+	}
+	if (syn->left)
+	{
+		free_tree(syn->left);
+		syn->left = NULL;
+	}
+	if (syn->right)
+	{
+		free_tree(syn->right);
+		syn->right = NULL;
+	}
 	free(syn);
+	syn = NULL;
 }
 
 void	ft_free_end(t_data *my_data)
@@ -57,12 +74,16 @@ void	ft_free_end(t_data *my_data)
 
 void	ft_free_necessary(t_data *my_data)
 {
-	free_tree(my_data->syn); 
-	free(my_data->childs);
+	if(my_data->syn)
+		free_tree(my_data->syn);
+	if(my_data->childs)
+	{ 
+		free(my_data->childs);
+		my_data->childs = NULL;
+	}
 	if (my_data->all_cmd)
 	{
 		free_tab3(my_data->all_cmd);
 		my_data->all_cmd = NULL;
 	}
 }
-
