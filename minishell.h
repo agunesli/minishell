@@ -68,17 +68,16 @@ typedef struct	s_syntax
 typedef struct s_data
 {
 	char		*read;
-	char		**env; //need to free
+	char		**env; //need to free in the end
 	char		**exprt;
-	t_syntax	*syn; //need to free
+	t_syntax	*syn; //need to free after exec
 	int			nb_process;
 	int			crt;
-	int			*childs; //need to free
+	int			*childs; //need to free after exec
 	int			fd_tmp;
-	char		***all_cmd; //need to free
-
+	char		***all_cmd; //need to free after 
 	int			syntax;
-	char		*path; //NUll sauf si le path n'hesiste pas au debut
+	char		*path; //NUll sauf si le path n'hesiste pas au debut - FREE in the end
 }	t_data;
 
 /***********************************************/

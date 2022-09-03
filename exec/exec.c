@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/02 16:28:49 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/03 14:36:14 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	end_of_parent(t_data *my_data)
 	}
 	signal_def();
 	free(my_data->childs);
+	my_data->childs = NULL;
 }
 
 void	exec_with_pipe(t_data *my_data, t_syntax *syn)

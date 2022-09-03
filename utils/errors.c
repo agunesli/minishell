@@ -32,7 +32,7 @@ void	error_command(char *str, t_data *my_data)
 	putstr_error("bash: ");
 	putstr_error(str);
 	putstr_error(": command not found\n");
-	free_all(my_data->env);
+//	free_all(my_data->env);
 	ft_free_necessary(my_data);
 	exit(127);
 }

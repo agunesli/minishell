@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:28:58 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/02 16:18:50 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/03 15:15:32 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	get_start(t_data *my_data, char *read)
 			update_data(my_data);
 			get_start_exec(my_data, my_data->syn);
 			//free_tree(my_data->syn);
-			free_tab3(my_data->all_cmd);
-			my_data->all_cmd = NULL;
+		//	free_tab3(my_data->all_cmd);
+	//		my_data->all_cmd = NULL;
 		}
 	}
 }

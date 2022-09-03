@@ -9,7 +9,6 @@ void	free_all(char **bin)
 		return ;
 	while (bin[++i])
 		free(bin[i]);
-//	printf("free all i = %d\n", i);
 	free(bin);
 }
 
@@ -30,6 +29,9 @@ void	free_tab3(char ***bin)
 
 void	free_tree(t_syntax *syn)
 {
+	t_syntax	*tmp1;
+	t_syntax	*tmp2;
+	
 	if (!syn)
 		return ;
 //	printf("free %s\n", syn->content);
@@ -43,18 +45,18 @@ void	free_tree(t_syntax *syn)
 		free_all(syn->cmd_arg);
 		syn->cmd_arg = NULL;
 	}
-	if (syn->left)
-	{
-		free_tree(syn->left);
-		syn->left = NULL;
-	}
-	if (syn->right)
-	{
-		free_tree(syn->right);
-		syn->right = NULL;
-	}
+	tmp1 = syn->left;
+	tmp2 = syn->right;
 	free(syn);
-	syn = NULL;
+	free_tree(tmp1);
+	free_tree(tmp2);
+/*	if (syn)
+	{
+		printf("bouhhh\n");
+		free(syn);
+		syn = NULL;
+		printf("2 %p\n", syn);
+	}*/
 }
 
 void	ft_free_end(t_data *my_data)
@@ -75,7 +77,10 @@ void	ft_free_end(t_data *my_data)
 void	ft_free_necessary(t_data *my_data)
 {
 	if(my_data->syn)
+	{
 		free_tree(my_data->syn);
+		my_data->syn = NULL;
+	}
 	if(my_data->childs)
 	{ 
 		free(my_data->childs);
