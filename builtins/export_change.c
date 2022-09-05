@@ -2,13 +2,12 @@
 
 int	id_is_in_env(char **env, char *cmd, int len)
 {
-	int	i;
+	int		i;
 	char	*id;
 	char	*pos;
 
 	i = -1;
 	id = ft_substr(cmd, 0, len + 1);
-	// printf("id is %s\n", id);
 	pos = NULL;
 	while (env[++i])
 	{
@@ -56,6 +55,7 @@ int	id_is_in_exprt(char **exprt, char *cmd)
 	}
 	return (0);
 }
+
 void	change_env(t_data *my_data, char **dst, int len)
 {
 	if (!id_is_in_env(my_data->env, dst[0], len))

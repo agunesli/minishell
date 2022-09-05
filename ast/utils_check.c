@@ -32,7 +32,7 @@ void	write_more(t_syntax *syn, t_data *my_data)
 	if (!line && g_error != 130)
 	{
 		printf("bash: syntax error: unexpected end of file\nexit");
-		free_tree(my_data->syn);
+		free_tree(&my_data->syn);
 		exit(2);
 	}
 	if (line && *line)

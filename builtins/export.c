@@ -28,7 +28,7 @@ void	do_export(char **cmd, t_data *my_data)
 	{
 		pos_eg = found_char(cmd[i], '=');
 		if (!pos_eg || !id_check(cmd[i], pos_eg))
-			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]); //Error 1
+			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]);
 		else
 		{
 			if (!ft_strncmp("PATH=", cmd[i], 5))

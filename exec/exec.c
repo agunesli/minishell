@@ -17,7 +17,7 @@ void	update_data_exec(t_data *my_data)
 	my_data->fd_tmp = STDIN_FILENO;
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
-		return ;// Error malloc
+		return ;
 }
 
 void	ft_dup2(int fd[2], t_data *my_data)
@@ -68,7 +68,8 @@ void	exec(t_syntax *syn, t_data *my_data)
 			exit(g_error);
 		}
 		path = correct_path(my_data->all_cmd[my_data->crt], my_data);
-		if (path && execve(path, my_data->all_cmd[my_data->crt], my_data->env) == -1)
+		if (path && execve(path, my_data->all_cmd[my_data->crt],
+				my_data->env) == -1)
 		{
 			g_error = errno;
 			errorp(path);
@@ -93,7 +94,6 @@ void	end_of_parent(t_data *my_data)
 	int	status;
 
 	i = -1;
-
 	while (++i < my_data->nb_process)
 	{
 		waitpid(my_data->childs[i], &status, 0);
@@ -109,7 +109,6 @@ void	end_of_parent(t_data *my_data)
 
 void	exec_with_pipe(t_data *my_data, t_syntax *syn)
 {
-
 	if (!my_data->all_cmd[my_data->crt])
 		return ;
 	update_data_exec(my_data);

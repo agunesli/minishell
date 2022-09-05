@@ -1,23 +1,23 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include <sys/ioctl.h>
-#include <termios.h>
-#include <curses.h>
-#include <term.h>
-#include <signal.h>
-#include <wait.h>
-#include <errno.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <dirent.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <termios.h>
+# include <curses.h>
+# include <term.h>
+# include <signal.h>
+# include <wait.h>
+# include <errno.h>
 
 //# define STRONG "|&"
 # define STRONG "|"
@@ -25,8 +25,8 @@
 # define LOW "\"\'$*"
 
 //couleur pour le prompt
-#define CYELLOW "\1\e[0;36m\2"
-#define RESET   "\1\e[0m\2"
+# define CYELLOW "\1\e[0;36m\2"
+# define RESET   "\1\e[0m\2"
 
 //# define PATH
 
@@ -35,14 +35,14 @@ extern int	g_error;
 
 enum e_syntax
 {
-	PIPE,	// 0
-	OR,	// 1
-	AND,	// 2
-	in,	// 3
-	out,	// 4
-	heredoc,// 5
-	append,	// 6
-	cmd,	// 7
+	PIPE,
+	OR,
+	AND,
+	in,
+	out,
+	heredoc,
+	append,
+	cmd,
 };
 enum e_built
 {
@@ -55,7 +55,7 @@ enum e_built
 	b_exit
 };
 
-typedef struct	s_syntax
+typedef struct s_syntax
 {
 	int				id;
 	char			*content;
@@ -154,7 +154,7 @@ void		start_env(char **env, t_data *my_data);
 //free
 void		free_all(char **bin);
 void		free_tab3(char ***bin);
-void		free_tree(t_syntax *syn);
+void		free_tree(t_syntax **syn);
 void		ft_free_end(t_data *my_data);
 void		ft_free_necessary(t_data *my_data);
 
@@ -194,7 +194,7 @@ char		**ft_split(char const *s, char c);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*get_next_line(int fd);
 char		*ft_strjoin(char const *s1, char const *s2); //GNL utils
-char		*ft_substr_end(char const *s, unsigned int start, size_t end);  //GNL utils
+char		*ft_substr_end(char const *s, unsigned int start, size_t end);
 char		*ft_itoa(int n);
 char		**ft_strjointab(char **s1, char **s2);
 char		**ft_tabdup(char **src);
@@ -203,5 +203,5 @@ int			ft_isalnum(int c);
 int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_atoi(const char *str);
-char    	*ft_strrchr(const char *s, int c);
+char		*ft_strrchr(const char *s, int c);
 #endif

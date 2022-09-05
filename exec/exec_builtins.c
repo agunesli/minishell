@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 int	is_builtins(t_data *my_data)
 {
 	int	crt;
@@ -16,7 +15,8 @@ int	is_builtins(t_data *my_data)
 		return (b_cd);
 	if (!ft_strncmp("exit", my_data->all_cmd[crt][0], ft_strlen("exit") + 1))
 		return (b_exit);
-	if (!ft_strncmp("export", my_data->all_cmd[crt][0], ft_strlen("export") + 1))
+	if (!ft_strncmp("export", my_data->all_cmd[crt][0],
+		ft_strlen("export") + 1))
 		return (b_exprt);
 	if (!ft_strncmp("unset", my_data->all_cmd[crt][0], ft_strlen("unset") + 1))
 		return (b_unset);
@@ -43,4 +43,3 @@ int	hub_builtins(int opt, t_data *my_data)
 		return (ft_env(my_data->all_cmd[my_data->crt], my_data));
 	return (-1);
 }
-

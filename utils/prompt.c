@@ -12,14 +12,13 @@
 */
 #include "../minishell.h"
 
-int g_error = 0;
+int	g_error = 0;
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	char	*read;
 	t_data	my_data;
 //	int		sg;
-
 	(void)argc;
 	(void)argv;
 	read = NULL;

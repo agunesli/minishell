@@ -37,14 +37,14 @@ int	len_bin(char **bin)
 	int	i;
 
 	i = 0;
-	while (bin[i])
+	while (bin && bin[i])
 		i++;
 	return (i);
 }
 
 int	is_dir(char *cmd)
 {
-	if(open(cmd, __O_DIRECTORY) != -1)
+	if (open(cmd, __O_DIRECTORY) != -1)
 	{
 		putstr_error("bash: ");
 		putstr_error(cmd);

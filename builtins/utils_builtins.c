@@ -46,7 +46,7 @@ int	id_check(char *str, int i)
 	else
 		len = i;
 	if (str[0] && ft_isdigit(str[0]))
-			return (0);
+		return (0);
 	while (str[++j] && j < len)
 	{
 		if (!ft_isalnum(str[j]) && str[j] != '_')

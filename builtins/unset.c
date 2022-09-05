@@ -2,7 +2,7 @@
 
 int	found_id(char *cmd,  char **env, t_data *my_data)
 {
-	int	i;
+	int		i;
 	char	*id;
 	char	*pos;
 
@@ -33,7 +33,7 @@ int	found_id(char *cmd,  char **env, t_data *my_data)
 
 char	**update_env(char *cmd, char **env, t_data *my_data)
 {
-	int 	pos;
+	int		pos;
 	int		len;
 	int		i;
 	char	**tmp;
@@ -66,7 +66,7 @@ int	ft_unset(char **cmd, t_data *my_data)
 	while (cmd[++i])
 	{
 		if (!id_check(cmd[i], -1))
-			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]); //Error 1
+			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]);
 		else
 			my_data->env = update_env(cmd[i], my_data->env, my_data);
 	}

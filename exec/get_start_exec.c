@@ -10,7 +10,7 @@ void	clean_fd(int ft_init[2])
 
 void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 {
-	int status;
+	int	status;
 
 	if (!my_data->all_cmd[my_data->crt])
 		return ;
