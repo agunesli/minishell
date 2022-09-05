@@ -58,7 +58,7 @@ void	exec(t_syntax *syn, t_data *my_data)
 	{
 		signal(SIGQUIT, signal_ctrbs);
 		ft_dup2(fd, my_data);
-		change_fd(syn);
+		change_fd(syn, my_data);
 		built = is_builtins(my_data);
 		if (built)
 		{
@@ -72,9 +72,12 @@ void	exec(t_syntax *syn, t_data *my_data)
 				my_data->env) == -1)
 		{
 			g_error = errno;
+			printf("bouhh %d\n", g_error);
 			errorp(path);
+			ft_free_end(my_data);
+			free(my_data->childs);
 		}
-		exit(0);
+		exit(g_error);
 	}
 	signal(SIGINT, SIG_IGN);
 	if (my_data->nb_process != 1)

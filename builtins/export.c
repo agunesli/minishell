@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	print_only_export(char **env, char **exprt)
+int	print_only_export(char **env, char **exprt)
 {
 	int	i;
 
@@ -11,13 +11,12 @@ void	print_only_export(char **env, char **exprt)
 		write(1, env[i], ft_strlen(env[i]));
 		write(1, "\n", 1);
 	}
-	if (!exprt)
-		return ;
-	else
+	if (exprt)
 		print_only_export(exprt, NULL);
+	return (0);
 }
 
-void	do_export(char **cmd, t_data *my_data)
+int	do_export(char **cmd, t_data *my_data)
 {
 	int		i;
 	int		pos_eg;
@@ -27,8 +26,8 @@ void	do_export(char **cmd, t_data *my_data)
 	while (cmd[++i])
 	{
 		pos_eg = found_char(cmd[i], '=');
-		if (!pos_eg || !id_check(cmd[i], pos_eg))
-			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]);
+		if (!cmd[i][0] || !pos_eg || !id_check(cmd[i], pos_eg))
+			return (error_invalid_id(cmd[i]));
 		else
 		{
 			if (!ft_strncmp("PATH=", cmd[i], 5))
@@ -43,13 +42,13 @@ void	do_export(char **cmd, t_data *my_data)
 				change_env(my_data, dst, pos_eg);
 		}
 	}
+	return (0);
 }
 
 int	ft_export(char **cmd, t_data *my_data)
 {
 	if (cmd[1] == NULL)
-		print_only_export(my_data->env, my_data->exprt);
+		return (print_only_export(my_data->env, my_data->exprt));
 	else
-		do_export(cmd, my_data);
-	return (0);
+		return (do_export(cmd, my_data));
 }

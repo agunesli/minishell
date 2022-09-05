@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void	change_fd(t_syntax *syn)
+void	change_fd(t_syntax *syn, t_data *my_data)
 {
 	int	fd;
 
@@ -9,15 +9,19 @@ void	change_fd(t_syntax *syn)
 	if (syn->id == in || syn->id == heredoc)
 	{
 		fd = open_file(syn->content, syn->id);
+		if (fd == -1)
+			ft_free_necessary(my_data);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
-		change_fd(syn->right);
+		change_fd(syn->right, my_data);
 	}
 	else if (syn->id == out || syn->id == append)
 	{
 		fd = open_file(syn->content, syn->id);
+		if (fd == -1)
+			ft_free_necessary(my_data);
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
-		change_fd(syn->right);
+		change_fd(syn->right, my_data);
 	}
 }

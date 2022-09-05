@@ -25,6 +25,7 @@ int	main(int argc, char **argv, char **env)
 	signal_def();
 //	printf("signal %d\n", sg);
 	init_data(&my_data, read, env);
+	rl_outstream = stderr;
 	while (42)
 	{
 //		if (read)

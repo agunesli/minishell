@@ -72,6 +72,7 @@ void	ft_free_end(t_data *my_data)
 		my_data->all_cmd = NULL;
 	}
 	free_all(my_data->env);
+	free_all(my_data->exprt);
 	free(my_data->path);
 }
 

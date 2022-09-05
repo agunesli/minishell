@@ -65,8 +65,8 @@ int	ft_unset(char **cmd, t_data *my_data)
 		return (0);
 	while (cmd[++i])
 	{
-		if (!id_check(cmd[i], -1))
-			printf("bash : export: '%s' : not a valid identifier\n", cmd[i]);
+		if (!cmd[i][0] || !id_check(cmd[i], -1))
+			return (error_invalid_id(cmd[i]));
 		else
 			my_data->env = update_env(cmd[i], my_data->env, my_data);
 	}

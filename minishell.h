@@ -69,7 +69,7 @@ typedef struct s_data
 {
 	char		*read;
 	char		**env; //need to free in the end
-	char		**exprt;
+	char		**exprt; //need to free in the end
 	t_syntax	*syn; //need to free after exec
 	int			nb_process;
 	int			crt;
@@ -108,7 +108,7 @@ void		print_tree(t_syntax *syn);
 char		**separate(char *cmd, t_data *my_data);
 char		**change_cmd(char *cmd, t_data *my_data);
 char		*ft_strjoin3(char *s1, char *s2, char *s3);
-char		*expand(char *cmd, t_data *my_data);
+char		*expand(char *cmd, t_data *my_data, int i);
 char		*change_expand(char *cmd, int i, t_data *my_data);
 char		*without_quote(char *cmd);
 
@@ -125,7 +125,7 @@ char		*found_name_fd(char *subread, int y);
 
 void		get_start_exec(t_data *my_data, t_syntax *syn);
 void		good_fd(t_syntax *syn, t_data *data);
-void		change_fd(t_syntax *syn);
+void		change_fd(t_syntax *syn, t_data *my_data);
 void		change_pipe(t_data *my_data);
 char		*correct_path(char **cmd, t_data *my_data);
 int			is_builtins(t_data *my_data);
@@ -163,6 +163,7 @@ void		putstr_error(char *str);
 void		error_syntax(char *str, t_data *my_data);
 void		error_command(char *str, t_data *my_data);
 void		errorp(char	*str);
+int			error_invalid_id(char *str);
 
 //signal
 void		signal_def(void);
@@ -204,4 +205,5 @@ int			ft_isdigit(int c);
 int			ft_isalpha(int c);
 int			ft_atoi(const char *str);
 char		*ft_strrchr(const char *s, int c);
+size_t		ft_strlcat(char *dest, const char *src, size_t size);
 #endif

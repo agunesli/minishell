@@ -14,7 +14,7 @@ void	signal_ctrbs(int sig)
 {
 	(void)sig;
 //	g_error = 131;
-	printf("\b\b  \b\b  \b\b");
+	printf("\b\b  \b\b");
 }
 
 void	sg_heredoc(int sig)
@@ -27,25 +27,10 @@ void	sg_heredoc(int sig)
 
 // SIGINT => Terminal interrupt signal
 // SIGQUIT => Terminal quit signal
-void	signal_def(void)
-{
-//	signal(SIGTSTP, signal_ctrd);
-	signal(SIGINT, signal_ctrc);
-	signal(SIGQUIT, signal_ctrbs);
-}
-
 // SIG_IGN => demande a ignnorer le signal
 // SIG_DFL => action par defaut
-void	signal_exec(int pid)
+void	signal_def(void)
 {
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
-	}
+	signal(SIGINT, signal_ctrc);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -42,7 +42,7 @@ int	len_bin(char **bin)
 	return (i);
 }
 
-int	is_dir(char *cmd)
+int	is_dir(char *cmd, t_data *my_data)
 {
 	if (open(cmd, __O_DIRECTORY) != -1)
 	{
@@ -51,6 +51,10 @@ int	is_dir(char *cmd)
 		putstr_error(": ");
 		putstr_error(strerror(21));
 		putstr_error("\n");
+		g_error = 126;
+		free_all(my_data->env);
+		ft_free_necessary(my_data);
+		exit(g_error);
 		return (1);
 	}
 	return (0);
@@ -65,7 +69,7 @@ char	*correct_path(char **cmd, t_data *my_data)
 	char	*cmdd;
 
 	i = 0;
-	if (access(cmd[0], F_OK) == 0 && is_dir(cmd[0]))
+	if (access(cmd[0], F_OK) == 0 && is_dir(cmd[0], my_data))
 	{
 //		if(is_dir(cmd[0]))
 		return (NULL);

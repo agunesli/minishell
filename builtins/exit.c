@@ -20,7 +20,6 @@ int	ft_exit(char **cmd, t_data *my_data)
 	int	nb;
 
 	nb = 0;
-	printf("exit\n");
 	if (!cmd[1])
 	{
 		ft_free_end(my_data);
@@ -28,6 +27,7 @@ int	ft_exit(char **cmd, t_data *my_data)
 	}
 	else
 	{
+//	printf("exit\n");
 		if (all_is_digit(cmd[1]) && !cmd[2])
 		{
 			nb = ft_atoi(cmd[1]) % 256;
@@ -36,13 +36,13 @@ int	ft_exit(char **cmd, t_data *my_data)
 		}
 		else if (all_is_digit(cmd[1]) && cmd[2])
 		{
-			printf("bash: exit: too many arguments\n");
+			//printf("bash: exit: too many arguments\n");
 			return (127);
 //			ft_free_necessary(my_data);
 		}
 		else if (!all_is_digit(cmd[1]))
 		{
-			printf("bash: exit: %s: numeric argument required\n", cmd[1]);
+			//printf("bash: exit: %s: numeric argument required\n", cmd[1]);
 			ft_free_end(my_data);
 			exit(2);
 		}

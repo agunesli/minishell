@@ -50,10 +50,7 @@ int	end_sub(char *subread, int len)
 int	skip_space(char *str, int i)
 {
 	while (str[i] && str[i] == ' ')
-	{
-		printf("str[i] %c\n", str[i]);
-		i++;
-	}		
+		i++;		
 	return (i);
 }
 

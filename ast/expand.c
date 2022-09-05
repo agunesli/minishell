@@ -35,7 +35,7 @@ char	*found_expand(char *expand, t_data *my_data)
 
 	i = -1;
 	if (!expand)
-		return (NULL);
+		return (ft_strdup("$"));
 	if (!ft_strncmp(expand, "?", 2))
 		return (ft_itoa(g_error));
 	else if (ft_isdigit(expand[i + 1]))
@@ -44,10 +44,20 @@ char	*found_expand(char *expand, t_data *my_data)
 	{
 		tmp = ft_strjoin(expand, "=");
 		if (!ft_strncmp(tmp, my_data->env[i], ft_strlen(tmp)))
-			return (ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
+			return (free(tmp), ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
 		free(tmp);
 	}
 	return (NULL);
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (tmp);
 }
 
 char	*change_expand(char *cmd, int i, t_data *my_data)
@@ -66,20 +76,20 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 	free(cmd);
 	free(expand);
 	if (!result || !result[0])
-		return (ft_strjoin(part1, part2));
+		return (ft_strjoin_free(part1, part2));
 	else
 		return (ft_strjoin3(part1, result, part2));
 }
 
-char	*expand(char *cmd, t_data *my_data)
+char	*expand(char *cmd, t_data *my_data, int i)
 {
-	int		i;
+//	int		i;
 	int		quote;
 	int		dbl;
 
 	if (!cmd)
 		return (NULL);
-	i = -1;
+//	i = -1;
 	quote = 1;
 	dbl = 0;
 	while (cmd[++i])
@@ -92,7 +102,7 @@ char	*expand(char *cmd, t_data *my_data)
 			&& (cmd[i + 1] == '$' || !cmd[i + 1]))
 				i++;
 		else if (cmd[i] == '$' && quote % 2)
-			return (expand(change_expand(cmd, i, my_data), my_data));
+			return (expand(change_expand(cmd, i, my_data), my_data, i));
 	}
 	return (cmd);
 }

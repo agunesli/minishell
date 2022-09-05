@@ -29,8 +29,6 @@ int	len_arg(char *cmd)
 				;
 			if (cmd[i])
 				cpt += 2;
-			else
-				return (-1);
 		}
 	}
 	return (cpt);
@@ -49,7 +47,7 @@ char	*without_quote(char *cmd)
 	if (cpt == 0)
 		return (cmd);
 	if (cpt == (int)ft_strlen(cmd))
-		return (free(cmd), ft_strdup(" "));
+		return (free(cmd), ft_strdup(""));
 	dest = malloc(sizeof(char) * (ft_strlen(cmd) - cpt + 1));
 	if (!dest)
 		return (NULL);

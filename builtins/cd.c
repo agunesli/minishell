@@ -29,7 +29,11 @@ char	**update_oldpwd_in_env(char **env, char *old_pwd)
 
 void	cd_error(char *str)
 {
-	printf("bash: cd: %s: %s\n", str, strerror(errno));
+	putstr_error("bash: cd: ");
+	putstr_error(str);
+	putstr_error(": ");
+	putstr_error(strerror(errno));
+	putstr_error("\n");
 }
 
 /* Tu dois update tes vars denv avec le old path sur 
@@ -40,23 +44,31 @@ int	ft_cd_handler(char *dst, t_data *my_data, int x)
 	char	*final_path;
 	int		rtvl;
 
-	final_path = ((rtvl = 0, NULL));
+	rtvl = 0;
+	final_path = NULL;
+//	final_path = ((rtvl = 0, NULL));
+	old_pwd[0] = 0;
 	getcwd(old_pwd, sizeof(old_pwd));
 	my_data->env = update_oldpwd_in_env(my_data->env, old_pwd);
 	if (x == 0)
 		final_path = ft_strjoin(getenv("HOME"), dst + 1);
 	else if (x == 1)
 	{
-		strcat(old_pwd, "/");
-		strcat(old_pwd, dst);
-		final_path = ft_strdup(old_pwd);
+		if (*old_pwd)
+		{
+			ft_strlcat(old_pwd, "/", 4096);
+			ft_strlcat(old_pwd, dst, 4096);
+			final_path = ft_strdup(old_pwd);
+		}
+		else
+			final_path = ft_strdup("");
 	}
 	else
 		final_path = ft_strdup(dst);
 	if (chdir(final_path) == -1)
 	{
 		cd_error(dst);
-		rtvl = -1;
+		rtvl = 1;
 	}
 	free(final_path);
 	free(dst);
@@ -72,21 +84,13 @@ int	ft_cd(char **cmd, t_data *my_data)
 	int		rtvl;
 
 	if (cmd[1] == NULL)
-	{
 		return (-1);
-	}
 	dst_path = strdup(cmd[1]);
 	if (dst_path[0] == '~')
-	{
 		rtvl = ft_cd_handler(dst_path, my_data, 0);
-	}
 	else if (dst_path[0] != '/')
-	{
 		rtvl = ft_cd_handler(dst_path, my_data, 1);
-	}
 	else
-	{
 		rtvl = ft_cd_handler(dst_path, my_data, 2);
-	}
 	return (rtvl);
 }

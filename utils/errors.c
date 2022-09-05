@@ -27,7 +27,6 @@ void	error_syntax(char *str, t_data *my_data)
 
 void	error_command(char *str, t_data *my_data)
 {
-	(void)my_data;
 	g_error = 127;
 	putstr_error("bash: ");
 	putstr_error(str);
@@ -37,4 +36,12 @@ void	error_command(char *str, t_data *my_data)
 	exit(127);
 }
 
+int	error_invalid_id(char *str)
+{
+	g_error = 1;
+	putstr_error("bash: export: '");
+	putstr_error(str);
+	putstr_error("' : not a valid identifier\n");
+	return (1);
+}
 //void	error_execve(char *str, t_data *my_data)
