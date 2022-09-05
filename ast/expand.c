@@ -89,7 +89,10 @@ char	*expand(char *cmd, t_data *my_data, int i)
 
 	if (!cmd)
 		return (NULL);
-//	i = -1;
+	sleep(2);
+	printf("ICI %d [%c]\n", i, cmd[i]);
+	if (i > -1 && cmd[i] == '$')
+		i++;
 	quote = 1;
 	dbl = 0;
 	while (cmd[++i])
@@ -102,7 +105,7 @@ char	*expand(char *cmd, t_data *my_data, int i)
 			&& (cmd[i + 1] == '$' || !cmd[i + 1]))
 				i++;
 		else if (cmd[i] == '$' && quote % 2)
-			return (expand(change_expand(cmd, i, my_data), my_data, i));
+			return (expand(change_expand(cmd, i, my_data), my_data, i - 1));
 	}
 	return (cmd);
 }
