@@ -72,11 +72,12 @@ void	exec(t_syntax *syn, t_data *my_data)
 				my_data->env) == -1)
 		{
 			g_error = errno;
-			printf("bouhh %d\n", g_error);
 			errorp(path);
 			ft_free_end(my_data);
 			free(my_data->childs);
 		}
+		else
+			error_command(path, my_data);
 		exit(g_error);
 	}
 	signal(SIGINT, SIG_IGN);

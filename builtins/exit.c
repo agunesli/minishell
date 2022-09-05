@@ -37,7 +37,8 @@ int	ft_exit(char **cmd, t_data *my_data)
 		else if (all_is_digit(cmd[1]) && cmd[2])
 		{
 			//printf("bash: exit: too many arguments\n");
-			return (127);
+			ft_free_end(my_data);
+			exit(1);
 //			ft_free_necessary(my_data);
 		}
 		else if (!all_is_digit(cmd[1]))

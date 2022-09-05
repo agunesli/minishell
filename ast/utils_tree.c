@@ -42,7 +42,7 @@ int	end_sub(char *subread, int len)
 {
 	if (len < 1)
 		return (0);
-	while (subread[len - 1] == ' ')
+	while (len > 0 && subread[len - 1] == ' ')
 		len--;
 	return (len);
 }

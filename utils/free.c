@@ -64,8 +64,11 @@ void	ft_free_end(t_data *my_data)
 {
 	if (my_data->syn)
 		free_tree(&my_data->syn);
-//	if (my_data->childs)
-//		free(my_data->childs);
+	if (my_data->childs)
+	{
+		free(my_data->childs);
+		my_data->childs = NULL;
+	}
 	if (my_data->all_cmd)
 	{
 		free_tab3(my_data->all_cmd);

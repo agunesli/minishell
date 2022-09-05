@@ -84,7 +84,7 @@ int	ft_cd(char **cmd, t_data *my_data)
 	int		rtvl;
 
 	if (cmd[1] == NULL)
-		return (-1);
+		return (1);
 	dst_path = strdup(cmd[1]);
 	if (dst_path[0] == '~')
 		rtvl = ft_cd_handler(dst_path, my_data, 0);

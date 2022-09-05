@@ -58,7 +58,7 @@ void	get_start(t_data *my_data, char *read)
 		check_tree(my_data->syn, my_data);
 		if (my_data->syntax)
 		{
-		//	print_tree(my_data->syn);
+			print_tree(my_data->syn);
 			update_data(my_data);
 			get_start_exec(my_data, my_data->syn);
 			free_tree(&my_data->syn);
