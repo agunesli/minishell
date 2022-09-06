@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:43:51 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 21:06:24 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 01:31:28 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**found_path_env(char **env, t_data *my_data)
 		}
 	}
 	if (path == NULL && !my_data->path)
-		errorp(my_data->all_cmd[my_data->crt][0]);
+		return (errorp(my_data->all_cmd[my_data->crt][0], my_data), NULL);
 	else if (my_data->path)
 		path = ft_strdup(my_data->path);
 	tmp = path;
@@ -83,6 +83,8 @@ char	*correct_path(char **cmd, t_data *my_data)
 	if (access(cmd[0], F_OK | X_OK) == 0 || ft_strrchr(cmd[0], '/'))
 		return (cmd[0]);
 	bin = found_path_env(my_data->env, my_data);
+	if (!bin)
+		return (NULL);
 	len = len_bin(bin);
 	cmdd = ft_strjoin("/", cmd[0]);
 	tmp = ft_strjoin(bin[0], cmdd);

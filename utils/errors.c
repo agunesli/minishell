@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:24:02 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 20:24:15 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 01:29:48 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	putstr_error(char *str)
 	write(2, str, ft_strlen(str));
 }
 
-void	errorp(char *str)
+void	errorp(char *str, t_data *my_data)
 {
 	g_error = errno;
 	putstr_error("bash: ");
 	putstr_error(str);
 	perror(" ");
+	ft_free_necessary(my_data);
 }
 
 void	error_syntax(char *str, t_data *my_data)

@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:45:27 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/07 01:01:09 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 01:29:20 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void		ft_free_necessary(t_data *my_data);
 void		putstr_error(char *str);
 void		error_syntax(char *str, t_data *my_data);
 void		error_command(char *str, t_data *my_data);
-void		errorp(char	*str);
+void		errorp(char	*str, t_data *my_data);
 int			error_invalid_id(char *str);
 
 //signal
