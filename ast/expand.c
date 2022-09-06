@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:30:32 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/06 11:20:23 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:33:47 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ char	*expand(char *cmd, t_data *my_data, int i)
 	j =	0;
 	if (!cmd)
 		return (NULL);
+/*	if (cmd[i + 1] == '$')
+		i++;*/
 	quote = 1;
 	dbl = 0;
 	while (cmd[++i])
@@ -102,10 +104,11 @@ char	*expand(char *cmd, t_data *my_data, int i)
 		else if (!(dbl % 2) && cmd[i] == '\'')
 			quote++;
 		else if (cmd[i] == '$' && (quote % 2)
-			&& (cmd[i + 1] == '$'/* || !cmd[i + 1]*/))
+			&& (cmd[i + 1] == '$' || !cmd[i + 1]))
 				j++;
-		else if (cmd[i] == '$' && (quote % 2) && (cmd[i + 1] == '=' 
-			|| cmd[i + 1] == '+' ||  cmd[i + 1] == ' ' || !cmd[i + 1]))
+		else if (cmd[i] == '$' && quote % 2 && !(ft_isalnum(cmd[i + 1]) 
+			|| cmd[i + 1] == '_' || cmd[i + 1] == '?'/*(cmd[i + 1] == '=' 
+			|| cmd[i + 1] == '+' ||  cmd[i + 1] == ' '*/ || !cmd[i + 1]))
 				i++;
 		else if (cmd[i] == '$' && quote % 2)
 			return (expand(change_expand(cmd, i - j, my_data), my_data, i - 1));
