@@ -12,18 +12,16 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 {
 	int	status;
 
-	if (!my_data->all_cmd[my_data->crt][0])
+	if (!my_data->all_cmd[my_data->crt] 
+		|| !my_data->all_cmd[my_data->crt][0])
 		return ;
 	status = is_builtins(my_data);
 	if (status)
 	{
-//		fd_init[0] = dup(STDIN_FILENO);
-//		fd_init[1] = dup(STDOUT_FILENO);
 		change_fd(my_data->syn, my_data);
 		g_error = hub_builtins(status, my_data);
 		//ft_free_end(my_data);
 		ft_free_necessary(my_data);
-//		clean_fd(fd_init);
 	}
 	else
 	{

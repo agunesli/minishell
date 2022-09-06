@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:30:32 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/31 18:31:15 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:20:23 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ char	*found_expand(char *expand, t_data *my_data)
 	{
 		tmp = ft_strjoin(expand, "=");
 		if (!ft_strncmp(tmp, my_data->env[i], ft_strlen(tmp)))
-			return (free(tmp), ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
+		{
+			free(tmp);
+			return (ft_strdup((my_data->env[i] + ft_strlen(expand) + 1)));
+		}
 		free(tmp);
 	}
 	return (NULL);
@@ -83,16 +86,13 @@ char	*change_expand(char *cmd, int i, t_data *my_data)
 
 char	*expand(char *cmd, t_data *my_data, int i)
 {
-//	int		i;
+	int		j;
 	int		quote;
 	int		dbl;
 
+	j =	0;
 	if (!cmd)
 		return (NULL);
-	sleep(2);
-	printf("ICI %d [%c]\n", i, cmd[i]);
-	if (i > -1 && cmd[i] == '$')
-		i++;
 	quote = 1;
 	dbl = 0;
 	while (cmd[++i])
@@ -101,11 +101,14 @@ char	*expand(char *cmd, t_data *my_data, int i)
 			dbl++;
 		else if (!(dbl % 2) && cmd[i] == '\'')
 			quote++;
-		else if (cmd[i] == '$' && dbl % 2
-			&& (cmd[i + 1] == '$' || !cmd[i + 1]))
+		else if (cmd[i] == '$' && (quote % 2)
+			&& (cmd[i + 1] == '$'/* || !cmd[i + 1]*/))
+				j++;
+		else if (cmd[i] == '$' && (quote % 2) && (cmd[i + 1] == '=' 
+			|| cmd[i + 1] == '+' ||  cmd[i + 1] == ' ' || !cmd[i + 1]))
 				i++;
 		else if (cmd[i] == '$' && quote % 2)
-			return (expand(change_expand(cmd, i, my_data), my_data, i - 1));
+			return (expand(change_expand(cmd, i - j, my_data), my_data, i - 1));
 	}
 	return (cmd);
 }

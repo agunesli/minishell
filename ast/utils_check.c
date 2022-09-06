@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:25:52 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/02 13:58:43 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 10:36:33 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	check_open(char *name, int opt, t_data *my_data)
 	fd = open_file(name, opt);
 	if (fd == -1)
 		my_data->syntax = 0;
-	close(fd);
+	else
+		close(fd);
 }
 
 char	*found_name_fd(char *subread, int y)

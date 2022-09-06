@@ -56,8 +56,10 @@ int	ft_cd_handler(char *dst, t_data *my_data, int x)
 	{
 		if (*old_pwd)
 		{
-			ft_strlcat(old_pwd, "/", 4096);
-			ft_strlcat(old_pwd, dst, 4096);
+	//		ft_strlcat(old_pwd, "/", 4096);
+	//		ft_strlcat(old_pwd, dst, 4096);
+			strcat(old_pwd, "/");
+			strcat(old_pwd, dst);
 			final_path = ft_strdup(old_pwd);
 		}
 		else

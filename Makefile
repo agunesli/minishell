@@ -1,6 +1,6 @@
 SRC	= libft/ft_split.c libft/ft_substr.c libft/ft_strncmp.c\
 	  libft/ft_strdup.c libft/ft_strlen.c libft/ft_itoa.c\
-	  libft/ft_strjointab.c libft/ft_isalnum.c libft/ft_atoi.c libft/ft_strlcat.c\
+	  libft/ft_strjointab.c libft/ft_isalnum.c libft/ft_atoi.c\
 	  libft/get_next_line.c libft/get_next_line_utils.c libft/ft_strrchr.c\
 	  ast/create_tree.c ast/redirection.c ast/heredoc.c\
 	  ast/check_tree.c ast/low_case.c ast/expand.c\

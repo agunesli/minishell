@@ -6,7 +6,7 @@
 /*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:26:10 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/01 18:02:17 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 10:36:49 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*found_name_fd_heredoc(void)
 		fd = open(tmp2, O_WRONLY, 0777);
 	}
 	free(tmp1);
-	close(fd);
+//	close(fd);
 	return (tmp2);
 }
 
