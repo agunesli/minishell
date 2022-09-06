@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:52:39 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 20:52:40 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 00:52:51 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 		ft_free_necessary(my_data);
 	}
 	else
-	{
-		update_data_exec(my_data);
+	{	
+		my_data->fd_tmp = STDIN_FILENO;
+		my_data->childs = malloc(sizeof(int) * my_data->nb_process);
+		if (!my_data->childs)
+			return ;
 		exec(syn, my_data);
 		end_of_parent(my_data);
 	}

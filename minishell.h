@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:45:27 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 20:45:48 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 00:55:12 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,9 @@ int			len_split(char **bin);
 
 //data
 void		init_data(t_data *my_data, char *read, char **env);
-void		update_data(t_data *my_data);
 void		start_env(char **env, t_data *my_data);
+void		update_data(t_data *my_data);
+
 
 //free
 void		free_all(char **bin);

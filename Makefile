@@ -23,7 +23,7 @@ CC		=	gcc
 FLAGS	=	-g3 -Wall -Wextra -Werror
 RM		=	rm -rf
 LFLAGS	=	-lreadline
-
+		
 %.o: %.c
 	${CC} ${FLAGS} -c $< -o $@
 
