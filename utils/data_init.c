@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data_init.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:24:33 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:39:56 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	start_env(char **env, t_data *my_data)
@@ -14,7 +26,8 @@ void	start_env(char **env, t_data *my_data)
 		my_data->env[1] = ft_strdup("SHLVL=1");
 		my_data->env[2] = ft_strdup("_=/usr/bin/env");
 		my_data->env[3] = NULL;
-		my_data->path = ft_strdup("PATH=/mnt/nfs/homes/agunesli/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/mnt/nfs/homes/agunesli/.local/bin");
+		my_data->path = ft_strdup(PATH1 PATH2 PATH3);
+		printf("%s", my_data->path);
 	}
 	else
 		my_data->env = ft_tabdup(env);

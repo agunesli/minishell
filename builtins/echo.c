@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 18:29:52 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 18:30:03 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-/* check -nnnn */
 int	check_option_nl(char **cmd)
 {
 	int	i;
@@ -30,7 +41,6 @@ int	ft_echo(char **cmd, t_data *my_data)
 	int	i;
 
 	(void)my_data;
-//	print_all(cmd);
 	nl = check_option_nl(cmd);
 	i = nl;
 	while (cmd[i])

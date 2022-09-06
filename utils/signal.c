@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:20:54 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:44:26 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	signal_ctrc(int sig)
@@ -13,7 +25,6 @@ void	signal_ctrc(int sig)
 void	signal_ctrbs(int sig)
 {
 	(void)sig;
-//	g_error = 131;
 	printf("\b\b  \b\b");
 }
 

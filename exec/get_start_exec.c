@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_start_exec.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:52:39 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:52:40 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	clean_fd(int ft_init[2])
@@ -12,7 +24,7 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 {
 	int	status;
 
-	if (!my_data->all_cmd[my_data->crt] 
+	if (!my_data->all_cmd[my_data->crt]
 		|| !my_data->all_cmd[my_data->crt][0])
 		return ;
 	status = is_builtins(my_data);
@@ -20,7 +32,6 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 	{
 		change_fd(my_data->syn, my_data);
 		g_error = hub_builtins(status, my_data);
-		//ft_free_end(my_data);
 		ft_free_necessary(my_data);
 	}
 	else

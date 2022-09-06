@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:26:10 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/06 10:36:49 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 20:18:43 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,21 @@ char	*found_name_fd_heredoc(void)
 		fd = open(tmp2, O_WRONLY, 0777);
 	}
 	free(tmp1);
-//	close(fd);
 	return (tmp2);
 }
 
-char	*expand_heredoc(char *line, t_data *my_data)
+char	*expand_heredoc(char *line, t_data *my_data, int expd)
 {
 	int	i;
 
 	i = -1;
+	if (!expd)
+		return (line);
 	while (line[++i])
 	{
 		if (line[i] == '$')
-			return (expand_heredoc(change_expand(line, i, my_data), my_data));
+			return (expand_heredoc(change_expand(line, i, my_data),
+					my_data, expd));
 	}
 	return (line);
 }
@@ -85,8 +87,7 @@ void	write_heredoc(int fd, char *lim, t_data *my_data)
 	line = readline("> ");
 	while (line && ft_strncmp(lim, line, ft_strlen(lim)))
 	{
-		if (expd)
-			line = expand_heredoc(line, my_data);
+		line = expand_heredoc(line, my_data, expd);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);

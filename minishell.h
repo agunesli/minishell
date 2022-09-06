@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:45:27 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:45:48 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
@@ -27,6 +39,9 @@
 //couleur pour le prompt
 # define CYELLOW "\1\e[0;36m\2"
 # define RESET   "\1\e[0m\2"
+# define PATH1 "PATH=/mnt/nfs/homes/agunesli/bin:/usr/local/sbin:"
+# define PATH2 "/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:"
+# define PATH3 "/usr/local/games:/snap/bin:/mnt/nfs/homes/agunesli/.local/bin"
 
 //# define PATH
 
@@ -68,16 +83,16 @@ typedef struct s_syntax
 typedef struct s_data
 {
 	char		*read;
-	char		**env; //need to free in the end
-	char		**exprt; //need to free in the end
-	t_syntax	*syn; //need to free after exec
+	char		**env;
+	char		**exprt;
+	t_syntax	*syn;
 	int			nb_process;
 	int			crt;
-	int			*childs; //need to free after exec
+	int			*childs;
 	int			fd_tmp;
-	char		***all_cmd; //need to free after 
+	char		***all_cmd;
 	int			syntax;
-	char		*path; //NUll sauf si le path n'hesiste pas au debut - FREE in the end
+	char		*path;
 }	t_data;
 
 /***********************************************/

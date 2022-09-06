@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_exec.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:52:59 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:53:16 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	len_split(char **bin)
@@ -20,7 +32,7 @@ int	open_file(char *file, int i)
 		fd = open(file, O_RDONLY);
 		if (fd == -1)
 		{
-			errorp(file); //[1] bash: name_file: No such file or directory
+			errorp(file);
 			return (-1);
 		}
 	}
@@ -29,7 +41,6 @@ int	open_file(char *file, int i)
 	else if (i == append)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd == -1)
-		errorp(file); //a modifie !!
-	//	printf("bash: name_file: Permission denied\n"); //[1] bash: name_file: Permission denied 
+		errorp(file);
 	return (fd);
 }

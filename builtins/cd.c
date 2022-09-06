@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 18:30:10 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 18:39:49 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	**update_oldpwd_in_env(char **env, char *old_pwd)
@@ -36,6 +48,18 @@ void	cd_error(char *str)
 	putstr_error("\n");
 }
 
+char	*change_oldpwd(char old_pwd[4096], char *dst)
+{
+	if (*old_pwd)
+	{
+		ft_strlcat(old_pwd, "/", 4096);
+		ft_strlcat(old_pwd, dst, 4096);
+		return (ft_strdup(old_pwd));
+	}
+	else
+		return (ft_strdup(""));
+}
+
 /* Tu dois update tes vars denv avec le old path sur 
 OLDPWD, des le debut, puisque si x == 1, old_pwd sera modif */
 int	ft_cd_handler(char *dst, t_data *my_data, int x)
@@ -44,27 +68,14 @@ int	ft_cd_handler(char *dst, t_data *my_data, int x)
 	char	*final_path;
 	int		rtvl;
 
-	rtvl = 0;
-	final_path = NULL;
-//	final_path = ((rtvl = 0, NULL));
+	final_path = ((rtvl = 0, NULL));
 	old_pwd[0] = 0;
 	getcwd(old_pwd, sizeof(old_pwd));
 	my_data->env = update_oldpwd_in_env(my_data->env, old_pwd);
 	if (x == 0)
 		final_path = ft_strjoin(getenv("HOME"), dst + 1);
 	else if (x == 1)
-	{
-		if (*old_pwd)
-		{
-	//		ft_strlcat(old_pwd, "/", 4096);
-	//		ft_strlcat(old_pwd, dst, 4096);
-			strcat(old_pwd, "/");
-			strcat(old_pwd, dst);
-			final_path = ft_strdup(old_pwd);
-		}
-		else
-			final_path = ft_strdup("");
-	}
+		final_path = change_oldpwd(old_pwd, dst);
 	else
 		final_path = ft_strdup(dst);
 	if (chdir(final_path) == -1)

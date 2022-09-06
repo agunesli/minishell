@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   data.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:24:25 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:24:27 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	nb_strong_piece(t_syntax *syn, int cpt)
@@ -51,5 +63,5 @@ void	update_data(t_data *my_data)
 {
 	my_data->nb_process = nb_strong_piece(my_data->syn, 0) + 1;
 	my_data->all_cmd = NULL;
-	my_data->all_cmd = handle_all_cmd(my_data, my_data->syn); //need to be free
+	my_data->all_cmd = handle_all_cmd(my_data, my_data->syn);
 }

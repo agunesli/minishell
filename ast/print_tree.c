@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_tree.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 19:20:54 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 19:20:55 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	g_current_level;
@@ -66,9 +78,4 @@ void	btree_apply_by_level(t_syntax *root,
 		level++;
 		apply(root, applyf, 0);
 	}
-}
-
-void	print_tree(t_syntax *syn)
-{
-	btree_apply_by_level(syn, &print_syn);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:27:06 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/31 18:27:08 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:36:42 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	end_sub(char *subread, int len)
 int	skip_space(char *str, int i)
 {
 	while (str[i] && str[i] == ' ')
-		i++;		
+		i++;
 	return (i);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:24:02 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:24:15 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	putstr_error(char *str)
@@ -7,8 +19,6 @@ void	putstr_error(char *str)
 
 void	errorp(char *str)
 {
-//	printf("errno is %d\n", errno);
-//	my_data->status_error = errno;
 	g_error = errno;
 	putstr_error("bash: ");
 	putstr_error(str);
@@ -44,4 +54,3 @@ int	error_invalid_id(char *str)
 	putstr_error("' : not a valid identifier\n");
 	return (1);
 }
-//void	error_execve(char *str, t_data *my_data)

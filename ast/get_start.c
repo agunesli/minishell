@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_start.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:28:58 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/06 15:41:09 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 20:19:12 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	get_start(t_data *my_data, char *read)
 		check_tree(my_data->syn, my_data);
 		if (my_data->syntax)
 		{
-//			print_tree(my_data->syn);
 			update_data(my_data);
 			get_start_exec(my_data, my_data->syn);
 			free_tree(&my_data->syn);
@@ -67,26 +66,3 @@ void	get_start(t_data *my_data, char *read)
 		}
 	}
 }
-
-/*int	main(int ac, char **av, char **env)
-{
-	if (ac == 1)
-	{
-		printf("Espece de conne tu as oublie les arguments !!\n");
-		return (0);
-	}
-//	(void)ac;
-//	(void)av;
-//	char *s = "<fd1 ls >fd >fd1 -la <fd1 | ls && << LIM";
-//	char *t = "\"\" accher\"$USER\" \"  \"";
-//	char *u = "/usr/bin/cat| ls ";
-//	printf("\ns = %s\n", s);
-//	parser(s, av, env);
-//	printf("\nt = %s\n", t);
-//	parser(t, av, env);
-//	printf("\nu = %s\n", u);
-//	parser(u, av, env);
-	printf("\nread = [%s]\n", av[1]);
-	parser(av[1], av, env);
-	return (0);
-}*/

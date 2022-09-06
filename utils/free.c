@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 20:23:26 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 20:23:39 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	free_all(char **bin)
@@ -20,10 +32,7 @@ void	free_tab3(char ***bin)
 	if (!bin)
 		return ;
 	while (bin[++i])
-	{
-//		print_all(bin[i]);
 		free_all(bin[i]);
-	}
 	free(bin);
 }
 
@@ -34,7 +43,6 @@ void	free_tree(t_syntax **syn)
 
 	if (!*syn)
 		return ;
-//	printf("free %s\n", syn->content);
 	if ((*syn)->content)
 	{
 		free((*syn)->content);
@@ -51,13 +59,6 @@ void	free_tree(t_syntax **syn)
 	*syn = NULL;
 	free_tree(&tmp1);
 	free_tree(&tmp2);
-/*	if (syn)
-	{
-		printf("bouhhh\n");
-		free(syn);
-		syn = NULL;
-		printf("2 %p\n", syn);
-	}*/
 }
 
 void	ft_free_end(t_data *my_data)

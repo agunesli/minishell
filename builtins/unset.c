@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 18:20:58 by tamather          #+#    #+#             */
+/*   Updated: 2022/09/06 18:24:34 by tamather         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int	found_id(char *cmd,  char **env, t_data *my_data)
+int	found_id(char *cmd, char **env, t_data *my_data)
 {
 	int		i;
 	char	*id;
 	char	*pos;
 
-	i = -1;
-	id = ft_strjoin(cmd, "=");
+	i = ((id = ft_strjoin(cmd, "="), -1));
 	if (!ft_strncmp(id, "PATH=", 5))
 		my_data->path = NULL;
 	pos = NULL;
@@ -25,10 +36,9 @@ int	found_id(char *cmd,  char **env, t_data *my_data)
 		env[i] = ft_strdup("SHLVL=0");
 		pos = NULL;
 	}
-	free(id);
 	if (pos)
-		return (i);
-	return (-1);
+		return (free(id), i);
+	return (free(id), -1);
 }
 
 char	**update_env(char *cmd, char **env, t_data *my_data)

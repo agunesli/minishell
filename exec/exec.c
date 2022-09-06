@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/03 14:36:14 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 21:07:54 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void	update_data_exec(t_data *my_data)
 	my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 	if (!my_data->childs)
 		return ;
+	if (my_data->nb_process != 1)
+	{
+		if (my_data->crt != my_data->nb_process - 1)
+			pipe(fd);
+		else
+			fd[1] = STDOUT_FILENO;
+	}
 }
 
 void	ft_dup2(int fd[2], t_data *my_data)
@@ -25,12 +32,10 @@ void	ft_dup2(int fd[2], t_data *my_data)
 	if (my_data->crt != 0)
 	{
 		dup2(my_data->fd_tmp, STDIN_FILENO);
-	//	close(my_data->fd_tmp);
 	}
 	if (my_data->crt != my_data->nb_process - 1)
 	{
 		dup2(fd[1], STDOUT_FILENO);
-	//	close(fd[1]);
 		close(fd[0]);
 	}
 }
@@ -44,16 +49,8 @@ void	exec(t_syntax *syn, t_data *my_data)
 	int		built;
 	int		fd[2];
 
-	if (my_data->nb_process != 1)
-	{
-		if (my_data->crt != my_data->nb_process - 1)
-			pipe(fd);
-		else
-			fd[1] =  STDOUT_FILENO;
-	}
+
 	my_data->childs[my_data->crt] = fork();
-//	if (my_data->childs[my_data->current_process] == -1)
-//		printf("Fail to create a new process\n");
 	if (my_data->childs[my_data->crt] == 0)
 	{
 		signal(SIGQUIT, signal_ctrbs);
@@ -80,15 +77,6 @@ void	exec(t_syntax *syn, t_data *my_data)
 			error_command(path, my_data);
 		exit(g_error);
 	}
-	signal(SIGINT, SIG_IGN);
-	if (my_data->nb_process != 1)
-	{
-		if (fd[1] != STDOUT_FILENO)
-			close(fd[1]);
-		if (my_data->fd_tmp != STDIN_FILENO)
-			close(my_data->fd_tmp);
-		my_data->fd_tmp = fd[0];
-	}
 	my_data->crt++;
 }
 
@@ -98,6 +86,15 @@ void	end_of_parent(t_data *my_data)
 	int	status;
 
 	i = -1;
+	signal(SIGINT, SIG_IGN);
+	if (my_data->nb_process != 1)
+	{
+		if (fd[1] != STDOUT_FILENO)
+			close(fd[1]);
+		if (my_data->fd_tmp != STDIN_FILENO)
+			close(my_data->fd_tmp);
+		my_data->fd_tmp = fd[0];
+	}
 	while (++i < my_data->nb_process)
 	{
 		waitpid(my_data->childs[i], &status, 0);

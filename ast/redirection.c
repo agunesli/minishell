@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:21:18 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/02 16:14:11 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:37:05 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 }
 
 t_syntax	*handle_std_next(t_syntax *syn, char *subrd, int y, t_data *my_data)
-{ 
+{
 	int			end;
 	int			start;
 

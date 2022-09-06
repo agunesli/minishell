@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agunesli <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:26:26 by agunesli          #+#    #+#             */
-/*   Updated: 2022/08/31 18:28:02 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/06 19:20:07 by tamather         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,14 @@ int	len_arg(char *cmd)
 	return (cpt);
 }
 
-char	*without_quote(char *cmd)
+void	update_quote(char *cmd, char *dest)
 {
-	int		cpt;
-	char	*dest;
 	int		i;
 	int		j;
 	char	c;
 
-	cpt = len_arg(cmd);
-	i = ((j = -1, -1));
-	if (cpt == 0)
-		return (cmd);
-	if (cpt == (int)ft_strlen(cmd))
-		return (free(cmd), ft_strdup(""));
-	dest = malloc(sizeof(char) * (ft_strlen(cmd) - cpt + 1));
-	if (!dest)
-		return (NULL);
+	i = -1;
+	j = -1;
 	while (cmd[++i])
 	{
 		if (cmd[i] == '\'' || cmd[i] == '\"')
@@ -63,5 +54,21 @@ char	*without_quote(char *cmd)
 				dest[++j] = cmd[i];
 	}
 	dest[++j] = '\0';
+}
+
+char	*without_quote(char *cmd)
+{
+	int		cpt;
+	char	*dest;
+
+	cpt = len_arg(cmd);
+	if (cpt == 0)
+		return (cmd);
+	if (cpt == (int)ft_strlen(cmd))
+		return (free(cmd), ft_strdup(""));
+	dest = malloc(sizeof(char) * (ft_strlen(cmd) - cpt + 1));
+	if (!dest)
+		return (NULL);
+	update_quote(cmd, dest);
 	return (free(cmd), dest);
 }
