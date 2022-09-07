@@ -32,9 +32,9 @@ int	id_is_in_env(char **env, char *cmd, int len)
 	free (id);
 	if (pos)
 	{
-		free(env[i]);
+		free(pos);
 		env[i] = ft_strdup(cmd);
-		return (1);
+		return (free(cmd), 1);
 	}
 	return (0);
 }
@@ -59,11 +59,11 @@ int	id_is_in_exprt(char **exprt, char *cmd)
 	if (pos)
 	{
 		if (i == len_split(exprt) - 1)
-			return (1);
+			return (free(cmd), 1);
 		while (exprt[++i])
 			exprt[i - 1] = exprt[i];
 		exprt[i - 1] = pos;
-		return (1);
+		return (free(cmd), 1);
 	}
 	return (0);
 }
@@ -72,10 +72,14 @@ void	change_env(t_data *my_data, char **dst, int len)
 {
 	if (!id_is_in_env(my_data->env, dst[0], len))
 		my_data->env = ft_strjointab(my_data->env, dst);
+	else
+		free(dst);
 }
 
 void	change_exprt(t_data *my_data, char **dst)
 {
 	if (!id_is_in_exprt(my_data->exprt, dst[0]))
 		my_data->exprt = ft_strjointab(my_data->exprt, dst);
+	else
+		free(dst);
 }

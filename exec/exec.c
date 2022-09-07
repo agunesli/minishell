@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/07 00:56:55 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 10:07:28 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,11 @@ void	child(t_data *my_data, int fd[2], t_syntax *syn, char *path)
 			my_data->env) == -1)
 	{
 		g_error = errno;
-		errorp(path);
+		errorp(path, my_data);
 		ft_free_end(my_data);
 		free(my_data->childs);
 	}
-	else
-		error_command(path, my_data);
+	free_all(my_data->env);
 	exit(g_error);
 }
 

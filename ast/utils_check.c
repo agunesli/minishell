@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:25:52 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/06 18:36:54 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 09:05:22 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	check_open(char *name, int opt, t_data *my_data)
 {
 	int	fd;
 
-	fd = open_file(name, opt);
+	fd = open_file(name, opt, my_data);
 	if (fd == -1)
 		my_data->syntax = 0;
 	else

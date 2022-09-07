@@ -77,7 +77,7 @@ char	*correct_path(char **cmd, t_data *my_data)
 	int		len;
 	char	*cmdd;
 
-	i = 0;
+	i = -1;
 	if (access(cmd[0], F_OK) == 0 && is_dir(cmd[0], my_data))
 		return (NULL);
 	if (access(cmd[0], F_OK | X_OK) == 0 || ft_strrchr(cmd[0], '/'))

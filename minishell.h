@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:45:27 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/07 01:29:20 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 09:06:50 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void		end_of_parent(t_data *my_data);
 void		exec_with_pipe(t_data *my_data, t_syntax *syn);
 
 //utils_exec
-int			open_file(char *file, int i);
+int			open_file(char *file, int i, t_data *my_data);
 void		print_all(char **bin);
 int			len_split(char **bin);
 
