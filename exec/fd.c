@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:42:55 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 20:42:56 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 10:18:43 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	change_fd(t_syntax *syn, t_data *my_data)
 		return ;
 	if (syn->id == in || syn->id == heredoc)
 	{
-		fd = open_file(syn->content, syn->id);
+		fd = open_file(syn->content, syn->id, my_data);
 		if (fd == -1)
 			ft_free_necessary(my_data);
 		dup2(fd, STDIN_FILENO);
@@ -29,7 +29,7 @@ void	change_fd(t_syntax *syn, t_data *my_data)
 	}
 	else if (syn->id == out || syn->id == append)
 	{
-		fd = open_file(syn->content, syn->id);
+		fd = open_file(syn->content, syn->id, my_data);
 		if (fd == -1)
 			ft_free_necessary(my_data);
 		dup2(fd, STDOUT_FILENO);

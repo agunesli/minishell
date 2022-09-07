@@ -31,7 +31,7 @@ t_syntax	*ft_heredoc(char *subread, int y, t_data *my_data)
 	end = end_sub(subread, y - 2);
 	syn->left = low_piece(ft_substr(subread, start, end), my_data);
 	tmp = found_name_fd(subread, y);
-	start = skip_space(subread, ft_strlen(tmp) + y);
+	start = skip_space(subread, y) + ft_strlen(tmp);
 	free(tmp);
 	end = ft_strlen(subread) - start;
 	syn->right = medium_piece(ft_substr(subread, start, end), my_data);

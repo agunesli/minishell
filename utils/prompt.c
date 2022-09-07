@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:22:10 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 20:22:52 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/07 10:17:56 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv, char **env)
 	read = NULL;
 	signal_def();
 	init_data(&my_data, read, env);
-	rl_outstream = stderr;
 	while (42)
 	{
 		read = readline(CYELLOW "Minishell💙 > " RESET);
