@@ -41,6 +41,7 @@ void	write_more(t_syntax *syn, t_data *my_data)
 	{
 		syn->right = NULL;
 		my_data->syntax = 0;
+		error_syntax("|", my_data);
 	}
 	dup2(b, STDIN_FILENO);
 	close(b);
