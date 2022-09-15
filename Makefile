@@ -5,7 +5,7 @@ SRC	= libft/ft_split.c libft/ft_substr.c libft/ft_strncmp.c\
 	  ast/create_tree.c ast/redirection.c ast/heredoc.c\
 	  ast/check_tree.c ast/low_case.c ast/expand.c\
 	  ast/quote.c ast/separate.c ast/get_start.c\
-	  ast/utils_tree.c ast/print_tree.c ast/utils_check.c\
+	  ast/utils_tree.c ast/utils_check.c\
 	  exec/fd.c exec/utils_exec.c exec/path.c\
 	  exec/exec.c exec/exec_builtins.c exec/get_start_exec.c\
 	  utils/data.c utils/free.c utils/errors.c\

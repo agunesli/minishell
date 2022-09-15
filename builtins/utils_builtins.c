@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 18:24:41 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 18:24:42 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:14:35 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 void	ft_putstr(char *str)
 {
 	write(1, str, ft_strlen(str));
+}
+
+void	cd_error(char *str)
+{
+	putstr_error("bash: cd: ");
+	putstr_error(str);
+	putstr_error(": ");
+	putstr_error(strerror(errno));
+	putstr_error("\n");
 }
 
 void	print_all(char **bin)

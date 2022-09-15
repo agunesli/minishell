@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:45:27 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/07 09:06:50 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:15:01 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ int			id_check(char *str, int i);
 int			found_char(char *str, char c);
 void		change_env(t_data *my_data, char **dst, int len);
 void		change_exprt(t_data *my_data, char **dst);
+void		cd_error(char *str);
 
 //libft
 size_t		ft_strlen(const char *s);

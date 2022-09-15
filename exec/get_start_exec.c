@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:52:39 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/07 00:52:51 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/15 10:01:54 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	exec_one_cmd(t_data *my_data, t_syntax *syn)
 	}
 	else
 	{	
+		if (!my_data->all_cmd[0][0][0])
+			return ;
 		my_data->fd_tmp = STDIN_FILENO;
 		my_data->childs = malloc(sizeof(int) * my_data->nb_process);
 		if (!my_data->childs)

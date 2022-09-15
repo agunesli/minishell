@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 18:30:10 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 18:39:49 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:15:24 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,31 @@ char	**update_oldpwd_in_env(char **env, char *old_pwd)
 	return (env);
 }
 
-void	cd_error(char *str)
+char	**update_pwd_in_env(char **env, char *pwd)
 {
-	putstr_error("bash: cd: ");
-	putstr_error(str);
-	putstr_error(": ");
-	putstr_error(strerror(errno));
-	putstr_error("\n");
+	int		i;
+	char	*tmp1;
+	char	**tmp2;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp("PWD=", env[i], 4))
+			break ;
+	}
+	if (env[i])
+	{
+		free(env[i]);
+		env[i] = ft_strjoin("PWD=", pwd);
+	}
+	else
+	{
+		tmp1 = ft_strjoin("PWD=", pwd);
+		tmp2 = change_str_to_tab(tmp1);
+		env = ft_strjointab(env, tmp2);
+		free(tmp1);
+	}
+	return (env);
 }
 
 char	*change_oldpwd(char old_pwd[4096], char *dst)
@@ -83,6 +101,8 @@ int	ft_cd_handler(char *dst, t_data *my_data, int x)
 		cd_error(dst);
 		rtvl = 1;
 	}
+	else
+		my_data->env = update_pwd_in_env(my_data->env, old_pwd);
 	free(final_path);
 	free(dst);
 	return (rtvl);

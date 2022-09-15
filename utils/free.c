@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:23:26 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/07 09:33:33 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/15 10:07:07 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	ft_free_end(t_data *my_data)
 		my_data->all_cmd = NULL;
 	}
 	free_all(my_data->env);
+	my_data->env = NULL;
 	free_all(my_data->exprt);
 	free(my_data->path);
 }

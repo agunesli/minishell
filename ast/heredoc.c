@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 18:26:10 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/06 20:18:43 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/15 10:08:38 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	write_heredoc(int fd, char *lim, t_data *my_data)
 	if (lim[0] == '\"' || lim [0] == '\'')
 		lim = ((expd = 0, without_quote(lim)));
 	line = readline("> ");
-	while (line && ft_strncmp(lim, line, ft_strlen(lim)))
+	while (line && ft_strncmp(lim, line, ft_strlen(lim) + 1))
 	{
 		line = expand_heredoc(line, my_data, expd);
 		write(fd, line, ft_strlen(line));

@@ -6,11 +6,34 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:24:33 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/06 20:39:56 by tamather         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:13:01 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	**update_shlvl_in_env(char **env)
+{
+	int		i;
+	int		nb;
+	char	*tmp;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp("SHLVL=", env[i], 6))
+			break ;
+	}
+	if (env[i])
+	{
+		nb = ft_atoi(env[i] + 6);
+		free(env[i]);
+		tmp = ft_itoa(nb + 1);
+		env[i] = ft_strjoin("SHLVL=", tmp);
+		free(tmp);
+	}
+	return (env);
+}
 
 void	start_env(char **env, t_data *my_data)
 {
@@ -30,7 +53,7 @@ void	start_env(char **env, t_data *my_data)
 		printf("%s", my_data->path);
 	}
 	else
-		my_data->env = ft_tabdup(env);
+		my_data->env = update_shlvl_in_env(ft_tabdup(env));
 }
 
 void	init_data(t_data *my_data, char *read, char **env)

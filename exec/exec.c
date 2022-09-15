@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 13:51:22 by agunesli          #+#    #+#             */
-/*   Updated: 2022/09/07 10:07:28 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:12:06 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	end_of_parent(t_data *my_data)
 		if (WIFEXITED(status))
 			g_error = WEXITSTATUS(status);
 		if (WIFSIGNALED(status))
-			g_error = WTERMSIG(status);
+			g_error = WTERMSIG(status) + 128;
 	}
 	signal_def();
 	free(my_data->childs);
