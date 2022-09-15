@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 18:25:17 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/15 11:47:35 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/15 11:49:37 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void	ft_exit_else(int nb, char **cmd, t_data *my_data)
 		exit(nb);
 	}
 	else if (all_is_digit(cmd[1]) && cmd[2])
-	{
 		printf("bash: exit: too many arguments\n");
-//		ft_free_end(my_data);
-//		exit(1);
-	}
 	else if (!all_is_digit(cmd[1]))
 	{
 		printf("bash: exit: %s: numeric argument required\n", cmd[1]);
