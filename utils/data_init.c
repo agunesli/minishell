@@ -6,7 +6,7 @@
 /*   By: tamather <tamather@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 20:24:33 by tamather          #+#    #+#             */
-/*   Updated: 2022/09/15 11:13:01 by agunesli         ###   ########.fr       */
+/*   Updated: 2022/09/15 15:05:26 by agunesli         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	start_env(char **env, t_data *my_data)
 		my_data->env[2] = ft_strdup("_=/usr/bin/env");
 		my_data->env[3] = NULL;
 		my_data->path = ft_strdup(PATH1 PATH2 PATH3);
-		printf("%s", my_data->path);
 	}
 	else
 		my_data->env = update_shlvl_in_env(ft_tabdup(env));
